@@ -1,0 +1,18 @@
+.resajet-button {
+  z-index: 10;
+  text-align: center;
+  cursor: pointer;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+  i {
+    color: rgb(255, 255, 255);
+    position: relative;
+    top: calc(50% - 20px);
+  }
+}
