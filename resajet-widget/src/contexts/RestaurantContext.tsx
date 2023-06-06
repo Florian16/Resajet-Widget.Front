@@ -1,13 +1,13 @@
 import React, { ReactNode, useState } from "react";
 import { RestaurantSetting } from "../models/restaurantSetting";
 
-interface RestaurantContextProps {
+export type RestaurantContextProps = {
   restaurantSettings: RestaurantSetting | null;
-}
+};
 
-interface RestaurantContextProviderProps {
+type RestaurantContextProviderProps = {
   children: ReactNode | ReactNode[];
-}
+};
 
 const RestaurantContext = React.createContext<RestaurantContextProps>({
   restaurantSettings: null,
@@ -23,7 +23,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      setRestaurantSettings({ color: "#2596be" });
+      setRestaurantSettings({ background: "#2596be" });
     };
 
     fetchData();

@@ -1,3 +1,3 @@
 export interface RestaurantSetting {
-  color: string;
+  background: string;
 }

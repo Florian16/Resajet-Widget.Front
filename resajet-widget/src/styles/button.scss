@@ -1,10 +1,19 @@
+.resajet-container {
+  position: relative;
+}
+
+.resajet-section {
+  position: absolute;
+  z-index: 9;
+}
+
 .resajet-button {
   z-index: 10;
   text-align: center;
   cursor: pointer;
   position: fixed;
-  right: 50px;
-  bottom: 50px;
+  right: 2%;
+  bottom: 3%;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -14,5 +23,16 @@
     color: rgb(255, 255, 255);
     position: relative;
     top: calc(50% - 20px);
+  }
+}
+
+.resajet-button:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 575.98px) {
+  .resajet-button {
+    right: 8%;
+    bottom: 6%;
   }
 }
