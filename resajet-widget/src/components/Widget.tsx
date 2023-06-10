@@ -11,11 +11,14 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
       className={`resajet-widget ${
         isOpen ? "resajet-widget-open" : "resajet-widget-close"
       }`}
+      style={{
+        backgroundColor: restaurantContext.restaurantSettings?.mainColor,
+      }}
     >
       <div
         className="resajet-header"
         style={{
-          backgroundColor: restaurantContext.restaurantSettings?.background,
+          backgroundColor: restaurantContext.restaurantSettings?.secondColor,
         }}
       >
         <span>Réservation</span>

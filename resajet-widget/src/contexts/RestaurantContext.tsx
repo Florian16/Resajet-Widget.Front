@@ -23,7 +23,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      setRestaurantSettings({ background: "#2596be" });
+      setRestaurantSettings({ secondColor: "#EBC80A", mainColor: "#EFF1F1" });
     };
 
     fetchData();

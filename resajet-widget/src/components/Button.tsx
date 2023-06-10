@@ -10,7 +10,7 @@ export default function Button({ restaurantContext, onClick }: ButtonProps) {
     <div
       className={`resajet-button`}
       style={{
-        backgroundColor: restaurantContext.restaurantSettings?.background,
+        backgroundColor: restaurantContext.restaurantSettings?.secondColor,
       }}
       onClick={onClick}
     ></div>

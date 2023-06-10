@@ -1,3 +1,4 @@
 export interface RestaurantSetting {
-  background: string;
+  mainColor?: string;
+  secondColor?: string;
 }
