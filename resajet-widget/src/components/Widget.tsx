@@ -1,4 +1,5 @@
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
+import { Card } from "@nextui-org/react";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -11,18 +12,22 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
       className={`resajet-widget ${
         isOpen ? "resajet-widget-open" : "resajet-widget-close"
       }`}
-      style={{
-        backgroundColor: restaurantContext.restaurantSettings?.mainColor,
-      }}
     >
-      <div
-        className="resajet-header"
-        style={{
-          backgroundColor: restaurantContext.restaurantSettings?.secondColor,
-        }}
-      >
-        <span>Réservation</span>
-      </div>
+      <Card>
+        <Card.Header
+          css={{ pl: "$12", pt: "$6" }}
+          className="resajet-header"
+          style={{
+            backgroundColor: restaurantContext.restaurantSettings?.secondColor,
+          }}
+        >
+          <span>Réserver maintenant</span>
+        </Card.Header>
+        <Card.Body
+          css={{ background: restaurantContext.restaurantSettings?.mainColor }}
+        ></Card.Body>
+      </Card>
+
       <div className="resajet-body"></div>
     </div>
   );
