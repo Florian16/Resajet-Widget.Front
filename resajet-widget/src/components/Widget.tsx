@@ -1,5 +1,11 @@
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Input,
+} from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
-import { Card } from "@nextui-org/react";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -13,22 +19,35 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
         isOpen ? "resajet-widget-open" : "resajet-widget-close"
       }`}
     >
-      <Card>
-        <Card.Header
-          css={{ pl: "$12", pt: "$6" }}
-          className="resajet-header"
-          style={{
-            backgroundColor: restaurantContext.restaurantSettings?.secondColor,
-          }}
-        >
-          <span>Réserver maintenant</span>
-        </Card.Header>
-        <Card.Body
-          css={{ background: restaurantContext.restaurantSettings?.mainColor }}
-        ></Card.Body>
-      </Card>
-
-      <div className="resajet-body"></div>
+      <div
+        className="resajet-header"
+        style={{
+          backgroundColor: restaurantContext.restaurantSettings?.secondColor,
+        }}
+      >
+        <span>Réserver maintenant</span>
+      </div>
+      <div
+        className="resajet-body"
+        style={{
+          background: restaurantContext.restaurantSettings?.mainColor,
+        }}
+      >
+        <FormControl variant="standard">
+          <span className="resajet-label">Type de réservation</span>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
     </div>
   );
 }

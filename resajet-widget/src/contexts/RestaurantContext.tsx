@@ -25,7 +25,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
     const fetchData = async () => {
       setRestaurantSettings({
         secondColor: "#EBC80A",
-        mainColor: "#EFF1F1",
+        mainColor: "#DBE0E0",
       });
     };
 
