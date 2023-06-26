@@ -1,10 +1,10 @@
-import postcss from "rollup-plugin-postcss";
-import fontMagician from "postcss-font-magician";
+import { defineConfig } from "vite";
 import autoprefixer from "autoprefixer";
+import fontMagician from "postcss-font-magician";
 
-export default {
-  plugins: [
-    postcss({
+export default defineConfig({
+  css: {
+    postcss: {
       plugins: [
         autoprefixer(),
         fontMagician({
@@ -17,6 +17,6 @@ export default {
           },
         }),
       ],
-    }),
-  ],
-};
+    },
+  },
+});
