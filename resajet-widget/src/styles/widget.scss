@@ -26,7 +26,8 @@
 .resajet-header {
   font-size: 1.5rem;
   padding-left: 2rem;
-  padding-top: 0.75rem;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
 }
@@ -35,13 +36,23 @@
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
   padding: 1.3rem;
+
+  &-container {
+    padding-bottom: 0.9rem !important;
+  }
+
+  .css-1nrlq1o-MuiFormControl-root,
+  .MuiFormControl {
+    width: 100%;
+  }
 }
 
 .resajet-label {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 1.05rem;
   line-height: 1.4375;
   letter-spacing: 0.00938rem;
+  margin-bottom: 0.2rem;
 }
 
 // Keyframes

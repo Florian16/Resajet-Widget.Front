@@ -8,8 +8,8 @@ function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="relative">
-      <div className="absolute z-9">
+    <div className="resajet-container">
+      <div className="resajet-section">
         <Button
           restaurantContext={restaurantContext}
           onClick={() => setIsOpen(!isOpen)}

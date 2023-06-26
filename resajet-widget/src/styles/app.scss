@@ -1,9 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+
 .resajet-container {
-    position: relative;
-    height: 100%;
+  font-family: "Poppins", sans-serif !important;
+  position: relative;
+  height: 100%;
+
+  // Customisation MUI
+
+  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 0.9rem;
+  }
+
+  .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select {
+    margin-left: 0.5rem;
+  }
+
+  .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input:focus {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:after {
+    border-bottom: none;
+  }
+
+  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before {
+    width: 97.7%;
+    margin-left: auto;
+  }
+
+  .css-1aznpnh-MuiSlider-root {
+    width: 97.7%;
+    margin-left: auto;
+  }
 }
-  
+
 .resajet-section {
-    position: absolute;
-    z-index: 9;
+  position: absolute;
+  z-index: 9;
 }
