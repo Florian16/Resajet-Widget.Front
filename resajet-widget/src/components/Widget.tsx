@@ -112,6 +112,9 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
             style={{ color: "black" }}
           />
         </FormControl>
+        <FormControl className="resajet-body-container" variant="standard">
+          <span className="resajet-label">Date</span>
+        </FormControl>
       </div>
     </div>
   );
