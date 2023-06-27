@@ -4,6 +4,7 @@ export type useFormulaireResult<T> = {
   formulaire: T;
   handleChange: (e: any) => void;
   setFormulaire: (value: T) => void;
+  handleCustomChange: (name: string, value: string) => void;
 };
 
 export function useFormulaire<T = any>(
@@ -20,9 +21,17 @@ export function useFormulaire<T = any>(
     update(name, value);
   };
 
+  const handleCustomChange = (name: string, value: string) => {
+    console.log(name);
+    console.log(value);
+
+    update(name, value);
+  };
+
   return {
     formulaire,
     handleChange,
     setFormulaire,
+    handleCustomChange,
   };
 }

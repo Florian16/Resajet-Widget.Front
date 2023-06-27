@@ -1,3 +1,4 @@
+import { TimeSlot } from "./timeSlot";
 import { TypeReservation } from "./typeReservation";
 
 export interface RestaurantSetting {
@@ -6,4 +7,6 @@ export interface RestaurantSetting {
   displayLogo?: boolean;
   restoreOptions?: TypeReservation[];
   maximumCovers: number;
+  disabledDates: Date[];
+  timeSlots: TimeSlot[];
 }

@@ -1,4 +1,11 @@
-import { Select, FormControl, MenuItem, Slider } from "@mui/material";
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  Slider,
+  Grid,
+  Button,
+} from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
@@ -15,6 +22,7 @@ type WidgetProps = {
 type FormulaireReservation = {
   restoreOption: string;
   covers: number;
+  timeSlotId: string;
 };
 
 type MarkSlider = {
@@ -25,19 +33,15 @@ type MarkSlider = {
 const formulaireInitial = {
   restoreOption: "",
   covers: 0,
+  timeSlotId: "",
 };
 
 export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
-  const { formulaire, handleChange, setFormulaire } =
+  const { formulaire, handleChange, setFormulaire, handleCustomChange } =
     useFormulaire<FormulaireReservation>({
       ...formulaireInitial,
     });
   const [marks, setMarks] = useState<MarkSlider[]>();
-  const disabledDates = [
-    new Date(2023, 5, 27),
-    new Date(2023, 5, 29),
-    new Date(2023, 6, 2),
-  ];
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
@@ -63,18 +67,21 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
-    return disabledDates.some(
-      (d) =>
-        d.getDate() === $d.getDate() &&
-        d.getMonth() === $d.getMonth() &&
-        d.getFullYear() === $d.getFullYear()
-    );
+    if (restaurantContext?.restaurantSettings) {
+      return restaurantContext?.restaurantSettings?.disabledDates.some(
+        (d) =>
+          d.getDate() === $d.getDate() &&
+          d.getMonth() === $d.getMonth() &&
+          d.getFullYear() === $d.getFullYear()
+      );
+    }
+
+    return false;
   };
 
   const StyledDateCalendar = styled(DateCalendar)`
     && .Mui-selected {
-      background-color: ${restaurantContext?.restaurantSettings
-        ?.secondColor}; /* Remplacez par votre couleur souhaitée */
+      background-color: ${restaurantContext?.restaurantSettings?.secondColor};
     }
   `;
 
@@ -144,9 +151,50 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
             <StyledDateCalendar
               disablePast
               shouldDisableDate={shouldDisableDate}
+              views={["month", "day"]}
             />
           </LocalizationProvider>
         </FormControl>
+        {formulaire?.restoreOption ? (
+          <FormControl className="resajet-body-container" variant="standard">
+            <span className="resajet-label-hour">Heures</span>
+            <Grid container>
+              {restaurantContext?.restaurantSettings?.timeSlots
+                .filter((ts) => ts.mealPeriodId === formulaire?.restoreOption)
+                .map((timeSlot) => (
+                  <Grid
+                    item
+                    md={3}
+                    xs={4}
+                    container
+                    justifyContent="center"
+                    alignItems="center"
+                    key={timeSlot.id}
+                  >
+                    <div
+                      className="resajet-body-button-hour"
+                      style={{
+                        borderColor:
+                          formulaire?.timeSlotId === timeSlot.id
+                            ? restaurantContext.restaurantSettings?.secondColor
+                            : "black",
+                      }}
+                      onClick={() =>
+                        handleCustomChange(
+                          "timeSlotId",
+                          timeSlot.id === formulaire?.timeSlotId
+                            ? ""
+                            : timeSlot.id
+                        )
+                      }
+                    >
+                      {timeSlot.hour.replace(/:00$/, "")}
+                    </div>
+                  </Grid>
+                ))}
+            </Grid>
+          </FormControl>
+        ) : null}
       </div>
     </div>
   );
