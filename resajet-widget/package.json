@@ -13,6 +13,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.4",
+    "@mui/x-date-pickers": "^6.9.0",
+    "dayjs": "^1.11.8",
     "postcss-font-magician": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

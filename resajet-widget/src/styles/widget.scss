@@ -1,14 +1,16 @@
 .resajet-widget {
+  overflow-y: auto;
   position: fixed;
-  bottom: 8%;
-  right: 6%;
-  max-height: calc(100% - 20%);
+  bottom: 0;
+  right: 90px;
+  max-height: calc(100% - 40px);
+  height: calc(100% - 130px);
   width: 100%;
   max-width: calc(100% - 75%);
-
   transform: translateY(100%);
   transition: opacity 0.3s, transform 0.6s;
   opacity: 0;
+  border-radius: 14px;
 
   &-open {
     opacity: 1;
@@ -21,6 +23,10 @@
     opacity: 0;
     animation: closeWidget 0.55s ease-in;
   }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .resajet-header {
@@ -28,22 +34,40 @@
   padding-left: 2rem;
   padding-top: 0.65rem;
   padding-bottom: 0.65rem;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 }
 
 .resajet-body {
+  padding: 1.3rem;
+  padding-bottom: 0rem;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
-  padding: 1.3rem;
 
   &-container {
-    padding-bottom: 0.9rem !important;
+    padding-bottom: 2.2rem !important;
+    &:last-child {
+      padding-bottom: 0rem !important;
+    }
   }
 
   .css-1nrlq1o-MuiFormControl-root,
   .MuiFormControl {
     width: 100%;
+  }
+
+  .css-cwhad8-MuiDateCalendar-root {
+    width: 100% !important;
+    max-height: inherit;
+  }
+
+  .css-nk89i7-MuiPickersCalendarHeader-root {
+    margin-top: inherit;
+    padding-left: 10px;
+    padding-right: inherit;
   }
 }
 

@@ -2,6 +2,10 @@ import { Select, FormControl, MenuItem, Slider } from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/fr";
+import { styled } from "@mui/material/styles";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -29,6 +33,11 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
       ...formulaireInitial,
     });
   const [marks, setMarks] = useState<MarkSlider[]>();
+  const disabledDates = [
+    new Date(2023, 5, 27),
+    new Date(2023, 5, 29),
+    new Date(2023, 6, 2),
+  ];
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
@@ -51,6 +60,23 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
 
     // Faites quelque chose avec la variable customMarks si nécessaire
   }, [restaurantContext?.restaurantSettings?.maximumCovers]);
+
+  const shouldDisableDate = (date: any) => {
+    const { $d } = date;
+    return disabledDates.some(
+      (d) =>
+        d.getDate() === $d.getDate() &&
+        d.getMonth() === $d.getMonth() &&
+        d.getFullYear() === $d.getFullYear()
+    );
+  };
+
+  const StyledDateCalendar = styled(DateCalendar)`
+    && .Mui-selected {
+      background-color: ${restaurantContext?.restaurantSettings
+        ?.secondColor}; /* Remplacez par votre couleur souhaitée */
+    }
+  `;
 
   return (
     <div
@@ -114,6 +140,12 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
         </FormControl>
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label">Date</span>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
+            <StyledDateCalendar
+              disablePast
+              shouldDisableDate={shouldDisableDate}
+            />
+          </LocalizationProvider>
         </FormControl>
       </div>
     </div>
