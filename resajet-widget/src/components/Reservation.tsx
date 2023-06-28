@@ -95,7 +95,7 @@ export default function Reservation({
         <span className="resajet-label">Espace</span>
         <Select
           displayEmpty
-          name="space"
+          name="area"
           onChange={handleChange}
           value={formulaire?.area}
         >
