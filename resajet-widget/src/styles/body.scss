@@ -1,0 +1,58 @@
+.resajet-body {
+  top: 0;
+  padding: 1.7rem;
+  background-color: #dbe0e0;
+
+  &-stepper {
+    padding-bottom: 1.7rem;
+  }
+
+  &-container {
+    padding-bottom: 2.2rem !important;
+    &:last-child {
+      padding-bottom: inherit !important;
+    }
+  }
+
+  &-button-hour {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    border: solid 2px;
+    padding: 3%;
+    padding-left: 15%;
+    padding-right: 15%;
+    border-radius: 14px;
+    cursor: pointer;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  .MuiFormControl-root,
+  .MuiFormControl {
+    width: 100%;
+  }
+
+  .MuiDateCalendar-root {
+    width: 100% !important;
+    max-height: inherit;
+    margin-bottom: -10%;
+  }
+
+  .MuiMonthCalendar-root {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .MuiPickersCalendarHeader-root {
+    margin-top: inherit;
+    padding-left: 2.5%;
+    padding-right: inherit;
+  }
+
+  .MuiPickersCalendarHeader-label {
+    text-transform: capitalize;
+  }
+}
