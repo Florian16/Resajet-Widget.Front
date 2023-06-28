@@ -58,7 +58,7 @@ export default function Reservation({
 
   const StyledDateCalendar = styled(DateCalendar)`
     && .Mui-selected {
-      background-color: ${restaurantContext?.restaurantSettings?.secondColor};
+      background-color: ${restaurantContext?.restaurantSettings?.mainColor};
     }
   `;
 
@@ -164,7 +164,7 @@ export default function Reservation({
                     style={{
                       borderColor:
                         formulaire?.timeSlotId === timeSlot.id
-                          ? restaurantContext.restaurantSettings?.secondColor
+                          ? restaurantContext.restaurantSettings?.mainColor
                           : "black",
                     }}
                     onClick={() =>

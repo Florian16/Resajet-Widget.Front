@@ -58,8 +58,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
       ];
 
       setRestaurantSettings({
-        secondColor: "#EBC80A",
-        mainColor: "#DBE0E0",
+        mainColor: "#EBC80A",
         restoreOptions,
         maximumCovers: 6,
         disabledDates: [

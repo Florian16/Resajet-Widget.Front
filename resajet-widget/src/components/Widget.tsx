@@ -1,4 +1,4 @@
-import { Stepper, Step, StepLabel } from "@mui/material";
+import { Stepper, Step, StepLabel, Grid, Button } from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
@@ -11,6 +11,9 @@ import StepConnector, {
 import { StepIconProps } from "@mui/material/StepIcon";
 import Check from "@mui/icons-material/Check";
 import Information from "./Information";
+import ChevronLeft from "@mui/icons-material/ChevronLeft";
+import ChevronRight from "@mui/icons-material/ChevronRight";
+import CheckIcon from "@mui/icons-material/Check";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -44,40 +47,17 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
     if (isOpen) setActiveStep(0);
   }, [isOpen, setFormulaire]);
 
-  const QontoConnector = styled(StepConnector)(() => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-      top: 10,
-      left: "calc(-50% + 16px)",
-      right: "calc(50% + 16px)",
-    },
-    [`&.${stepConnectorClasses.active}`]: {
-      [`& .${stepConnectorClasses.line}`]: {
-        borderColor: restaurantContext.restaurantSettings?.secondColor,
-      },
-    },
-    [`&.${stepConnectorClasses.completed}`]: {
-      [`& .${stepConnectorClasses.line}`]: {
-        borderColor: restaurantContext.restaurantSettings?.secondColor,
-      },
-    },
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#8a8a8a",
-      borderTopWidth: 3,
-      borderRadius: 1,
-    },
-  }));
-
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     ({ ownerState }) => ({
-      color: restaurantContext.restaurantSettings?.secondColor,
+      color: restaurantContext.restaurantSettings?.mainColor,
       display: "flex",
       height: 22,
       alignItems: "center",
       ...(ownerState.active && {
-        color: restaurantContext.restaurantSettings?.secondColor,
+        color: restaurantContext.restaurantSettings?.mainColor,
       }),
       "& .QontoStepIcon-completedIcon": {
-        color: restaurantContext.restaurantSettings?.secondColor,
+        color: restaurantContext.restaurantSettings?.mainColor,
         zIndex: 1,
         fontSize: 18,
       },
@@ -113,42 +93,72 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
       <div
         className="resajet-header"
         style={{
-          backgroundColor: restaurantContext.restaurantSettings?.secondColor,
+          backgroundColor: restaurantContext.restaurantSettings?.mainColor,
         }}
       >
         <span>Réserver maintenant</span>
       </div>
-      <div
-        className="resajet-body"
-        style={{
-          background: restaurantContext.restaurantSettings?.mainColor,
-        }}
-      >
+      <div className="resajet-body">
         <Stepper
           activeStep={activeStep}
           alternativeLabel
           className="resajet-body-stepper"
-          connector={<QontoConnector />}
         >
-          {steps.map((step) => (
-            <Step>
-              <StepLabel StepIconComponent={QontoStepIcon}>{step}</StepLabel>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
-
-        {activeStep === 0 && (
-          <Reservation
-            handleChange={handleChange}
-            handleCustomChange={handleCustomChange}
-            restaurantContext={restaurantContext}
-            formulaire={formulaire}
-            onChangeStepper={(activeStep: number) => setActiveStep(activeStep)}
-          />
-        )}
-        {activeStep === 1 && (
-          <Information formulaire={formulaire} handleChange={handleChange} />
-        )}
+        <div>
+          {activeStep === 0 && (
+            <Reservation
+              handleChange={handleChange}
+              handleCustomChange={handleCustomChange}
+              restaurantContext={restaurantContext}
+              formulaire={formulaire}
+              onChangeStepper={(activeStep: number) =>
+                setActiveStep(activeStep)
+              }
+            />
+          )}
+          {activeStep === 1 && (
+            <Information formulaire={formulaire} handleChange={handleChange} />
+          )}
+        </div>
+      </div>
+      <div className="resajet-footer">
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <Button
+              startIcon={<ChevronLeft />}
+              disabled={activeStep === 0}
+              onClick={() => setActiveStep(activeStep - 1)}
+              style={{ color: "black" }}
+            >
+              Retour
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              endIcon={
+                activeStep === steps.length - 1 ? (
+                  <CheckIcon />
+                ) : (
+                  <ChevronRight />
+                )
+              }
+              onClick={() =>
+                activeStep === steps.length - 1
+                  ? alert("Fini")
+                  : setActiveStep(activeStep + 1)
+              }
+              style={{ color: "black" }}
+            >
+              {activeStep === steps.length - 1 ? "Terminer" : "Suivant"}{" "}
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

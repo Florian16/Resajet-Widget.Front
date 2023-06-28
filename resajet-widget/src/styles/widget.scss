@@ -42,8 +42,7 @@
 
 .resajet-body {
   padding: 1.7rem;
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
+  background-color: #dbe0e0;
 
   &-stepper {
     padding-bottom: 1.7rem;
@@ -51,6 +50,9 @@
 
   &-container {
     padding-bottom: 2.2rem !important;
+    &:last-child {
+      padding-bottom: inherit !important;
+    }
   }
 
   &-button-hour {
@@ -95,6 +97,21 @@
   .MuiPickersCalendarHeader-label {
     text-transform: capitalize;
   }
+}
+
+.resajet-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #c1c8c8;
+  font-size: 1.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
 }
 
 .resajet-label {
