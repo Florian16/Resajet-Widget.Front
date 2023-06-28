@@ -1,3 +1,4 @@
+import { Area } from "./area";
 import { TimeSlot } from "./timeSlot";
 import { TypeReservation } from "./typeReservation";
 
@@ -9,4 +10,5 @@ export interface RestaurantSetting {
   maximumCovers: number;
   disabledDates: Date[];
   timeSlots: TimeSlot[];
+  areas: Area[];
 }

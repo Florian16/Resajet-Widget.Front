@@ -1,32 +1,24 @@
-import { Select, FormControl, MenuItem, Slider, Grid } from "@mui/material";
+import { Stepper, Step, StepLabel } from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "dayjs/locale/fr";
+import Reservation from "./Reservation";
+import { FormulaireReservation } from "../interfaces/FormulaireReservation";
 import { styled } from "@mui/material/styles";
-import dayjs, { Dayjs } from "dayjs";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
+import { StepIconProps } from "@mui/material/StepIcon";
+import Check from "@mui/icons-material/Check";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
   isOpen: boolean;
 };
 
-type FormulaireReservation = {
-  restoreOption: string;
-  covers: number;
-  timeSlotId: string;
-  date: Dayjs | null;
-};
-
-type MarkSlider = {
-  value: number;
-  label: string;
-};
-
 const formulaireInitial = {
   restoreOption: "",
+  area: "",
   covers: 0,
   timeSlotId: "",
   date: null,
@@ -37,49 +29,72 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
     useFormulaire<FormulaireReservation>({
       ...formulaireInitial,
     });
-  const [marks, setMarks] = useState<MarkSlider[]>();
+  const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
+    if (isOpen) setActiveStep(0);
   }, [isOpen, setFormulaire]);
 
-  useEffect(() => {
-    const customMarks: MarkSlider[] = [];
+  const QontoConnector = styled(StepConnector)(({ theme }) => ({
+    [`&.${stepConnectorClasses.alternativeLabel}`]: {
+      top: 10,
+      left: "calc(-50% + 16px)",
+      right: "calc(50% + 16px)",
+    },
+    [`&.${stepConnectorClasses.active}`]: {
+      [`& .${stepConnectorClasses.line}`]: {
+        borderColor: restaurantContext.restaurantSettings?.secondColor,
+      },
+    },
+    [`&.${stepConnectorClasses.completed}`]: {
+      [`& .${stepConnectorClasses.line}`]: {
+        borderColor: restaurantContext.restaurantSettings?.secondColor,
+      },
+    },
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: "#8a8a8a",
+      borderTopWidth: 3,
+      borderRadius: 1,
+    },
+  }));
 
-    if (restaurantContext?.restaurantSettings?.maximumCovers) {
-      for (
-        let i = 1;
-        i <= restaurantContext?.restaurantSettings?.maximumCovers;
-        i++
-      ) {
-        customMarks.push({ value: i, label: i.toString() });
-      }
-    }
+  const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
+    ({ theme, ownerState }) => ({
+      color: restaurantContext.restaurantSettings?.secondColor,
+      display: "flex",
+      height: 22,
+      alignItems: "center",
+      ...(ownerState.active && {
+        color: restaurantContext.restaurantSettings?.secondColor,
+      }),
+      "& .QontoStepIcon-completedIcon": {
+        color: restaurantContext.restaurantSettings?.secondColor,
+        zIndex: 1,
+        fontSize: 18,
+      },
+      "& .QontoStepIcon-circle": {
+        width: 8,
+        height: 8,
+        borderRadius: "50%",
+        backgroundColor: "currentColor",
+      },
+    })
+  );
 
-    setMarks(customMarks);
+  function QontoStepIcon(props: StepIconProps) {
+    const { active, completed, className } = props;
 
-    // Faites quelque chose avec la variable customMarks si nécessaire
-  }, [restaurantContext?.restaurantSettings?.maximumCovers]);
-
-  const shouldDisableDate = (date: any) => {
-    const { $d } = date;
-    if (restaurantContext?.restaurantSettings) {
-      return restaurantContext?.restaurantSettings?.disabledDates.some(
-        (d) =>
-          d.getDate() === $d.getDate() &&
-          d.getMonth() === $d.getMonth() &&
-          d.getFullYear() === $d.getFullYear()
-      );
-    }
-
-    return false;
-  };
-
-  const StyledDateCalendar = styled(DateCalendar)`
-    && .Mui-selected {
-      background-color: ${restaurantContext?.restaurantSettings?.secondColor};
-    }
-  `;
+    return (
+      <QontoStepIconRoot ownerState={{ active }} className={className}>
+        {completed ? (
+          <Check className="QontoStepIcon-completedIcon" />
+        ) : (
+          <div className="QontoStepIcon-circle" />
+        )}
+      </QontoStepIconRoot>
+    );
+  }
 
   return (
     <div
@@ -101,112 +116,31 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
           background: restaurantContext.restaurantSettings?.mainColor,
         }}
       >
-        <FormControl variant="standard" className="resajet-body-container">
-          <span className="resajet-label">Option de restauration</span>
-          <Select
-            displayEmpty
-            name="restoreOption"
-            onChange={handleChange}
-            value={formulaire?.restoreOption}
-            renderValue={(selected) => {
-              if (selected === "") {
-                return <em>Veuillez choisir une option de restauration</em>;
-              }
-              const restoreOption =
-                restaurantContext.restaurantSettings?.restoreOptions?.find(
-                  (tr) => tr.id === selected
-                );
-              return restoreOption ? restoreOption.name : "";
-            }}
-          >
-            {restaurantContext.restaurantSettings?.restoreOptions?.map(
-              (restoreOption) => (
-                <MenuItem key={restoreOption.id} value={restoreOption.id}>
-                  {restoreOption.name}
-                </MenuItem>
-              )
-            )}
-          </Select>
-        </FormControl>
-        <FormControl className="resajet-body-container" variant="standard">
-          <span className="resajet-label">Nombre de personnes</span>
-          <Slider
-            disabled={formulaire?.restoreOption === ""}
-            value={formulaire?.covers}
-            min={1}
-            max={restaurantContext.restaurantSettings?.maximumCovers}
-            marks={marks}
-            name="covers"
-            onChange={handleChange}
-            style={{ color: "black" }}
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
+          className="resajet-body-stepper"
+          connector={<QontoConnector />}
+        >
+          <Step>
+            <StepLabel StepIconComponent={QontoStepIcon}>Réservation</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel StepIconComponent={QontoStepIcon}>Données</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel StepIconComponent={QontoStepIcon}>Validation</StepLabel>
+          </Step>
+        </Stepper>
+        {activeStep === 0 && (
+          <Reservation
+            handleChange={handleChange}
+            handleCustomChange={handleCustomChange}
+            restaurantContext={restaurantContext}
+            formulaire={formulaire}
+            onChangeStepper={(activeStep: number) => setActiveStep(activeStep)}
           />
-        </FormControl>
-        <FormControl className="resajet-body-container" variant="standard">
-          <span className="resajet-label">Date</span>
-          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
-            <StyledDateCalendar
-              disablePast
-              shouldDisableDate={shouldDisableDate}
-              views={["month", "day"]}
-              value={formulaire?.date}
-              onChange={(value: any) => handleCustomChange("date", value)}
-              disabled={
-                !(formulaire?.restoreOption !== "" && formulaire?.covers > 0)
-              }
-            />
-          </LocalizationProvider>
-        </FormControl>
-        {formulaire?.restoreOption ? (
-          <FormControl className="resajet-body-container" variant="standard">
-            <span className="resajet-label-hour">Heures</span>
-            <Grid container>
-              {restaurantContext?.restaurantSettings?.timeSlots
-                .filter((ts) => ts.mealPeriodId === formulaire?.restoreOption)
-                .map((timeSlot) => (
-                  <Grid
-                    item
-                    md={3}
-                    xs={4}
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    key={timeSlot.id}
-                  >
-                    <div
-                      className={`resajet-body-button-hour${
-                        !(
-                          formulaire?.restoreOption !== "" &&
-                          formulaire?.covers > 0 &&
-                          formulaire?.date !== null
-                        )
-                          ? " disabled"
-                          : ""
-                      }`}
-                      style={{
-                        borderColor:
-                          formulaire?.timeSlotId === timeSlot.id
-                            ? restaurantContext.restaurantSettings?.secondColor
-                            : "black",
-                      }}
-                      onClick={() =>
-                        formulaire?.restoreOption !== "" &&
-                        formulaire?.covers > 0 &&
-                        formulaire?.date !== null &&
-                        handleCustomChange(
-                          "timeSlotId",
-                          timeSlot.id === formulaire?.timeSlotId
-                            ? ""
-                            : timeSlot.id
-                        )
-                      }
-                    >
-                      {timeSlot.hour.replace(/:00$/, "")}
-                    </div>
-                  </Grid>
-                ))}
-            </Grid>
-          </FormControl>
-        ) : null}
+        )}
       </div>
     </div>
   );

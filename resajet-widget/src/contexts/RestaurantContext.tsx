@@ -46,6 +46,17 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
         },
       ];
 
+      const areas = [
+        {
+          id: generateGUID(),
+          name: "Intérieur",
+        },
+        {
+          id: generateGUID(),
+          name: "Extérieur",
+        },
+      ];
+
       setRestaurantSettings({
         secondColor: "#EBC80A",
         mainColor: "#DBE0E0",
@@ -177,6 +188,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
             mealPeriodId: restoreOptions[2].id,
           },
         ],
+        areas,
       });
     };
 
