@@ -1,10 +1,11 @@
+import { Dayjs } from "dayjs";
 import { useState } from "react";
 
 export type useFormulaireResult<T> = {
   formulaire: T;
   handleChange: (e: any) => void;
   setFormulaire: (value: T) => void;
-  handleCustomChange: (name: string, value: string) => void;
+  handleCustomChange: (name: string, value: any) => void;
 };
 
 export function useFormulaire<T = any>(
@@ -12,7 +13,7 @@ export function useFormulaire<T = any>(
 ): useFormulaireResult<T> {
   const [formulaire, setFormulaire] = useState<T>(initialState);
 
-  function update(name: string, value: string | number | boolean) {
+  function update(name: string, value: string | number | boolean | Dayjs) {
     setFormulaire({ ...formulaire, [name]: value });
   }
 
@@ -21,10 +22,7 @@ export function useFormulaire<T = any>(
     update(name, value);
   };
 
-  const handleCustomChange = (name: string, value: string) => {
-    console.log(name);
-    console.log(value);
-
+  const handleCustomChange = (name: string, value: any) => {
     update(name, value);
   };
 

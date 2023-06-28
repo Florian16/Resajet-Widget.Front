@@ -1,12 +1,11 @@
 .resajet-widget {
   overflow-y: auto;
   position: fixed;
-  bottom: 10%;
-  right: 6%;
-  max-height: calc(100% - 25%);
-  height: calc(100% - 25%);
+  bottom: 8.5%;
+  right: 5.5%;
+  max-height: 75%;
   width: 100%;
-  max-width: calc(100% - 75%);
+  max-width: 25%;
   transform: translateY(100%);
   transition: opacity 0.3s, transform 0.6s;
   opacity: 0;
@@ -42,8 +41,7 @@
 }
 
 .resajet-body {
-  padding: 1.8rem;
-  padding-bottom: 0rem;
+  padding: 1.7rem;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
 
@@ -61,6 +59,11 @@
     padding-right: 15%;
     border-radius: 14px;
     cursor: pointer;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   .MuiFormControl-root,

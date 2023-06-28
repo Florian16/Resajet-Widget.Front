@@ -1,11 +1,4 @@
-import {
-  Select,
-  FormControl,
-  MenuItem,
-  Slider,
-  Grid,
-  Button,
-} from "@mui/material";
+import { Select, FormControl, MenuItem, Slider, Grid } from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
@@ -13,6 +6,7 @@ import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
 import { styled } from "@mui/material/styles";
+import dayjs, { Dayjs } from "dayjs";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -23,6 +17,7 @@ type FormulaireReservation = {
   restoreOption: string;
   covers: number;
   timeSlotId: string;
+  date: Dayjs | null;
 };
 
 type MarkSlider = {
@@ -34,6 +29,7 @@ const formulaireInitial = {
   restoreOption: "",
   covers: 0,
   timeSlotId: "",
+  date: null,
 };
 
 export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
@@ -152,6 +148,11 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
               disablePast
               shouldDisableDate={shouldDisableDate}
               views={["month", "day"]}
+              value={formulaire?.date}
+              onChange={(value: any) => handleCustomChange("date", value)}
+              disabled={
+                !(formulaire?.restoreOption !== "" && formulaire?.covers > 0)
+              }
             />
           </LocalizationProvider>
         </FormControl>
@@ -172,7 +173,15 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
                     key={timeSlot.id}
                   >
                     <div
-                      className="resajet-body-button-hour"
+                      className={`resajet-body-button-hour${
+                        !(
+                          formulaire?.restoreOption !== "" &&
+                          formulaire?.covers > 0 &&
+                          formulaire?.date !== null
+                        )
+                          ? " disabled"
+                          : ""
+                      }`}
                       style={{
                         borderColor:
                           formulaire?.timeSlotId === timeSlot.id
@@ -180,6 +189,9 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
                             : "black",
                       }}
                       onClick={() =>
+                        formulaire?.restoreOption !== "" &&
+                        formulaire?.covers > 0 &&
+                        formulaire?.date !== null &&
                         handleCustomChange(
                           "timeSlotId",
                           timeSlot.id === formulaire?.timeSlotId
