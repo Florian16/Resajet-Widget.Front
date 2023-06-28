@@ -137,7 +137,7 @@ export default function Reservation({
       </FormControl>
       {formulaire?.restoreOption ? (
         <FormControl className="resajet-body-container" variant="standard">
-          <span className="resajet-label-hour">Heures</span>
+          <span className="resajet-label hour">Heures</span>
           <Grid container>
             {restaurantContext?.restaurantSettings?.timeSlots
               .filter((ts) => ts.mealPeriodId === formulaire?.restoreOption)

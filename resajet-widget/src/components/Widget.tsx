@@ -10,6 +10,7 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
 import Check from "@mui/icons-material/Check";
+import Information from "./Information";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -22,7 +23,14 @@ const formulaireInitial = {
   covers: 0,
   timeSlotId: "",
   date: null,
+  firstname: "",
+  lastname: "",
+  phone: "",
+  mail: "",
+  comment: "",
 };
+
+const steps = ["Réservation", "Données", "Validation"];
 
 export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
   const { formulaire, handleChange, setFormulaire, handleCustomChange } =
@@ -36,7 +44,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
     if (isOpen) setActiveStep(0);
   }, [isOpen, setFormulaire]);
 
-  const QontoConnector = styled(StepConnector)(({ theme }) => ({
+  const QontoConnector = styled(StepConnector)(() => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
       top: 10,
       left: "calc(-50% + 16px)",
@@ -60,7 +68,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
   }));
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
-    ({ theme, ownerState }) => ({
+    ({ ownerState }) => ({
       color: restaurantContext.restaurantSettings?.secondColor,
       display: "flex",
       height: 22,
@@ -122,16 +130,13 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
           className="resajet-body-stepper"
           connector={<QontoConnector />}
         >
-          <Step>
-            <StepLabel StepIconComponent={QontoStepIcon}>Réservation</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel StepIconComponent={QontoStepIcon}>Données</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel StepIconComponent={QontoStepIcon}>Validation</StepLabel>
-          </Step>
+          {steps.map((step) => (
+            <Step>
+              <StepLabel StepIconComponent={QontoStepIcon}>{step}</StepLabel>
+            </Step>
+          ))}
         </Stepper>
+
         {activeStep === 0 && (
           <Reservation
             handleChange={handleChange}
@@ -140,6 +145,9 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
             formulaire={formulaire}
             onChangeStepper={(activeStep: number) => setActiveStep(activeStep)}
           />
+        )}
+        {activeStep === 1 && (
+          <Information formulaire={formulaire} handleChange={handleChange} />
         )}
       </div>
     </div>

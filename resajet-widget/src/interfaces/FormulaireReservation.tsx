@@ -5,4 +5,9 @@ export interface FormulaireReservation {
   covers: number;
   timeSlotId: string;
   date: Dayjs | null;
+  lastname: string;
+  firstname: string;
+  mail: string;
+  phone?: string;
+  comment?: string;
 }

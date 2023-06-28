@@ -104,8 +104,12 @@
   letter-spacing: 0.00938rem;
   margin-bottom: 0.4rem;
 
-  &-hour {
+  &.hour {
     margin-bottom: 0.6rem;
+  }
+
+  &.information {
+    padding-bottom: 1.6rem;
   }
 }
 
