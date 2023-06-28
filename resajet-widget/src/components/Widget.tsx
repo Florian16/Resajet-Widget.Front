@@ -1,19 +1,14 @@
-import { Stepper, Step, StepLabel, Grid, Button } from "@mui/material";
+import { Stepper, Step, StepLabel } from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
 import Reservation from "./Reservation";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
 import { styled } from "@mui/material/styles";
-import StepConnector, {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
 import Check from "@mui/icons-material/Check";
 import Information from "./Information";
-import ChevronLeft from "@mui/icons-material/ChevronLeft";
-import ChevronRight from "@mui/icons-material/ChevronRight";
-import CheckIcon from "@mui/icons-material/Check";
+import Footer from "./Footer";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -70,7 +65,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
     })
   );
 
-  function QontoStepIcon(props: StepIconProps) {
+  const QontoStepIcon = (props: StepIconProps) => {
     const { active, completed, className } = props;
 
     return (
@@ -82,7 +77,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
         )}
       </QontoStepIconRoot>
     );
-  }
+  };
 
   return (
     <div
@@ -117,9 +112,6 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
               handleCustomChange={handleCustomChange}
               restaurantContext={restaurantContext}
               formulaire={formulaire}
-              onChangeStepper={(activeStep: number) =>
-                setActiveStep(activeStep)
-              }
             />
           )}
           {activeStep === 1 && (
@@ -127,39 +119,12 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
           )}
         </div>
       </div>
-      <div className="resajet-footer">
-        <Grid container justifyContent="space-between">
-          <Grid item>
-            <Button
-              startIcon={<ChevronLeft />}
-              disabled={activeStep === 0}
-              onClick={() => setActiveStep(activeStep - 1)}
-              style={{ color: "black" }}
-            >
-              Retour
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              endIcon={
-                activeStep === steps.length - 1 ? (
-                  <CheckIcon />
-                ) : (
-                  <ChevronRight />
-                )
-              }
-              onClick={() =>
-                activeStep === steps.length - 1
-                  ? alert("Fini")
-                  : setActiveStep(activeStep + 1)
-              }
-              style={{ color: "black" }}
-            >
-              {activeStep === steps.length - 1 ? "Terminer" : "Suivant"}{" "}
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
+      <Footer
+        activeStep={activeStep}
+        formulaire={formulaire}
+        setActiveStep={(as) => setActiveStep(as)}
+        steps={steps}
+      />
     </div>
   );
 }

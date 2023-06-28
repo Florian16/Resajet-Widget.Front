@@ -11,7 +11,6 @@ import { MarkSlider } from "../interfaces/MarkSlider";
 type ReservationProps = {
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
-  onChangeStepper: (activeStep: number) => void;
   restaurantContext: RestaurantContextProps;
   formulaire: FormulaireReservation;
 };
@@ -21,7 +20,6 @@ export default function Reservation({
   formulaire,
   restaurantContext,
   handleCustomChange,
-  onChangeStepper,
 }: ReservationProps) {
   const [marks, setMarks] = useState<MarkSlider[]>();
   useEffect(() => {
@@ -171,13 +169,12 @@ export default function Reservation({
                       formulaire?.restoreOption !== "" &&
                       formulaire?.covers > 0 &&
                       formulaire?.date !== null
-                        ? (handleCustomChange(
+                        ? handleCustomChange(
                             "timeSlotId",
                             timeSlot.id === formulaire?.timeSlotId
                               ? ""
                               : timeSlot.id
-                          ),
-                          onChangeStepper(1))
+                          )
                         : null
                     }
                   >
