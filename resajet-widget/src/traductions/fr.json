@@ -1,0 +1,31 @@
+{
+  "header": {
+    "titre": "Réserver maintenant"
+  },
+  "steps": {
+    "reservation": "Réservation",
+    "informations": "Informations",
+    "recapitulatif": "Récapitulatif"
+  },
+  "reservation": {
+    "optionRestauration": "Option de restauration",
+    "veuillezChoisirOptionRestauration": "Veuillez choisir une option de restauration",
+    "espace": "Espace",
+    "pasDePreference": "Pas de préférence",
+    "nombreDePersonnes": "Nombre de personnes",
+    "date": "Date",
+    "heures": "Heures"
+  },
+  "information": {
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "email": "E-mail",
+    "telephone": "Téléphone",
+    "commentaire": "Commentaire"
+  },
+  "footer": {
+    "retour": "Retour",
+    "valider": "Valider",
+    "suivant": "Suivant"
+  }
+}

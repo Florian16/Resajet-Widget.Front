@@ -1,0 +1,31 @@
+{
+  "header": {
+    "titre": "Reserveer nu"
+  },
+  "steps": {
+    "reservation": "Reservatie",
+    "informations": "Informatie",
+    "recapitulatif": "Overzicht"
+  },
+  "reservation": {
+    "optionRestauration": "Hersteloptie",
+    "veuillezChoisirOptionRestauration": "Kies een hersteloptie",
+    "espace": "Ruimte",
+    "pasDePreference": "Geen voorkeur",
+    "nombreDePersonnes": "Aantal personen",
+    "date": "Datum",
+    "heures": "Uren"
+  },
+  "information": {
+    "nom": "Naam",
+    "prenom": "Voornaam",
+    "email": "E-mail",
+    "telephone": "Telefoon",
+    "commentaire": "Commentaar"
+  },
+  "footer": {
+    "retour": "Terug",
+    "valider": "Bevestigen",
+    "suivant": "Volgend"
+  }
+}

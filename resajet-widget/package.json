@@ -16,9 +16,12 @@
     "@mui/material": "^5.13.4",
     "@mui/x-date-pickers": "^6.9.0",
     "dayjs": "^1.11.8",
+    "flag-icon-css": "^4.1.7",
+    "i18next": "^23.2.6",
     "postcss-font-magician": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.0.1",
     "react-phone-input-2": "^2.15.1",
     "rollup-plugin-postcss": "^4.0.2"
   },

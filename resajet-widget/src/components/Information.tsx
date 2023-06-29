@@ -2,11 +2,13 @@ import { Box, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
 import PhoneInput from "react-phone-input-2";
+import { TFunction } from "i18next";
 
 type InformationProps = {
   formulaire: FormulaireReservation;
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
+  t: TFunction;
 };
 
 const PersonalTextField = styled(TextField)`
@@ -21,6 +23,7 @@ export default function Information({
   formulaire,
   handleChange,
   handleCustomChange,
+  t,
 }: InformationProps) {
   const generateAutoCompleteValue = () => {
     return Math.random().toString(36).substring(2);
@@ -30,7 +33,7 @@ export default function Information({
     <Box component="form">
       <Grid container spacing={2} alignItems={"center"}>
         <Grid item xs={3}>
-          <span className="resajet-label">Nom</span>
+          <span className="resajet-label">{t("information.nom")}</span>
         </Grid>
         <Grid item xs={9}>
           <PersonalTextField
@@ -43,7 +46,7 @@ export default function Information({
           />
         </Grid>
         <Grid item xs={3}>
-          <span className="resajet-label">Prénom</span>
+          <span className="resajet-label">{t("information.prenom")}</span>
         </Grid>
         <Grid item xs={9}>
           <PersonalTextField
@@ -56,7 +59,7 @@ export default function Information({
           />
         </Grid>
         <Grid item xs={3}>
-          <span className="resajet-label">E-mail</span>
+          <span className="resajet-label">{t("information.email")}</span>
         </Grid>
         <Grid item xs={9}>
           <PersonalTextField
@@ -70,7 +73,7 @@ export default function Information({
           />
         </Grid>
         <Grid item xs={3}>
-          <span className="resajet-label">Téléphone</span>
+          <span className="resajet-label">{t("information.telephone")}</span>
         </Grid>
         <Grid item xs={9}>
           <PhoneInput
@@ -81,7 +84,7 @@ export default function Information({
           />
         </Grid>
         <Grid item xs={12}>
-          <span className="resajet-label">Commentaire</span>
+          <span className="resajet-label">{t("information.commentaire")}</span>
           <PersonalTextField
             rows={5}
             multiline

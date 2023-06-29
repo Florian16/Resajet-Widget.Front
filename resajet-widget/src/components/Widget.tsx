@@ -10,6 +10,7 @@ import Check from "@mui/icons-material/Check";
 import Information from "./Information";
 import Footer from "./Footer";
 import Header from "./Header";
+import { useTranslation } from "react-i18next";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -29,18 +30,22 @@ const formulaireInitial = {
   comment: "",
 };
 
-const steps = ["Réservation", "Données", "Récapitulatif"];
-
 export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
+  const { t } = useTranslation();
   const { formulaire, handleChange, setFormulaire, handleCustomChange } =
     useFormulaire<FormulaireReservation>({
       ...formulaireInitial,
     });
   const [activeStep, setActiveStep] = useState<number>(0);
+  const steps = [
+    t("steps.reservation"),
+    t("steps.informations"),
+    t("steps.recapitulatif"),
+  ];
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
-    if (isOpen) setActiveStep(1);
+    if (isOpen) setActiveStep(0);
   }, [isOpen, setFormulaire]);
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
@@ -106,6 +111,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
               handleCustomChange={handleCustomChange}
               restaurantContext={restaurantContext}
               formulaire={formulaire}
+              t={t}
             />
           )}
           {activeStep === 1 && (
@@ -113,6 +119,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
               formulaire={formulaire}
               handleChange={handleChange}
               handleCustomChange={handleCustomChange}
+              t={t}
             />
           )}
         </div>
@@ -122,6 +129,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
         formulaire={formulaire}
         setActiveStep={(as) => setActiveStep(as)}
         steps={steps}
+        t={t}
       />
     </div>
   );

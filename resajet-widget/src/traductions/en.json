@@ -1,0 +1,31 @@
+{
+  "header": {
+    "titre": "Book now"
+  },
+  "steps": {
+    "reservation": "Booking",
+    "informations": "Information",
+    "recapitulatif": "Overview"
+  },
+  "reservation": {
+    "optionRestauration": "Restore option",
+    "veuillezChoisirOptionRestauration": "Please choose a restore option",
+    "espace": "Area",
+    "pasDePreference": "No preference",
+    "nombreDePersonnes": "Number of people",
+    "date": "Date",
+    "heures": "Hours"
+  },
+  "information": {
+    "nom": "Lastname",
+    "prenom": "Firstname",
+    "email": "Email",
+    "telephone": "Phone",
+    "commentaire": "Comment"
+  },
+  "footer": {
+    "retour": "Back",
+    "valider": "Confirm",
+    "suivant": "Next"
+  }
+}

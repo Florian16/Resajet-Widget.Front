@@ -3,12 +3,14 @@ import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import CheckIcon from "@mui/icons-material/Check";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import { TFunction } from "i18next";
 
 type FooterProps = {
   activeStep: number;
   formulaire: FormulaireReservation;
   setActiveStep: (as: number) => void;
   steps: string[];
+  t: TFunction;
 };
 
 export default function Footer({
@@ -16,6 +18,7 @@ export default function Footer({
   formulaire,
   setActiveStep,
   steps,
+  t,
 }: FooterProps) {
   const nextIsDisabled = () => {
     if (activeStep === 0) {
@@ -40,7 +43,7 @@ export default function Footer({
                 color: "black",
               }}
             >
-              Retour
+              {t("footer.retour")}
             </Button>
           </Grid>
         )}
@@ -61,7 +64,9 @@ export default function Footer({
             }}
             disableRipple={nextIsDisabled()}
           >
-            {activeStep === steps.length - 1 ? "Valider" : "Suivant"}{" "}
+            {activeStep === steps.length - 1
+              ? `${t("footer.valider")}`
+              : `${t("footer.suivant")}`}{" "}
           </Button>
         </Grid>
       </Grid>

@@ -7,12 +7,14 @@ import { styled } from "@mui/material/styles";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
 import { MarkSlider } from "../interfaces/MarkSlider";
+import { TFunction } from "i18next";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
   restaurantContext: RestaurantContextProps;
   formulaire: FormulaireReservation;
+  t: TFunction;
 };
 
 export default function Reservation({
@@ -20,6 +22,7 @@ export default function Reservation({
   formulaire,
   restaurantContext,
   handleCustomChange,
+  t,
 }: ReservationProps) {
   const [marks, setMarks] = useState<MarkSlider[]>();
   useEffect(() => {
@@ -63,7 +66,9 @@ export default function Reservation({
   return (
     <div>
       <FormControl variant="standard" className="resajet-body-container">
-        <span className="resajet-label">Option de restauration</span>
+        <span className="resajet-label">
+          {t("reservation.optionRestauration")}
+        </span>
         <Select
           displayEmpty
           name="restoreOption"
@@ -71,7 +76,9 @@ export default function Reservation({
           value={formulaire?.restoreOption}
           renderValue={(selected) => {
             if (selected === "") {
-              return <em>Veuillez choisir une option de restauration</em>;
+              return (
+                <em>{t("reservation.veuillezChoisirOptionRestauration")}</em>
+              );
             }
             const restoreOption =
               restaurantContext.restaurantSettings?.restoreOptions?.find(
@@ -90,14 +97,14 @@ export default function Reservation({
         </Select>
       </FormControl>
       <FormControl variant="standard" className="resajet-body-container">
-        <span className="resajet-label">Espace</span>
+        <span className="resajet-label">{t("reservation.espace")}</span>
         <Select
           displayEmpty
           name="area"
           onChange={handleChange}
           value={formulaire?.area}
         >
-          <MenuItem value={""}>Pas de préférence</MenuItem>
+          <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
           {restaurantContext.restaurantSettings?.areas?.map((a) => (
             <MenuItem key={a.id} value={a.id}>
               {a.name}
@@ -106,7 +113,9 @@ export default function Reservation({
         </Select>
       </FormControl>
       <FormControl className="resajet-body-container" variant="standard">
-        <span className="resajet-label">Nombre de personnes</span>
+        <span className="resajet-label">
+          {t("reservation.nombreDePersonnes")}
+        </span>
         <Slider
           disabled={formulaire?.restoreOption === ""}
           value={formulaire?.covers}
@@ -119,7 +128,7 @@ export default function Reservation({
         />
       </FormControl>
       <FormControl className="resajet-body-container" variant="standard">
-        <span className="resajet-label">Date</span>
+        <span className="resajet-label">{t("reservation.date")}</span>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
           <StyledDateCalendar
             disablePast
@@ -135,7 +144,7 @@ export default function Reservation({
       </FormControl>
       {formulaire?.restoreOption ? (
         <FormControl className="resajet-body-container" variant="standard">
-          <span className="resajet-label hour">Heures</span>
+          <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
             {restaurantContext?.restaurantSettings?.timeSlots
               .filter((ts) => ts.mealPeriodId === formulaire?.restoreOption)

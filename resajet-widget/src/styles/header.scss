@@ -8,4 +8,18 @@
   left: 0;
   right: 0;
   z-index: 999;
+
+  &-flag {
+    padding-left: 0px !important;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: 0px;
+  }
+
+  .MuiOutlinedInput-root.Mui-focused {
+    & fieldset {
+      border: 0px;
+    }
+  }
 }
