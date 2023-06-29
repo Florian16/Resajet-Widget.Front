@@ -9,6 +9,7 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import Check from "@mui/icons-material/Check";
 import Information from "./Information";
 import Footer from "./Footer";
+import Header from "./Header";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -85,14 +86,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
         isOpen ? "resajet-widget-open" : "resajet-widget-close"
       }`}
     >
-      <div
-        className="resajet-header"
-        style={{
-          backgroundColor: restaurantContext.restaurantSettings?.mainColor,
-        }}
-      >
-        <span>Réserver maintenant</span>
-      </div>
+      <Header restaurantContext={restaurantContext} />
       <div className="resajet-body">
         <Stepper
           activeStep={activeStep}
