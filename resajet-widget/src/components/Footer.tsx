@@ -31,21 +31,20 @@ export default function Footer({
   return (
     <div className="resajet-footer">
       <Grid container justifyContent="space-between">
-        <Grid item>
-          <Button
-            startIcon={<ChevronLeft />}
-            onClick={() => activeStep !== 0 && setActiveStep(activeStep - 1)}
-            style={{
-              color: "black",
-              cursor: activeStep === 0 ? "not-allowed" : "pointer",
-            }}
-            disableRipple={activeStep === 0}
-            disableElevation={activeStep === 0}
-          >
-            Retour
-          </Button>
-        </Grid>
-        <Grid item>
+        {activeStep !== 0 && (
+          <Grid item>
+            <Button
+              startIcon={<ChevronLeft />}
+              onClick={() => setActiveStep(activeStep - 1)}
+              style={{
+                color: "black",
+              }}
+            >
+              Retour
+            </Button>
+          </Grid>
+        )}
+        <Grid item style={{ marginLeft: "auto" }}>
           <Button
             endIcon={
               activeStep === steps.length - 1 ? <CheckIcon /> : <ChevronRight />

@@ -28,7 +28,7 @@ const formulaireInitial = {
   comment: "",
 };
 
-const steps = ["Réservation", "Données", "Validation"];
+const steps = ["Réservation", "Données", "Récapitulatif"];
 
 export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
   const { formulaire, handleChange, setFormulaire, handleCustomChange } =
@@ -39,7 +39,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
-    if (isOpen) setActiveStep(0);
+    if (isOpen) setActiveStep(1);
   }, [isOpen, setFormulaire]);
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
@@ -115,7 +115,11 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
             />
           )}
           {activeStep === 1 && (
-            <Information formulaire={formulaire} handleChange={handleChange} />
+            <Information
+              formulaire={formulaire}
+              handleChange={handleChange}
+              handleCustomChange={handleCustomChange}
+            />
           )}
         </div>
       </div>

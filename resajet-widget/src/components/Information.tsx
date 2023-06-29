@@ -1,10 +1,12 @@
 import { Box, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import PhoneInput from "react-phone-input-2";
 
 type InformationProps = {
   formulaire: FormulaireReservation;
   handleChange: (e: any) => void;
+  handleCustomChange: (name: string, value: any) => void;
 };
 
 const PersonalTextField = styled(TextField)`
@@ -18,21 +20,19 @@ const PersonalTextField = styled(TextField)`
 export default function Information({
   formulaire,
   handleChange,
+  handleCustomChange,
 }: InformationProps) {
   const generateAutoCompleteValue = () => {
-    return Math.random().toString(36).substring(2); // Générer une valeur aléatoire
+    return Math.random().toString(36).substring(2);
   };
+
   return (
-    <Box component="form" autoComplete="off">
-      <Grid container>
-        <Grid
-          md={6}
-          style={{
-            paddingLeft: "3%",
-            paddingRight: "3%",
-          }}
-        >
+    <Box component="form">
+      <Grid container spacing={2} alignItems={"center"}>
+        <Grid item xs={3}>
           <span className="resajet-label">Nom</span>
+        </Grid>
+        <Grid item xs={9}>
           <PersonalTextField
             onChange={handleChange}
             name="lastname"
@@ -42,15 +42,10 @@ export default function Information({
             autoComplete={generateAutoCompleteValue()}
           />
         </Grid>
-
-        <Grid
-          md={6}
-          style={{
-            paddingLeft: "3%",
-            paddingRight: "3%",
-          }}
-        >
+        <Grid item xs={3}>
           <span className="resajet-label">Prénom</span>
+        </Grid>
+        <Grid item xs={9}>
           <PersonalTextField
             onChange={handleChange}
             name="firstname"
@@ -60,16 +55,10 @@ export default function Information({
             autoComplete={generateAutoCompleteValue()}
           />
         </Grid>
-      </Grid>
-      <Grid container style={{ marginTop: "3%" }}>
-        <Grid
-          md={6}
-          style={{
-            paddingLeft: "3%",
-            paddingRight: "3%",
-          }}
-        >
+        <Grid item xs={3}>
           <span className="resajet-label">E-mail</span>
+        </Grid>
+        <Grid item xs={9}>
           <PersonalTextField
             type="email"
             onChange={handleChange}
@@ -80,33 +69,18 @@ export default function Information({
             autoComplete={generateAutoCompleteValue()}
           />
         </Grid>
-
-        <Grid
-          md={6}
-          style={{
-            paddingLeft: "3%",
-            paddingRight: "3%",
-          }}
-        >
+        <Grid item xs={3}>
           <span className="resajet-label">Téléphone</span>
-          <PersonalTextField
-            onChange={handleChange}
-            name="phone"
+        </Grid>
+        <Grid item xs={9}>
+          <PhoneInput
+            specialLabel={""}
+            country={"be"}
             value={formulaire?.phone}
-            size="small"
-            style={{ marginTop: "3%" }}
-            autoComplete={generateAutoCompleteValue()}
+            onChange={(e) => handleCustomChange("phone", e)}
           />
         </Grid>
-      </Grid>
-      <Grid container style={{ marginTop: "3%" }}>
-        <Grid
-          md={12}
-          style={{
-            paddingLeft: "3%",
-            paddingRight: "3%",
-          }}
-        >
+        <Grid item xs={12}>
           <span className="resajet-label">Commentaire</span>
           <PersonalTextField
             rows={5}
