@@ -46,7 +46,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
-    if (isOpen) setActiveStep(2);
+    if (isOpen) setActiveStep(0);
   }, [isOpen, setFormulaire]);
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
