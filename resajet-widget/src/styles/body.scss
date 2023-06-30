@@ -1,5 +1,4 @@
 .resajet-body {
-  width: 100%;
   padding: 1.5rem;
   background-color: #dbe0e0;
   &-stepper {
@@ -57,5 +56,11 @@
 
   .MuiGrid-root > .MuiGrid-item {
     padding-top: 0 !important;
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+  .resajet-body {
+    width: 100%;
   }
 }
