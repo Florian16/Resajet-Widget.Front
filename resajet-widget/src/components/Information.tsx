@@ -31,11 +31,16 @@ export default function Information({
 
   return (
     <Box component="form">
-      <Grid container spacing={2} alignItems={"center"}>
-        <Grid item xs={3}>
+      <Grid
+        container
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="resajet-information"
+      >
+        <Grid item xs={4}>
           <span className="resajet-label">{t("information.nom")}</span>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} className="resajet-information-input">
           <PersonalTextField
             onChange={handleChange}
             name="lastname"
@@ -45,10 +50,17 @@ export default function Information({
             autoComplete={generateAutoCompleteValue()}
           />
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+      <Grid
+        container
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="resajet-information"
+      >
+        <Grid item xs={4}>
           <span className="resajet-label">{t("information.prenom")}</span>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} className="resajet-information-input">
           <PersonalTextField
             onChange={handleChange}
             name="firstname"
@@ -58,10 +70,17 @@ export default function Information({
             autoComplete={generateAutoCompleteValue()}
           />
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+      <Grid
+        container
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="resajet-information"
+      >
+        <Grid item xs={4}>
           <span className="resajet-label">{t("information.email")}</span>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} className="resajet-information-input">
           <PersonalTextField
             type="email"
             onChange={handleChange}
@@ -72,10 +91,17 @@ export default function Information({
             autoComplete={generateAutoCompleteValue()}
           />
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+      <Grid
+        container
+        alignItems={"center"}
+        justifyContent={"center"}
+        className="resajet-information"
+      >
+        <Grid item xs={4}>
           <span className="resajet-label">{t("information.telephone")}</span>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} className="resajet-information-input">
           <PhoneInput
             specialLabel={""}
             country={"be"}
@@ -83,6 +109,8 @@ export default function Information({
             onChange={(e) => handleCustomChange("phone", e)}
           />
         </Grid>
+      </Grid>
+      <Grid container alignItems={"center"} justifyContent={"center"}>
         <Grid item xs={12}>
           <span className="resajet-label">{t("information.commentaire")}</span>
           <PersonalTextField

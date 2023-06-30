@@ -54,4 +54,8 @@
   .MuiPickersCalendarHeader-label {
     text-transform: capitalize;
   }
+
+  .MuiGrid-root > .MuiGrid-item {
+    padding-top: 0 !important;
+  }
 }
