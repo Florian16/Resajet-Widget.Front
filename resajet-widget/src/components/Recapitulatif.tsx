@@ -1,6 +1,6 @@
 import { TFunction } from "i18next";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { RestaurantContextProps } from "../contexts/RestaurantContext";
 
 type RecapitulatifProps = {
@@ -88,6 +88,7 @@ export default function Recapitulatif({
             item
             xs={6}
             className="resajet-recapitulatif-container-grid-text"
+            style={{ textTransform: "inherit" }}
           >
             <span>
               {formulaire?.covers}{" "}
@@ -109,6 +110,7 @@ export default function Recapitulatif({
             item
             xs={6}
             className="resajet-recapitulatif-container-grid-text"
+            style={formulaire?.area === "" ? { textTransform: "inherit" } : {}}
           >
             <span>
               {formulaire?.area === ""
@@ -130,6 +132,7 @@ export default function Recapitulatif({
               item
               xs={6}
               className="resajet-recapitulatif-container-grid-text"
+              style={{ textTransform: "inherit" }}
             >
               <span>{formulaire?.mail}</span>
             </Grid>

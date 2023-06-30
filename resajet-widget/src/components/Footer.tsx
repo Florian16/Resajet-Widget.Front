@@ -29,6 +29,25 @@ export default function Footer({
         formulaire?.timeSlotId === ""
       );
     }
+    if (activeStep === 1) {
+      return (
+        formulaire?.restoreOption === "" ||
+        formulaire?.covers <= 0 ||
+        formulaire?.date === null ||
+        formulaire?.timeSlotId === "" ||
+        formulaire?.lastname === "" ||
+        formulaire?.firstname === "" ||
+        formulaire?.mail === "" ||
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          formulaire?.mail
+        ) ||
+        formulaire?.phone === "" ||
+        !(
+          formulaire?.phone &&
+          /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phone)
+        )
+      );
+    }
     return false;
   };
   return (
