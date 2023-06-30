@@ -27,5 +27,16 @@
     "retour": "Retour",
     "valider": "Valider",
     "suivant": "Suivant"
+  },
+  "recapitulatif": {
+    "client": "Client",
+    "date": "Date",
+    "heure": "Heure",
+    "nombreDePersonnes": "Nombre de personnes",
+    "email": "E-mail",
+    "telephone": "Téléphone",
+    "personne": "personne",
+    "personnes": "personnes",
+    "espace": "Espace"
   }
 }

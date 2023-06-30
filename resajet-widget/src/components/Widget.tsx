@@ -11,6 +11,7 @@ import Information from "./Information";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useTranslation } from "react-i18next";
+import Recapitulatif from "./Recapitulatif";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -23,8 +24,8 @@ const formulaireInitial = {
   covers: 0,
   timeSlotId: "",
   date: null,
-  firstname: "",
-  lastname: "",
+  firstname: "Florian",
+  lastname: "Demoulin",
   phone: "",
   mail: "",
   comment: "",
@@ -45,7 +46,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
 
   useEffect(() => {
     setFormulaire({ ...formulaireInitial });
-    if (isOpen) setActiveStep(0);
+    if (isOpen) setActiveStep(2);
   }, [isOpen, setFormulaire]);
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
@@ -120,6 +121,13 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
               handleChange={handleChange}
               handleCustomChange={handleCustomChange}
               t={t}
+            />
+          )}
+          {activeStep === 2 && (
+            <Recapitulatif
+              t={t}
+              formulaire={formulaire}
+              restaurantContext={restaurantContext}
             />
           )}
         </div>

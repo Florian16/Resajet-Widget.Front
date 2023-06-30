@@ -27,5 +27,16 @@
     "retour": "Terug",
     "valider": "Bevestigen",
     "suivant": "Volgend"
+  },
+  "recapitulatif": {
+    "client": "Klant",
+    "date": "Datum",
+    "heure": "Uur",
+    "nombreDePersonnes": "Aantal personen",
+    "email": "E-mail",
+    "telephone": "Telefoon",
+    "personne": "Persoon",
+    "personnes": "Personen",
+    "espace": "Ruimte"
   }
 }

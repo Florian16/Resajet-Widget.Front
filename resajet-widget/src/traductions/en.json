@@ -27,5 +27,16 @@
     "retour": "Back",
     "valider": "Confirm",
     "suivant": "Next"
+  },
+  "recapitulatif": {
+    "client": "Client",
+    "date": "Date",
+    "heure": "Hour",
+    "nombreDePersonnes": "Number of people",
+    "email": "Email",
+    "telephone": "Phone",
+    "personne": "person",
+    "personnes": "Persons",
+    "espace": "Area"
   }
 }
