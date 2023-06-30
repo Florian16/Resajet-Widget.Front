@@ -40,7 +40,7 @@ export default function Information({
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.nom")}</span>
         </Grid>
-        <Grid item xs={8} className="resajet-information-input">
+        <Grid item xs={8}>
           <PersonalTextField
             onChange={handleChange}
             name="lastname"
@@ -60,7 +60,7 @@ export default function Information({
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.prenom")}</span>
         </Grid>
-        <Grid item xs={8} className="resajet-information-input">
+        <Grid item xs={8}>
           <PersonalTextField
             onChange={handleChange}
             name="firstname"
@@ -80,7 +80,7 @@ export default function Information({
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.email")}</span>
         </Grid>
-        <Grid item xs={8} className="resajet-information-input">
+        <Grid item xs={8}>
           <PersonalTextField
             type="email"
             onChange={handleChange}
@@ -101,7 +101,7 @@ export default function Information({
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.telephone")}</span>
         </Grid>
-        <Grid item xs={8} className="resajet-information-input">
+        <Grid item xs={8}>
           <PhoneInput
             specialLabel={""}
             country={"be"}
