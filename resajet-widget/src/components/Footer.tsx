@@ -71,12 +71,7 @@ export default function Footer({
             endIcon={
               activeStep === steps.length - 1 ? <CheckIcon /> : <ChevronRight />
             }
-            onClick={() =>
-              !nextIsDisabled() &&
-              (activeStep === steps.length - 1
-                ? alert("Fini")
-                : setActiveStep(activeStep + 1))
-            }
+            onClick={() => !nextIsDisabled() && setActiveStep(activeStep + 1)}
             style={{
               color: "black",
               cursor: nextIsDisabled() ? "not-allowed" : "pointer",

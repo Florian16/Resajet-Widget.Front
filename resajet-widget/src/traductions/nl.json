@@ -35,8 +35,8 @@
     "nombreDePersonnes": "Aantal personen",
     "email": "E-mail",
     "telephone": "Telefoon",
-    "personne": "Persoon",
-    "personnes": "Personen",
+    "personne": "persoon",
+    "personnes": "personen",
     "espace": "Ruimte"
   }
 }

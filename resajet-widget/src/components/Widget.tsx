@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { useTranslation } from "react-i18next";
 import Recapitulatif from "./Recapitulatif";
+import SuccessAnimation from "./SuccessAnimation";
 
 type WidgetProps = {
   restaurantContext: RestaurantContextProps;
@@ -129,6 +130,10 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
               formulaire={formulaire}
               restaurantContext={restaurantContext}
             />
+          )}
+
+          {activeStep === 3 && (
+            <SuccessAnimation title="La réservation a bien été enregistrée." />
           )}
         </div>
       </div>
