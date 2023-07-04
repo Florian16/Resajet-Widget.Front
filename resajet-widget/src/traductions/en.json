@@ -37,6 +37,10 @@
     "telephone": "Phone",
     "personne": "person",
     "personnes": "persons",
-    "espace": "Area"
+    "espace": "Area",
+    "commentaire": "Comment"
+  },
+  "validation": {
+    "reservationBienEnregistree": "The reservation has been registered."
   }
 }

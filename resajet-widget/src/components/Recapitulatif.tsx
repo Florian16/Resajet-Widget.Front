@@ -153,6 +153,23 @@ export default function Recapitulatif({
               <span>+{formulaire?.phone}</span>
             </Grid>
           </Grid>
+          <Grid container className="resajet-recapitulatif-container-grid">
+            <Grid
+              item
+              xs={6}
+              className="resajet-recapitulatif-container-grid-label"
+            >
+              <span>{t("recapitulatif.commentaire")} :</span>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              className="resajet-recapitulatif-container-grid-text"
+              style={{ textTransform: "inherit" }}
+            >
+              <span>{formulaire?.comment}</span>
+            </Grid>
+          </Grid>
         </Grid>
       </div>
     </div>

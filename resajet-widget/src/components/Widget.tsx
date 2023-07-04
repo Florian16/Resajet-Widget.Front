@@ -133,7 +133,9 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
           )}
 
           {activeStep === 3 && (
-            <SuccessAnimation title="La réservation a bien été enregistrée." />
+            <SuccessAnimation
+              title={t("validation.reservationBienEnregistree")}
+            />
           )}
         </div>
       </div>

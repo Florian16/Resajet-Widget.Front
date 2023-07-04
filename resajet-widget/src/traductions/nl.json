@@ -37,6 +37,10 @@
     "telephone": "Telefoon",
     "personne": "persoon",
     "personnes": "personen",
-    "espace": "Ruimte"
+    "espace": "Ruimte",
+    "commentaire": "Commentaar"
+  },
+  "validation": {
+    "reservationBienEnregistree": "De reservering is geregistreerd."
   }
 }
