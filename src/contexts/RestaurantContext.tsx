@@ -1,8 +1,9 @@
 import React, { ReactNode, useState, useEffect } from "react";
-import { RestaurantSetting } from "../models/restaurantSetting";
+import { CompanyDto } from "../dtos/companyDto";
+import { Language } from "../enums/language";
 
 export type RestaurantContextProps = {
-  restaurantSettings: RestaurantSetting | null;
+  restaurantSettings: CompanyDto | null;
 };
 
 type RestaurantContextProviderProps = {
@@ -15,7 +16,7 @@ const RestaurantContext = React.createContext<RestaurantContextProps>({
 
 const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
   const [restaurantSettings, setRestaurantSettings] =
-    useState<RestaurantSetting | null>(null);
+    useState<CompanyDto | null>(null);
 
   const context: RestaurantContextProps = {
     restaurantSettings,
@@ -31,18 +32,57 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
         });
       };
 
-      const restoreOptions = [
+      const periods = [
         {
           id: generateGUID(),
-          name: "Déjeuner",
+          periodTranslations: [
+            {
+              language: Language.French,
+              name: "Déjeuner",
+            },
+            {
+              language: Language.English,
+              name: "Breakfast",
+            },
+            {
+              language: Language.Dutch,
+              name: "Ontbijten",
+            },
+          ],
         },
         {
           id: generateGUID(),
-          name: "Dîner",
+          periodTranslations: [
+            {
+              language: Language.French,
+              name: "Dîner",
+            },
+            {
+              language: Language.English,
+              name: "Lunch",
+            },
+            {
+              language: Language.Dutch,
+              name: "Lunch",
+            },
+          ],
         },
         {
           id: generateGUID(),
-          name: "Souper",
+          periodTranslations: [
+            {
+              language: Language.French,
+              name: "Souper",
+            },
+            {
+              language: Language.English,
+              name: "Dinner",
+            },
+            {
+              language: Language.Dutch,
+              name: "Avondeten",
+            },
+          ],
         },
       ];
 
@@ -59,7 +99,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
 
       setRestaurantSettings({
         mainColor: "#EBC80A",
-        restoreOptions,
+        periods,
         maximumCovers: 6,
         disabledDates: [
           new Date(2023, 5, 5),
@@ -89,102 +129,102 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
           {
             id: generateGUID(),
             hour: "07:00:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "07:30:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "08:00:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "08:30:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "09:00:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "09:30:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "10:00:00",
-            mealPeriodId: restoreOptions[0].id,
+            mealPeriodId: periods[0].id,
           },
           {
             id: generateGUID(),
             hour: "11:30:00",
-            mealPeriodId: restoreOptions[1].id,
+            mealPeriodId: periods[1].id,
           },
           {
             id: generateGUID(),
             hour: "12:00:00",
-            mealPeriodId: restoreOptions[1].id,
+            mealPeriodId: periods[1].id,
           },
           {
             id: generateGUID(),
             hour: "12:30:00",
-            mealPeriodId: restoreOptions[1].id,
+            mealPeriodId: periods[1].id,
           },
           {
             id: generateGUID(),
             hour: "13:00:00",
-            mealPeriodId: restoreOptions[1].id,
+            mealPeriodId: periods[1].id,
           },
           {
             id: generateGUID(),
             hour: "13:30:00",
-            mealPeriodId: restoreOptions[1].id,
+            mealPeriodId: periods[1].id,
           },
           {
             id: generateGUID(),
             hour: "14:00:00",
-            mealPeriodId: restoreOptions[1].id,
+            mealPeriodId: periods[1].id,
           },
           {
             id: generateGUID(),
             hour: "18:00:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
           {
             id: generateGUID(),
             hour: "18:30:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
           {
             id: generateGUID(),
             hour: "19:00:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
           {
             id: generateGUID(),
             hour: "19:30:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
           {
             id: generateGUID(),
             hour: "20:00:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
           {
             id: generateGUID(),
             hour: "20:30:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
           {
             id: generateGUID(),
             hour: "21:00:00",
-            mealPeriodId: restoreOptions[2].id,
+            mealPeriodId: periods[2].id,
           },
         ],
         areas,

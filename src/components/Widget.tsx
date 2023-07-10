@@ -20,7 +20,7 @@ type WidgetProps = {
 };
 
 const formulaireInitial = {
-  restoreOption: "",
+  period: "",
   area: "",
   covers: 0,
   timeSlotId: "",

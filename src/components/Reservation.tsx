@@ -8,6 +8,7 @@ import { RestaurantContextProps } from "../contexts/RestaurantContext";
 import { FormulaireReservation } from "../interfaces/FormulaireReservation";
 import { MarkSlider } from "../interfaces/MarkSlider";
 import { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
@@ -24,6 +25,7 @@ export default function Reservation({
   handleCustomChange,
   t,
 }: ReservationProps) {
+  const { i18n } = useTranslation();
   const [marks, setMarks] = useState<MarkSlider[]>();
   useEffect(() => {
     const customMarks: MarkSlider[] = [];
@@ -71,29 +73,34 @@ export default function Reservation({
         </span>
         <Select
           displayEmpty
-          name="restoreOption"
+          name="period"
           onChange={handleChange}
-          value={formulaire?.restoreOption}
+          value={formulaire?.period}
           renderValue={(selected) => {
             if (selected === "") {
               return (
                 <em>{t("reservation.veuillezChoisirOptionRestauration")}</em>
               );
             }
-            const restoreOption =
-              restaurantContext.restaurantSettings?.restoreOptions?.find(
-                (tr) => tr.id === selected
-              );
-            return restoreOption ? restoreOption.name : "";
+            const period = restaurantContext.restaurantSettings?.periods?.find(
+              (tr) => tr.id === selected
+            );
+            return period
+              ? period.periodTranslations.find(
+                  (pt) => pt.language.toString() == i18n.language
+                )?.name
+              : "";
           }}
         >
-          {restaurantContext.restaurantSettings?.restoreOptions?.map(
-            (restoreOption) => (
-              <MenuItem key={restoreOption.id} value={restoreOption.id}>
-                {restoreOption.name}
-              </MenuItem>
-            )
-          )}
+          {restaurantContext.restaurantSettings?.periods?.map((period) => (
+            <MenuItem key={period.id} value={period.id}>
+              {
+                period.periodTranslations.find(
+                  (pt) => pt.language.toString() == i18n.language
+                )?.name
+              }
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <FormControl variant="standard" className="resajet-body-container">
@@ -117,7 +124,7 @@ export default function Reservation({
           {t("reservation.nombreDePersonnes")}
         </span>
         <Slider
-          disabled={formulaire?.restoreOption === ""}
+          disabled={formulaire?.period === ""}
           value={formulaire?.covers}
           min={1}
           max={restaurantContext.restaurantSettings?.maximumCovers}
@@ -136,18 +143,16 @@ export default function Reservation({
             views={["month", "day"]}
             value={formulaire?.date}
             onChange={(value: any) => handleCustomChange("date", value)}
-            disabled={
-              !(formulaire?.restoreOption !== "" && formulaire?.covers > 0)
-            }
+            disabled={!(formulaire?.period !== "" && formulaire?.covers > 0)}
           />
         </LocalizationProvider>
       </FormControl>
-      {formulaire?.restoreOption ? (
+      {formulaire?.period ? (
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
             {restaurantContext?.restaurantSettings?.timeSlots
-              .filter((ts) => ts.mealPeriodId === formulaire?.restoreOption)
+              .filter((ts) => ts.mealPeriodId === formulaire?.period)
               .map((timeSlot) => (
                 <Grid
                   item
@@ -161,7 +166,7 @@ export default function Reservation({
                   <div
                     className={`resajet-body-button-hour${
                       !(
-                        formulaire?.restoreOption !== "" &&
+                        formulaire?.period !== "" &&
                         formulaire?.covers > 0 &&
                         formulaire?.date !== null
                       )
@@ -175,7 +180,7 @@ export default function Reservation({
                           : "black",
                     }}
                     onClick={() =>
-                      formulaire?.restoreOption !== "" &&
+                      formulaire?.period !== "" &&
                       formulaire?.covers > 0 &&
                       formulaire?.date !== null
                         ? handleCustomChange(
