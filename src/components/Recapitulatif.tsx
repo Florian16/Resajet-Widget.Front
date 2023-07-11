@@ -1,17 +1,17 @@
 import { TFunction } from "i18next";
-import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import { ReservationRequest } from "../requests/ReservationRequest";
 import { Grid } from "@mui/material";
-import { RestaurantContextProps } from "../contexts/RestaurantContext";
+import { CompanyContextProps } from "../contexts/CompanyContext";
 
 type RecapitulatifProps = {
-  restaurantContext: RestaurantContextProps;
-  formulaire: FormulaireReservation;
+  companyContext: CompanyContextProps;
+  formulaire: ReservationRequest;
   t: TFunction;
 };
 export default function Recapitulatif({
   t,
   formulaire,
-  restaurantContext,
+  companyContext,
 }: RecapitulatifProps) {
   return (
     <div className="resajet-recapitulatif">
@@ -70,7 +70,7 @@ export default function Recapitulatif({
             className="resajet-recapitulatif-container-grid-text"
           >
             <span>
-              {restaurantContext?.restaurantSettings?.timeSlots
+              {companyContext?.companySettings?.timeSlots
                 .find((ts) => ts.id === formulaire?.timeSlotId)
                 ?.hour.replace(/:00$/, "")}
             </span>
@@ -91,8 +91,8 @@ export default function Recapitulatif({
             style={{ textTransform: "inherit" }}
           >
             <span>
-              {formulaire?.covers}{" "}
-              {formulaire?.covers > 1
+              {formulaire?.participants}{" "}
+              {formulaire?.participants > 1
                 ? t("recapitulatif.personnes")
                 : t("recapitulatif.personne")}
             </span>
@@ -115,7 +115,7 @@ export default function Recapitulatif({
             <span>
               {formulaire?.area === ""
                 ? t("reservation.pasDePreference")
-                : restaurantContext?.restaurantSettings?.areas.find(
+                : companyContext?.companySettings?.areas.find(
                     (a) => a.id === formulaire?.area
                   )?.name}
             </span>

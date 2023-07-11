@@ -4,8 +4,8 @@ import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
 import { styled } from "@mui/material/styles";
-import { RestaurantContextProps } from "../contexts/RestaurantContext";
-import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import { CompanyContextProps } from "../contexts/CompanyContext";
+import { ReservationRequest } from "../requests/ReservationRequest";
 import { MarkSlider } from "../interfaces/MarkSlider";
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
@@ -13,15 +13,15 @@ import { useTranslation } from "react-i18next";
 type ReservationProps = {
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
-  restaurantContext: RestaurantContextProps;
-  formulaire: FormulaireReservation;
+  companyContext: CompanyContextProps;
+  formulaire: ReservationRequest;
   t: TFunction;
 };
 
 export default function Reservation({
   handleChange,
   formulaire,
-  restaurantContext,
+  companyContext,
   handleCustomChange,
   t,
 }: ReservationProps) {
@@ -30,10 +30,10 @@ export default function Reservation({
   useEffect(() => {
     const customMarks: MarkSlider[] = [];
 
-    if (restaurantContext?.restaurantSettings?.maximumCovers) {
+    if (companyContext?.companySettings?.maximumReservations) {
       for (
         let i = 1;
-        i <= restaurantContext?.restaurantSettings?.maximumCovers;
+        i <= companyContext?.companySettings?.maximumReservations;
         i++
       ) {
         customMarks.push({ value: i, label: i.toString() });
@@ -43,12 +43,12 @@ export default function Reservation({
     setMarks(customMarks);
 
     // Faites quelque chose avec la variable customMarks si nécessaire
-  }, [restaurantContext?.restaurantSettings?.maximumCovers]);
+  }, [companyContext?.companySettings?.maximumReservations]);
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
-    if (restaurantContext?.restaurantSettings) {
-      return restaurantContext?.restaurantSettings?.disabledDates.some(
+    if (companyContext?.companySettings) {
+      return companyContext?.companySettings?.disabledDates.some(
         (d) =>
           d.getDate() === $d.getDate() &&
           d.getMonth() === $d.getMonth() &&
@@ -61,7 +61,7 @@ export default function Reservation({
 
   const StyledDateCalendar = styled(DateCalendar)`
     && .Mui-selected {
-      background-color: ${restaurantContext?.restaurantSettings?.mainColor};
+      background-color: ${companyContext?.companySettings?.mainColor};
     }
   `;
 
@@ -82,7 +82,7 @@ export default function Reservation({
                 <em>{t("reservation.veuillezChoisirOptionRestauration")}</em>
               );
             }
-            const period = restaurantContext.restaurantSettings?.periods?.find(
+            const period = companyContext.companySettings?.periods?.find(
               (tr) => tr.id === selected
             );
             return period
@@ -92,7 +92,7 @@ export default function Reservation({
               : "";
           }}
         >
-          {restaurantContext.restaurantSettings?.periods?.map((period) => (
+          {companyContext.companySettings?.periods?.map((period) => (
             <MenuItem key={period.id} value={period.id}>
               {
                 period.periodTranslations.find(
@@ -112,9 +112,13 @@ export default function Reservation({
           value={formulaire?.area}
         >
           <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
-          {restaurantContext.restaurantSettings?.areas?.map((a) => (
-            <MenuItem key={a.id} value={a.id}>
-              {a.name}
+          {companyContext.companySettings?.areas?.map((area) => (
+            <MenuItem key={area.id} value={area.id}>
+              {
+                area.areaTranslations.find(
+                  (at) => at.language.toString() == i18n.language
+                )?.name
+              }
             </MenuItem>
           ))}
         </Select>
@@ -125,25 +129,30 @@ export default function Reservation({
         </span>
         <Slider
           disabled={formulaire?.period === ""}
-          value={formulaire?.covers}
+          value={formulaire?.participants}
           min={1}
-          max={restaurantContext.restaurantSettings?.maximumCovers}
+          max={companyContext.companySettings?.maximumReservations}
           marks={marks}
-          name="covers"
+          name="participants"
           onChange={handleChange}
           style={{ color: "black" }}
         />
       </FormControl>
       <FormControl className="resajet-body-container" variant="standard">
         <span className="resajet-label">{t("reservation.date")}</span>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
+        <LocalizationProvider
+          dateAdapter={AdapterDayjs}
+          adapterLocale={i18n.language}
+        >
           <StyledDateCalendar
             disablePast
             shouldDisableDate={shouldDisableDate}
             views={["month", "day"]}
             value={formulaire?.date}
             onChange={(value: any) => handleCustomChange("date", value)}
-            disabled={!(formulaire?.period !== "" && formulaire?.covers > 0)}
+            disabled={
+              !(formulaire?.period !== "" && formulaire?.participants > 0)
+            }
           />
         </LocalizationProvider>
       </FormControl>
@@ -151,7 +160,7 @@ export default function Reservation({
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
-            {restaurantContext?.restaurantSettings?.timeSlots
+            {companyContext?.companySettings?.timeSlots
               .filter((ts) => ts.mealPeriodId === formulaire?.period)
               .map((timeSlot) => (
                 <Grid
@@ -167,7 +176,7 @@ export default function Reservation({
                     className={`resajet-body-button-hour${
                       !(
                         formulaire?.period !== "" &&
-                        formulaire?.covers > 0 &&
+                        formulaire?.participants > 0 &&
                         formulaire?.date !== null
                       )
                         ? " disabled"
@@ -176,12 +185,12 @@ export default function Reservation({
                     style={{
                       borderColor:
                         formulaire?.timeSlotId === timeSlot.id
-                          ? restaurantContext.restaurantSettings?.mainColor
+                          ? companyContext.companySettings?.mainColor
                           : "black",
                     }}
                     onClick={() =>
                       formulaire?.period !== "" &&
-                      formulaire?.covers > 0 &&
+                      formulaire?.participants > 0 &&
                       formulaire?.date !== null
                         ? handleCustomChange(
                             "timeSlotId",

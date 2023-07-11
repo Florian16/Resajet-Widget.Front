@@ -1,12 +1,12 @@
-import { RestaurantContextProps } from "../contexts/RestaurantContext";
+import { CompanyContextProps } from "../contexts/CompanyContext";
 import { Grid, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 type HeaderProps = {
-  restaurantContext: RestaurantContextProps;
+  companyContext: CompanyContextProps;
 };
 
-export default function Header({ restaurantContext }: HeaderProps) {
+export default function Header({ companyContext }: HeaderProps) {
   const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (event: SelectChangeEvent<string>) => {
@@ -17,7 +17,7 @@ export default function Header({ restaurantContext }: HeaderProps) {
     <div
       className="resajet-header"
       style={{
-        backgroundColor: restaurantContext.restaurantSettings?.mainColor,
+        backgroundColor: companyContext.companySettings?.mainColor,
       }}
     >
       <Grid container spacing={2} alignItems="center">

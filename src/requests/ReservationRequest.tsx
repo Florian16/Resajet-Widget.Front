@@ -1,8 +1,8 @@
 import { Dayjs } from "dayjs";
-export interface FormulaireReservation {
+export interface ReservationRequest {
   period: string;
   area: string;
-  covers: number;
+  participants: number;
   timeSlotId: string;
   date: Dayjs | null;
   lastname: string;

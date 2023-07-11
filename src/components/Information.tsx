@@ -1,11 +1,11 @@
 import { Box, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import { ReservationRequest } from "../requests/ReservationRequest";
 import PhoneInput from "react-phone-input-2";
 import { TFunction } from "i18next";
 
 type InformationProps = {
-  formulaire: FormulaireReservation;
+  formulaire: ReservationRequest;
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
   t: TFunction;

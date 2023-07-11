@@ -1,9 +1,9 @@
 import { Stepper, Step, StepLabel } from "@mui/material";
-import { RestaurantContextProps } from "../contexts/RestaurantContext";
+import { CompanyContextProps } from "../contexts/CompanyContext";
 import { useFormulaire } from "../hooks/useFormulaire";
 import { useEffect, useState } from "react";
 import Reservation from "./Reservation";
-import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import { ReservationRequest } from "../requests/ReservationRequest";
 import { styled } from "@mui/material/styles";
 import { StepIconProps } from "@mui/material/StepIcon";
 import Check from "@mui/icons-material/Check";
@@ -15,14 +15,14 @@ import Recapitulatif from "./Recapitulatif";
 import SuccessAnimation from "./SuccessAnimation";
 
 type WidgetProps = {
-  restaurantContext: RestaurantContextProps;
+  companyContext: CompanyContextProps;
   isOpen: boolean;
 };
 
 const formulaireInitial = {
   period: "",
   area: "",
-  covers: 0,
+  participants: 0,
   timeSlotId: "",
   date: null,
   firstname: "",
@@ -32,10 +32,10 @@ const formulaireInitial = {
   comment: "",
 };
 
-export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
+export default function Widget({ companyContext, isOpen }: WidgetProps) {
   const { t } = useTranslation();
   const { formulaire, handleChange, setFormulaire, handleCustomChange } =
-    useFormulaire<FormulaireReservation>({
+    useFormulaire<ReservationRequest>({
       ...formulaireInitial,
     });
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -52,15 +52,15 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     ({ ownerState }) => ({
-      color: restaurantContext.restaurantSettings?.mainColor,
+      color: companyContext.companySettings?.mainColor,
       display: "flex",
       height: 22,
       alignItems: "center",
       ...(ownerState.active && {
-        color: restaurantContext.restaurantSettings?.mainColor,
+        color: companyContext.companySettings?.mainColor,
       }),
       "& .QontoStepIcon-completedIcon": {
-        color: restaurantContext.restaurantSettings?.mainColor,
+        color: companyContext.companySettings?.mainColor,
         zIndex: 1,
         fontSize: 18,
       },
@@ -93,7 +93,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
         isOpen ? "resajet-widget-open" : "resajet-widget-close"
       }`}
     >
-      <Header restaurantContext={restaurantContext} />
+      <Header companyContext={companyContext} />
       <div className="resajet-body">
         <Stepper
           activeStep={activeStep}
@@ -111,7 +111,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
             <Reservation
               handleChange={handleChange}
               handleCustomChange={handleCustomChange}
-              restaurantContext={restaurantContext}
+              companyContext={companyContext}
               formulaire={formulaire}
               t={t}
             />
@@ -128,7 +128,7 @@ export default function Widget({ restaurantContext, isOpen }: WidgetProps) {
             <Recapitulatif
               t={t}
               formulaire={formulaire}
-              restaurantContext={restaurantContext}
+              companyContext={companyContext}
             />
           )}
 

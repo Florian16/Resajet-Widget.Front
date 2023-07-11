@@ -1,25 +1,27 @@
 import React, { ReactNode, useState, useEffect } from "react";
-import { CompanyDto } from "../dtos/companyDto";
+import { CompanySettingDto } from "../dtos/companySettingDto";
 import { Language } from "../enums/language";
+import { Area } from "../models/area";
+import { Period } from "../models/period";
 
-export type RestaurantContextProps = {
-  restaurantSettings: CompanyDto | null;
+export type CompanyContextProps = {
+  companySettings: CompanySettingDto | null;
 };
 
-type RestaurantContextProviderProps = {
+type CompanyContextProviderProps = {
   children: ReactNode | ReactNode[];
 };
 
-const RestaurantContext = React.createContext<RestaurantContextProps>({
-  restaurantSettings: null,
+const CompanyContext = React.createContext<CompanyContextProps>({
+  companySettings: null,
 });
 
-const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
-  const [restaurantSettings, setRestaurantSettings] =
-    useState<CompanyDto | null>(null);
+const CompanyProvider = ({ children }: CompanyContextProviderProps) => {
+  const [companySettings, setCompanySettings] =
+    useState<CompanySettingDto | null>(null);
 
-  const context: RestaurantContextProps = {
-    restaurantSettings,
+  const context: CompanyContextProps = {
+    companySettings,
   };
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
         });
       };
 
-      const periods = [
+      const periods: Period[] = [
         {
           id: generateGUID(),
           periodTranslations: [
@@ -86,21 +88,47 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
         },
       ];
 
-      const areas = [
+      const areas: Area[] = [
         {
           id: generateGUID(),
-          name: "Intérieur",
+          areaTranslations: [
+            {
+              language: Language.French,
+              name: "Intérieur",
+            },
+            {
+              language: Language.English,
+              name: "Indoor",
+            },
+            {
+              language: Language.Dutch,
+              name: "Binnen",
+            },
+          ],
         },
         {
           id: generateGUID(),
-          name: "Extérieur",
+          areaTranslations: [
+            {
+              language: Language.French,
+              name: "Extérieur",
+            },
+            {
+              language: Language.English,
+              name: "Outdoor",
+            },
+            {
+              language: Language.Dutch,
+              name: "Buiten",
+            },
+          ],
         },
       ];
 
-      setRestaurantSettings({
+      setCompanySettings({
         mainColor: "#EBC80A",
         periods,
-        maximumCovers: 6,
+        maximumReservations: 6,
         disabledDates: [
           new Date(2023, 5, 5),
           new Date(2023, 5, 6),
@@ -235,10 +263,10 @@ const RestaurantProvider = ({ children }: RestaurantContextProviderProps) => {
   }, []);
 
   return (
-    <RestaurantContext.Provider value={context}>
+    <CompanyContext.Provider value={context}>
       {children}
-    </RestaurantContext.Provider>
+    </CompanyContext.Provider>
   );
 };
 
-export { RestaurantContext, RestaurantProvider };
+export { CompanyContext, CompanyProvider };

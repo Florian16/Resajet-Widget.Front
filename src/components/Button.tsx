@@ -1,16 +1,16 @@
-import { RestaurantContextProps } from "../contexts/RestaurantContext";
+import { CompanyContextProps } from "../contexts/CompanyContext";
 
 type ButtonProps = {
-  restaurantContext: RestaurantContextProps;
+  companyContext: CompanyContextProps;
   onClick: () => void;
 };
 
-export default function Button({ restaurantContext, onClick }: ButtonProps) {
+export default function Button({ companyContext, onClick }: ButtonProps) {
   return (
     <div
       className={`resajet-button`}
       style={{
-        backgroundColor: restaurantContext.restaurantSettings?.mainColor,
+        backgroundColor: companyContext.companySettings?.mainColor,
       }}
       onClick={onClick}
     ></div>

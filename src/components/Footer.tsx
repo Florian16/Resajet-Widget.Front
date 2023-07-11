@@ -2,12 +2,12 @@ import { Grid, Button } from "@mui/material";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import CheckIcon from "@mui/icons-material/Check";
-import { FormulaireReservation } from "../interfaces/FormulaireReservation";
+import { ReservationRequest } from "../requests/ReservationRequest";
 import { TFunction } from "i18next";
 
 type FooterProps = {
   activeStep: number;
-  formulaire: FormulaireReservation;
+  formulaire: ReservationRequest;
   setActiveStep: (as: number) => void;
   steps: string[];
   t: TFunction;
@@ -23,16 +23,16 @@ export default function Footer({
   const nextIsDisabled = () => {
     if (activeStep === 0) {
       return (
-        formulaire?.restoreOption === "" ||
-        formulaire?.covers <= 0 ||
+        formulaire?.period === "" ||
+        formulaire?.participants <= 0 ||
         formulaire?.date === null ||
         formulaire?.timeSlotId === ""
       );
     }
     if (activeStep === 1) {
       return (
-        formulaire?.restoreOption === "" ||
-        formulaire?.covers <= 0 ||
+        formulaire?.period === "" ||
+        formulaire?.participants <= 0 ||
         formulaire?.date === null ||
         formulaire?.timeSlotId === "" ||
         formulaire?.lastname === "" ||
