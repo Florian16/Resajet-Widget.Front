@@ -2,6 +2,7 @@ import { TFunction } from "i18next";
 import { ReservationRequest } from "../requests/ReservationRequest";
 import { Grid } from "@mui/material";
 import { CompanyContextProps } from "../contexts/CompanyContext";
+import i18n from "../traductions/i18n";
 
 type RecapitulatifProps = {
   companyContext: CompanyContextProps;
@@ -70,8 +71,9 @@ export default function Recapitulatif({
             className="resajet-recapitulatif-container-grid-text"
           >
             <span>
-              {companyContext?.companySettings?.timeSlots
-                .find((ts) => ts.id === formulaire?.timeSlotId)
+              {companyContext?.companySettings?.periods
+                .find((p) => p.id === formulaire?.period)
+                ?.timeSlots.find((ts) => ts.id === formulaire.timeSlotId)
                 ?.hour.replace(/:00$/, "")}
             </span>
           </Grid>
@@ -115,9 +117,11 @@ export default function Recapitulatif({
             <span>
               {formulaire?.area === ""
                 ? t("reservation.pasDePreference")
-                : companyContext?.companySettings?.areas.find(
-                    (a) => a.id === formulaire?.area
-                  )?.name}
+                : companyContext?.companySettings?.areas
+                    .find((a) => a.id === formulaire?.area)
+                    ?.areaTranslations.find(
+                      (at) => at.language.toString() == i18n.language
+                    )?.name}
             </span>
           </Grid>
           <Grid container className="resajet-recapitulatif-container-grid">

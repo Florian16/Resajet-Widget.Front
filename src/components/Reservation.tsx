@@ -9,6 +9,7 @@ import { ReservationRequest } from "../requests/ReservationRequest";
 import { MarkSlider } from "../interfaces/MarkSlider";
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
+import { Language } from "../enums/language";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
@@ -30,10 +31,10 @@ export default function Reservation({
   useEffect(() => {
     const customMarks: MarkSlider[] = [];
 
-    if (companyContext?.companySettings?.maximumReservations) {
+    if (companyContext?.companySettings?.maximumReservation) {
       for (
         let i = 1;
-        i <= companyContext?.companySettings?.maximumReservations;
+        i <= companyContext?.companySettings?.maximumReservation;
         i++
       ) {
         customMarks.push({ value: i, label: i.toString() });
@@ -43,12 +44,12 @@ export default function Reservation({
     setMarks(customMarks);
 
     // Faites quelque chose avec la variable customMarks si nécessaire
-  }, [companyContext?.companySettings?.maximumReservations]);
+  }, [companyContext?.companySettings?.maximumReservation]);
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
     if (companyContext?.companySettings) {
-      return companyContext?.companySettings?.disabledDates.some(
+      return companyContext?.companySettings?.unavailabilities.some(
         (d) =>
           d.getDate() === $d.getDate() &&
           d.getMonth() === $d.getMonth() &&
@@ -85,9 +86,10 @@ export default function Reservation({
             const period = companyContext.companySettings?.periods?.find(
               (tr) => tr.id === selected
             );
+
             return period
               ? period.periodTranslations.find(
-                  (pt) => pt.language.toString() == i18n.language
+                  (pt) => Object.values(Language)[pt.language] === i18n.language
                 )?.name
               : "";
           }}
@@ -96,7 +98,7 @@ export default function Reservation({
             <MenuItem key={period.id} value={period.id}>
               {
                 period.periodTranslations.find(
-                  (pt) => pt.language.toString() == i18n.language
+                  (pt) => Object.values(Language)[pt.language] === i18n.language
                 )?.name
               }
             </MenuItem>
@@ -131,7 +133,7 @@ export default function Reservation({
           disabled={formulaire?.period === ""}
           value={formulaire?.participants}
           min={1}
-          max={companyContext.companySettings?.maximumReservations}
+          max={companyContext.companySettings?.maximumReservation}
           marks={marks}
           name="participants"
           onChange={handleChange}
@@ -160,9 +162,9 @@ export default function Reservation({
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
-            {companyContext?.companySettings?.timeSlots
-              .filter((ts) => ts.mealPeriodId === formulaire?.period)
-              .map((timeSlot) => (
+            {companyContext?.companySettings?.periods
+              .find((p) => p.id === formulaire.period)
+              ?.timeSlots.map((timeSlot) => (
                 <Grid
                   item
                   md={3}
