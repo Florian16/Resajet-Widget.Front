@@ -4,8 +4,6 @@ class ApiService {
   private axiosInstance: AxiosInstance;
 
   constructor() {
-    console.log(import.meta.env.VITE_API_URL);
-
     this.axiosInstance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
       headers: {

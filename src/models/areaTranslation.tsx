@@ -1,6 +1,4 @@
-import { Language } from "../enums/language";
-
 export interface AreaTranslation {
-  language: Language;
+  language: number;
   name: string;
 }

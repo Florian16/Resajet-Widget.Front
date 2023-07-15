@@ -118,7 +118,7 @@ export default function Reservation({
             <MenuItem key={area.id} value={area.id}>
               {
                 area.areaTranslations.find(
-                  (at) => at.language.toString() == i18n.language
+                  (at) => Object.values(Language)[at.language] === i18n.language
                 )?.name
               }
             </MenuItem>

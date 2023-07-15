@@ -25,7 +25,7 @@ const CompanyProvider = ({ children }: CompanyContextProviderProps) => {
   useEffect(() => {
     const fetchData = async () => {
       companyService
-        .getCompanySettings("3fa85f64-5717-4562-b3fc-2c963f66afa6")
+        .getCompanySettings("46f463f5-07c6-491c-a353-ab0ce4ab3b77")
         .then((result) => {
           setCompanySettings(result);
         })
