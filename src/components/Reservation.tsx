@@ -51,9 +51,9 @@ export default function Reservation({
     if (companyContext?.companySettings) {
       return companyContext?.companySettings?.unavailabilities.some(
         (d) =>
-          d.getDate() === $d.getDate() &&
-          d.getMonth() === $d.getMonth() &&
-          d.getFullYear() === $d.getFullYear()
+          new Date(d).getDate() === $d.getDate() &&
+          new Date(d).getMonth() === $d.getMonth() &&
+          new Date(d).getFullYear() === $d.getFullYear()
       );
     }
 
