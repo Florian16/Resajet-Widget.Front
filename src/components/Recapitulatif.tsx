@@ -72,7 +72,7 @@ export default function Recapitulatif({
           >
             <span>
               {companyContext?.companySettings?.periods
-                .find((p) => p.id === formulaire?.period)
+                .find((p) => p.id === formulaire?.periodId)
                 ?.timeSlots.find((ts) => ts.id === formulaire.timeSlotId)
                 ?.hour.replace(/:00$/, "")}
             </span>

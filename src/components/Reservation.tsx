@@ -10,6 +10,7 @@ import { MarkSlider } from "../interfaces/MarkSlider";
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { Language } from "../enums/language";
+import dayjs from "dayjs";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
@@ -48,8 +49,19 @@ export default function Reservation({
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
-    if (companyContext?.companySettings) {
-      return companyContext?.companySettings?.unavailabilities.some(
+    if (companyContext?.companySettings && formulaire.periodId !== "") {
+      const disabledDates: Date[] = [];
+      companyContext?.companySettings?.unavailabilities.forEach(
+        (unavailability) => {
+          if (
+            unavailability.unavailabilityPeriodIds.find(
+              (upid) => upid.periodId === formulaire.periodId
+            )?.disabled
+          )
+            disabledDates.push(unavailability.date);
+        }
+      );
+      return disabledDates.some(
         (d) =>
           new Date(d).getDate() === $d.getDate() &&
           new Date(d).getMonth() === $d.getMonth() &&
@@ -74,9 +86,9 @@ export default function Reservation({
         </span>
         <Select
           displayEmpty
-          name="period"
+          name="periodId"
           onChange={handleChange}
-          value={formulaire?.period}
+          value={formulaire?.periodId}
           renderValue={(selected) => {
             if (selected === "") {
               return (
@@ -130,7 +142,7 @@ export default function Reservation({
           {t("reservation.nombreDePersonnes")}
         </span>
         <Slider
-          disabled={formulaire?.period === ""}
+          disabled={formulaire?.periodId === ""}
           value={formulaire?.participants}
           min={1}
           max={companyContext.companySettings?.maximumReservation}
@@ -153,18 +165,31 @@ export default function Reservation({
             value={formulaire?.date}
             onChange={(value: any) => handleCustomChange("date", value)}
             disabled={
-              !(formulaire?.period !== "" && formulaire?.participants > 0)
+              !(formulaire?.periodId !== "" && formulaire?.participants > 0)
             }
           />
         </LocalizationProvider>
       </FormControl>
-      {formulaire?.period ? (
+      {formulaire?.periodId ? (
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
             {companyContext?.companySettings?.periods
-              .find((p) => p.id === formulaire.period)
-              ?.timeSlots.map((timeSlot) => (
+              .find((p) => p.id === formulaire.periodId)
+              ?.timeSlots.filter(
+                (ts) =>
+                  !companyContext?.companySettings?.unavailabilities.some(
+                    (u) =>
+                      dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
+                      u.unavailabilityPeriodIds.find(
+                        (upid) =>
+                          upid.periodId === formulaire.periodId &&
+                          upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                          !upid.disabled
+                      )
+                  )
+              )
+              .map((timeSlot) => (
                 <Grid
                   item
                   md={3}
@@ -177,7 +202,7 @@ export default function Reservation({
                   <div
                     className={`resajet-body-button-hour${
                       !(
-                        formulaire?.period !== "" &&
+                        formulaire?.periodId !== "" &&
                         formulaire?.participants > 0 &&
                         formulaire?.date !== null
                       )
@@ -191,7 +216,7 @@ export default function Reservation({
                           : "black",
                     }}
                     onClick={() =>
-                      formulaire?.period !== "" &&
+                      formulaire?.periodId !== "" &&
                       formulaire?.participants > 0 &&
                       formulaire?.date !== null
                         ? handleCustomChange(

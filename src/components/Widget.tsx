@@ -20,7 +20,7 @@ type WidgetProps = {
 };
 
 const formulaireInitial = {
-  period: "",
+  periodId: "",
   area: "",
   participants: 0,
   timeSlotId: "",

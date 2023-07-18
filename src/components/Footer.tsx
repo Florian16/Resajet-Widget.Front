@@ -23,7 +23,7 @@ export default function Footer({
   const nextIsDisabled = () => {
     if (activeStep === 0) {
       return (
-        formulaire?.period === "" ||
+        formulaire?.periodId === "" ||
         formulaire?.participants <= 0 ||
         formulaire?.date === null ||
         formulaire?.timeSlotId === ""
@@ -31,7 +31,7 @@ export default function Footer({
     }
     if (activeStep === 1) {
       return (
-        formulaire?.period === "" ||
+        formulaire?.periodId === "" ||
         formulaire?.participants <= 0 ||
         formulaire?.date === null ||
         formulaire?.timeSlotId === "" ||
