@@ -117,26 +117,7 @@ export default function Reservation({
           ))}
         </Select>
       </FormControl>
-      <FormControl variant="standard" className="resajet-body-container">
-        <span className="resajet-label">{t("reservation.espace")}</span>
-        <Select
-          displayEmpty
-          name="area"
-          onChange={handleChange}
-          value={formulaire?.area}
-        >
-          <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
-          {companyContext.companySettings?.areas?.map((area) => (
-            <MenuItem key={area.id} value={area.id}>
-              {
-                area.areaTranslations.find(
-                  (at) => Object.values(Language)[at.language] === i18n.language
-                )?.name
-              }
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+
       <FormControl className="resajet-body-container" variant="standard">
         <span className="resajet-label">
           {t("reservation.nombreDePersonnes")}
@@ -169,6 +150,26 @@ export default function Reservation({
             }
           />
         </LocalizationProvider>
+      </FormControl>
+      <FormControl variant="standard" className="resajet-body-container">
+        <span className="resajet-label">{t("reservation.espace")}</span>
+        <Select
+          displayEmpty
+          name="area"
+          onChange={handleChange}
+          value={formulaire?.area}
+        >
+          <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
+          {companyContext.companySettings?.areas?.map((area) => (
+            <MenuItem key={area.id} value={area.id}>
+              {
+                area.areaTranslations.find(
+                  (at) => Object.values(Language)[at.language] === i18n.language
+                )?.name
+              }
+            </MenuItem>
+          ))}
+        </Select>
       </FormControl>
       {formulaire?.periodId ? (
         <FormControl className="resajet-body-container" variant="standard">
