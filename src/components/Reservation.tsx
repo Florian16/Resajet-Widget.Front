@@ -49,14 +49,29 @@ export default function Reservation({
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
+
     if (companyContext?.companySettings && formulaire.periodId !== "") {
       const disabledDates: Date[] = [];
+      const currentDate = new Date($d);
       companyContext?.companySettings?.unavailabilities.forEach(
         (unavailability) => {
           if (
             unavailability.unavailabilityPeriodIds.find(
               (upid) => upid.periodId === formulaire.periodId
-            )?.disabled
+            )?.disabled ||
+            companyContext.companySettings?.areas?.filter(
+              (a) =>
+                !companyContext?.companySettings?.unavailabilities.some(
+                  (u) =>
+                    isSameDay(new Date(u.date), currentDate) &&
+                    u.unavailabilityPeriodIds.find(
+                      (upid) =>
+                        upid.periodId === formulaire.periodId &&
+                        upid.areaIds.find((areaId) => areaId === a.id) &&
+                        !upid.disabled
+                    )
+                )
+            ).length === 0
           )
             disabledDates.push(unavailability.date);
         }
@@ -70,6 +85,14 @@ export default function Reservation({
     }
 
     return false;
+  };
+
+  const isSameDay = (date1: Date, date2: Date) => {
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
   };
 
   const StyledDateCalendar = styled(DateCalendar)`
@@ -160,17 +183,38 @@ export default function Reservation({
           value={formulaire?.area}
         >
           <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
-          {companyContext.companySettings?.areas?.map((area) => (
-            <MenuItem key={area.id} value={area.id}>
-              {
-                area.areaTranslations.find(
-                  (at) => Object.values(Language)[at.language] === i18n.language
-                )?.name
-              }
-            </MenuItem>
-          ))}
+          {companyContext.companySettings?.areas
+            ?.filter((a) =>
+              companyContext?.companySettings?.periods
+                .find((p) => p.id === formulaire.periodId)
+                ?.timeSlots.some(
+                  (ts) =>
+                    !companyContext?.companySettings?.unavailabilities.some(
+                      (u) =>
+                        dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
+                        u.unavailabilityPeriodIds.find(
+                          (upid) =>
+                            upid.periodId === formulaire.periodId &&
+                            upid.areaIds.find((areaId) => areaId === a.id) &&
+                            upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                            !upid.disabled
+                        )
+                    )
+                )
+            )
+            .map((area) => (
+              <MenuItem key={area.id} value={area.id}>
+                {
+                  area.areaTranslations.find(
+                    (at) =>
+                      Object.values(Language)[at.language] === i18n.language
+                  )?.name
+                }
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
+
       {formulaire?.periodId ? (
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label hour">{t("reservation.heures")}</span>
@@ -185,6 +229,9 @@ export default function Reservation({
                       u.unavailabilityPeriodIds.find(
                         (upid) =>
                           upid.periodId === formulaire.periodId &&
+                          upid.areaIds.find(
+                            (areaId) => areaId === formulaire.area
+                          ) &&
                           upid.unavailabilityTimeSlotIds.includes(ts.id) &&
                           !upid.disabled
                       )
