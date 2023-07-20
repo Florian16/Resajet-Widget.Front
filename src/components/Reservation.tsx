@@ -226,14 +226,17 @@ export default function Reservation({
                   !companyContext?.companySettings?.unavailabilities.some(
                     (u) =>
                       dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
-                      u.unavailabilityPeriodIds.find(
-                        (upid) =>
-                          upid.periodId === formulaire.periodId &&
-                          upid.areaIds.find(
-                            (areaId) => areaId === formulaire.area
-                          ) &&
-                          upid.unavailabilityTimeSlotIds.includes(ts.id) &&
-                          !upid.disabled
+                      u.unavailabilityPeriodIds.find((upid) =>
+                        upid.areaIds.length > 0
+                          ? upid.periodId === formulaire.periodId &&
+                            upid.areaIds.find(
+                              (areaId) => areaId === formulaire.area
+                            ) &&
+                            upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                            !upid.disabled
+                          : upid.periodId === formulaire.periodId &&
+                            upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                            !upid.disabled
                       )
                   )
               )
