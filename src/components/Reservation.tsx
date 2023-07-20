@@ -178,9 +178,9 @@ export default function Reservation({
         <span className="resajet-label">{t("reservation.espace")}</span>
         <Select
           displayEmpty
-          name="area"
+          name="areaId"
           onChange={handleChange}
-          value={formulaire?.area}
+          value={formulaire?.areaId}
         >
           <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
           {companyContext.companySettings?.areas
@@ -230,7 +230,7 @@ export default function Reservation({
                         upid.areaIds.length > 0
                           ? upid.periodId === formulaire.periodId &&
                             upid.areaIds.find(
-                              (areaId) => areaId === formulaire.area
+                              (areaId) => areaId === formulaire.areaId
                             ) &&
                             upid.unavailabilityTimeSlotIds.includes(ts.id) &&
                             !upid.disabled

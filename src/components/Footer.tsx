@@ -41,10 +41,10 @@ export default function Footer({
         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
           formulaire?.mail
         ) ||
-        formulaire?.phone === "" ||
+        formulaire?.phoneNumber === "" ||
         !(
-          formulaire?.phone &&
-          /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phone)
+          formulaire?.phoneNumber &&
+          /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
         )
       );
     }

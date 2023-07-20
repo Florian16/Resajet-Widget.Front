@@ -21,13 +21,13 @@ type WidgetProps = {
 
 const formulaireInitial = {
   periodId: "",
-  area: "",
+  areaId: "",
   participants: 0,
   timeSlotId: "",
   date: null,
   firstname: "",
   lastname: "",
-  phone: "",
+  phoneNumber: "",
   mail: "",
   comment: "",
 };

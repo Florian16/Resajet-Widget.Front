@@ -105,8 +105,8 @@ export default function Information({
           <PhoneInput
             specialLabel={""}
             country={"be"}
-            value={formulaire?.phone}
-            onChange={(e) => handleCustomChange("phone", e)}
+            value={formulaire?.phoneNumber}
+            onChange={(e) => handleCustomChange("phoneNumber", e)}
           />
         </Grid>
       </Grid>

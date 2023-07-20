@@ -112,13 +112,15 @@ export default function Recapitulatif({
             item
             xs={6}
             className="resajet-recapitulatif-container-grid-text"
-            style={formulaire?.area === "" ? { textTransform: "inherit" } : {}}
+            style={
+              formulaire?.areaId === "" ? { textTransform: "inherit" } : {}
+            }
           >
             <span>
-              {formulaire?.area === ""
+              {formulaire?.areaId === ""
                 ? t("reservation.pasDePreference")
                 : companyContext?.companySettings?.areas
-                    .find((a) => a.id === formulaire?.area)
+                    .find((a) => a.id === formulaire?.areaId)
                     ?.areaTranslations.find(
                       (at) => at.language.toString() == i18n.language
                     )?.name}
@@ -154,7 +156,7 @@ export default function Recapitulatif({
               xs={6}
               className="resajet-recapitulatif-container-grid-text"
             >
-              <span>+{formulaire?.phone}</span>
+              <span>+{formulaire?.phoneNumber}</span>
             </Grid>
           </Grid>
           <Grid container className="resajet-recapitulatif-container-grid">
