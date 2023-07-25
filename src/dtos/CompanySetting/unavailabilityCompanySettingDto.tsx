@@ -1,4 +1,4 @@
-import { UnavailabilityPeriodDto } from "../Unavailability/unavailabilityPeriodDto";
+import { UnavailabilityPeriodDto } from "../Unavailability/UnavailabilityPeriodDto";
 
 export interface UnavailabilityCompanySettingDto {
   date: Date;

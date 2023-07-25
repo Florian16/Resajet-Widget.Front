@@ -1,4 +1,4 @@
-import { PeriodTranslation } from "./periodTranslation";
+import { PeriodTranslation } from "./PeriodTranslation";
 
 export interface Period {
   id: string;

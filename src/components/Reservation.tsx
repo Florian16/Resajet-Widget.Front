@@ -9,7 +9,7 @@ import { ReservationRequest } from "../requests/ReservationRequest";
 import { MarkSlider } from "../interfaces/MarkSlider";
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-import { Language } from "../enums/language";
+import { Language } from "../enums/Language";
 import dayjs from "dayjs";
 
 type ReservationProps = {
@@ -101,6 +101,25 @@ export default function Reservation({
     }
   `;
 
+  const areasFiltered = companyContext.companySettings?.areas?.filter((a) =>
+    companyContext?.companySettings?.periods
+      .find((p) => p.id === formulaire.periodId)
+      ?.timeSlots.some(
+        (ts) =>
+          !companyContext?.companySettings?.unavailabilities.some(
+            (u) =>
+              dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
+              u.unavailabilityPeriodIds.find(
+                (upid) =>
+                  upid.periodId === formulaire.periodId &&
+                  upid.areaIds.find((areaId) => areaId === a.id) &&
+                  upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                  !upid.disabled
+              )
+          )
+      )
+  );
+
   return (
     <div>
       <FormControl variant="standard" className="resajet-body-container">
@@ -174,35 +193,17 @@ export default function Reservation({
           />
         </LocalizationProvider>
       </FormControl>
-      <FormControl variant="standard" className="resajet-body-container">
-        <span className="resajet-label">{t("reservation.espace")}</span>
-        <Select
-          displayEmpty
-          name="areaId"
-          onChange={handleChange}
-          value={formulaire?.areaId}
-        >
-          <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
-          {companyContext.companySettings?.areas
-            ?.filter((a) =>
-              companyContext?.companySettings?.periods
-                .find((p) => p.id === formulaire.periodId)
-                ?.timeSlots.some(
-                  (ts) =>
-                    !companyContext?.companySettings?.unavailabilities.some(
-                      (u) =>
-                        dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
-                        u.unavailabilityPeriodIds.find(
-                          (upid) =>
-                            upid.periodId === formulaire.periodId &&
-                            upid.areaIds.find((areaId) => areaId === a.id) &&
-                            upid.unavailabilityTimeSlotIds.includes(ts.id) &&
-                            !upid.disabled
-                        )
-                    )
-                )
-            )
-            .map((area) => (
+      {areasFiltered && areasFiltered.length > 0 && (
+        <FormControl variant="standard" className="resajet-body-container">
+          <span className="resajet-label">{t("reservation.espace")}</span>
+          <Select
+            displayEmpty
+            name="areaId"
+            onChange={handleChange}
+            value={formulaire?.areaId}
+          >
+            <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
+            {areasFiltered?.map((area) => (
               <MenuItem key={area.id} value={area.id}>
                 {
                   area.areaTranslations.find(
@@ -212,8 +213,9 @@ export default function Reservation({
                 }
               </MenuItem>
             ))}
-        </Select>
-      </FormControl>
+          </Select>
+        </FormControl>
+      )}
 
       {formulaire?.periodId ? (
         <FormControl className="resajet-body-container" variant="standard">

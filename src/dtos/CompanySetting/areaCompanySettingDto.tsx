@@ -1,4 +1,4 @@
-import { AreaTranslation } from "../../models/areaTranslation";
+import { AreaTranslation } from "../../models/AreaTranslation";
 
 export interface AreaCompanySettingDto {
   id: string;

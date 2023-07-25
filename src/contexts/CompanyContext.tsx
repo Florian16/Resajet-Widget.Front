@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import { companyService } from "../services/company.service";
-import { CompanySettingDto } from "../dtos/CompanySetting/companySettingDto";
+import { CompanySettingDto } from "../dtos/CompanySetting/CompanySettingDto";
 
 export type CompanyContextProps = {
   companySettings: CompanySettingDto | null;

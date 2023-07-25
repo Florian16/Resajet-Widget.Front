@@ -1,5 +1,5 @@
-import { PeriodTranslation } from "../../models/periodTranslation";
-import { TimeSlotCompanySettingDto } from "./timeSlotCompanySettingDto";
+import { PeriodTranslation } from "../../models/PeriodTranslation";
+import { TimeSlotCompanySettingDto } from "./TimeSlotCompanySettingDto";
 
 export interface PeriodCompanySettingDto {
   id: string;

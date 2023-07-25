@@ -1,6 +1,6 @@
-import { AreaCompanySettingDto } from "./areaCompanySettingDto.tsx";
-import { PeriodCompanySettingDto } from "./periodCompanySettingDto.tsx";
-import { UnavailabilityCompanySettingDto } from "./unavailabilityCompanySettingDto.tsx";
+import { AreaCompanySettingDto } from "./AreaCompanySettingDto.tsx";
+import { PeriodCompanySettingDto } from "./PeriodCompanySettingDto.tsx";
+import { UnavailabilityCompanySettingDto } from "./UnavailabilityCompanySettingDto.tsx";
 
 export interface CompanySettingDto {
   mainColor: string;
