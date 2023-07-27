@@ -3,6 +3,7 @@ import { ReservationRequest } from "../requests/ReservationRequest";
 import { Grid } from "@mui/material";
 import { CompanyContextProps } from "../contexts/CompanyContext";
 import i18n from "../traductions/i18n";
+import { Language } from "../enums/Language";
 
 type RecapitulatifProps = {
   companyContext: CompanyContextProps;
@@ -122,7 +123,8 @@ export default function Recapitulatif({
                 : companyContext?.companySettings?.areas
                     .find((a) => a.id === formulaire?.areaId)
                     ?.areaTranslations.find(
-                      (at) => at.language.toString() == i18n.language
+                      (at) =>
+                        Object.values(Language)[at.language] == i18n.language
                     )?.name}
             </span>
           </Grid>
