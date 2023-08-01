@@ -7,7 +7,7 @@ export interface ReservationRequest {
   date: Dayjs | null;
   lastname: string;
   firstname: string;
-  mail: string;
+  email: string;
   phoneNumber?: string;
   comment?: string;
 }

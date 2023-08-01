@@ -11,6 +11,7 @@ type FooterProps = {
   setActiveStep: (as: number) => void;
   steps: string[];
   t: TFunction;
+  validateReservation: () => void;
 };
 
 export default function Footer({
@@ -19,6 +20,7 @@ export default function Footer({
   setActiveStep,
   steps,
   t,
+  validateReservation,
 }: FooterProps) {
   const nextIsDisabled = () => {
     if (activeStep === 0) {
@@ -37,9 +39,9 @@ export default function Footer({
         formulaire?.timeSlotId === "" ||
         formulaire?.lastname === "" ||
         formulaire?.firstname === "" ||
-        formulaire?.mail === "" ||
+        formulaire?.email === "" ||
         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-          formulaire?.mail
+          formulaire?.email
         ) ||
         formulaire?.phoneNumber === "" ||
         !(
@@ -71,7 +73,12 @@ export default function Footer({
             endIcon={
               activeStep === steps.length - 1 ? <CheckIcon /> : <ChevronRight />
             }
-            onClick={() => !nextIsDisabled() && setActiveStep(activeStep + 1)}
+            onClick={() => {
+              activeStep === steps.length - 1
+                ? validateReservation()
+                : !nextIsDisabled();
+              setActiveStep(activeStep + 1);
+            }}
             style={{
               color: "black",
               cursor: nextIsDisabled() ? "not-allowed" : "pointer",

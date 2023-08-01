@@ -142,7 +142,7 @@ export default function Recapitulatif({
               className="resajet-recapitulatif-container-grid-text"
               style={{ textTransform: "inherit" }}
             >
-              <span>{formulaire?.mail}</span>
+              <span>{formulaire?.email}</span>
             </Grid>
           </Grid>
           <Grid container className="resajet-recapitulatif-container-grid">

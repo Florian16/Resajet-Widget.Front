@@ -13,13 +13,14 @@ import Header from "./Header";
 import { useTranslation } from "react-i18next";
 import Recapitulatif from "./Recapitulatif";
 import SuccessAnimation from "./SuccessAnimation";
+import { reservationService } from "../services/reservation.service";
 
 type WidgetProps = {
   companyContext: CompanyContextProps;
   isOpen: boolean;
 };
 
-const formulaireInitial = {
+const formulaireInitial: ReservationRequest = {
   periodId: "",
   areaId: "",
   participants: 0,
@@ -28,7 +29,7 @@ const formulaireInitial = {
   firstname: "",
   lastname: "",
   phoneNumber: "",
-  mail: "",
+  email: "",
   comment: "",
 };
 
@@ -87,6 +88,22 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
     );
   };
 
+  const validateReservation = () => {
+    reservationService
+      .createReservation(companyContext.companySettings?.id ?? "", formulaire)
+      .then(() => {
+        console.log("ok");
+      })
+      .catch(() => {
+        console.log("error");
+      })
+      .finally(() => {
+        setFormulaire({
+          ...formulaireInitial,
+        });
+      });
+  };
+
   return (
     <div
       className={`resajet-widget ${
@@ -139,13 +156,16 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
           )}
         </div>
       </div>
-      <Footer
-        activeStep={activeStep}
-        formulaire={formulaire}
-        setActiveStep={(as) => setActiveStep(as)}
-        steps={steps}
-        t={t}
-      />
+      {activeStep === steps.length ? null : (
+        <Footer
+          activeStep={activeStep}
+          formulaire={formulaire}
+          setActiveStep={(as) => setActiveStep(as)}
+          steps={steps}
+          validateReservation={validateReservation}
+          t={t}
+        />
+      )}
     </div>
   );
 }

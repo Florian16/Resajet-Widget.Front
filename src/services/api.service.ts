@@ -16,6 +16,11 @@ class ApiService {
     const response: AxiosResponse<T> = await this.axiosInstance.get(url);
     return response.data;
   }
+
+  public async post<T, U>(url: string, data: U): Promise<T> {
+    const response: AxiosResponse<T> = await this.axiosInstance.post(url, data);
+    return response.data;
+  }
 }
 
 export const apiService = new ApiService();
