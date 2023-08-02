@@ -50,6 +50,7 @@ export default function Footer({
         )
       );
     }
+
     return false;
   };
   return (
@@ -74,10 +75,10 @@ export default function Footer({
               activeStep === steps.length - 1 ? <CheckIcon /> : <ChevronRight />
             }
             onClick={() => {
-              activeStep === steps.length - 1
-                ? validateReservation()
-                : !nextIsDisabled();
-              setActiveStep(activeStep + 1);
+              activeStep === steps.length - 1 && validateReservation();
+              !nextIsDisabled() &&
+                activeStep !== steps.length - 1 &&
+                setActiveStep(activeStep + 1);
             }}
             style={{
               color: "black",

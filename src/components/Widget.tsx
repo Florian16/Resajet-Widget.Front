@@ -92,7 +92,7 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
     reservationService
       .createReservation(companyContext.companySettings?.id ?? "", formulaire)
       .then(() => {
-        console.log("ok");
+        setActiveStep(activeStep + 1);
       })
       .catch(() => {
         console.log("error");

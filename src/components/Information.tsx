@@ -84,8 +84,8 @@ export default function Information({
           <PersonalTextField
             type="email"
             onChange={handleChange}
-            name="mail"
-            value={formulaire?.mail}
+            name="email"
+            value={formulaire?.email}
             size="small"
             style={{ marginTop: "3%" }}
             autoComplete={generateAutoCompleteValue()}
