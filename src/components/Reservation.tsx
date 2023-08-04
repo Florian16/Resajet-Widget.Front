@@ -193,7 +193,7 @@ export default function Reservation({
           />
         </LocalizationProvider>
       </FormControl>
-      {areasFiltered && areasFiltered.length > 0 && (
+      {companyContext.companySettings?.allowAreaSelection && (
         <FormControl variant="standard" className="resajet-body-container">
           <span className="resajet-label">{t("reservation.espace")}</span>
           <Select

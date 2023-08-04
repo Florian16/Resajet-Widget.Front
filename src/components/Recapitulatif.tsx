@@ -102,32 +102,37 @@ export default function Recapitulatif({
           </Grid>
         </Grid>
         <Grid container className="resajet-recapitulatif-container-grid">
-          <Grid
-            item
-            xs={6}
-            className="resajet-recapitulatif-container-grid-label"
-          >
-            <span>{t("recapitulatif.espace")} :</span>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            className="resajet-recapitulatif-container-grid-text"
-            style={
-              formulaire?.areaId === "" ? { textTransform: "inherit" } : {}
-            }
-          >
-            <span>
-              {formulaire?.areaId === ""
-                ? t("reservation.pasDePreference")
-                : companyContext?.companySettings?.areas
-                    .find((a) => a.id === formulaire?.areaId)
-                    ?.areaTranslations.find(
-                      (at) =>
-                        Object.values(Language)[at.language] == i18n.language
-                    )?.name}
-            </span>
-          </Grid>
+          {companyContext.companySettings?.allowAreaSelection && (
+            <>
+              <Grid
+                item
+                xs={6}
+                className="resajet-recapitulatif-container-grid-label"
+              >
+                <span>{t("recapitulatif.espace")} :</span>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                className="resajet-recapitulatif-container-grid-text"
+                style={
+                  formulaire?.areaId === "" ? { textTransform: "inherit" } : {}
+                }
+              >
+                <span>
+                  {formulaire?.areaId === ""
+                    ? t("reservation.pasDePreference")
+                    : companyContext?.companySettings?.areas
+                        .find((a) => a.id === formulaire?.areaId)
+                        ?.areaTranslations.find(
+                          (at) =>
+                            Object.values(Language)[at.language] ==
+                            i18n.language
+                        )?.name}
+                </span>
+              </Grid>
+            </>
+          )}
           <Grid container className="resajet-recapitulatif-container-grid">
             <Grid
               item

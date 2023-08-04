@@ -7,6 +7,7 @@ export interface CompanySettingDto {
   mainColor: string;
   periods: PeriodCompanySettingDto[];
   maximumReservation: number;
+  allowAreaSelection: boolean;
   unavailabilities: UnavailabilityCompanySettingDto[];
   areas: AreaCompanySettingDto[];
 }
