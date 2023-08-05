@@ -1,12 +1,12 @@
-import { CompanySettingDto } from "../dtos/CompanySetting/CompanySettingDto.tsx";
+import { CompanyDto } from "../dtos/Company/CompanyDto.tsx";
 import { apiService } from "./api.service";
 
 class CompanyService {
   private readonly baseUrl = "/companies";
 
-  public async getCompanySettings(id: string): Promise<CompanySettingDto> {
+  public async getCompany(id: string): Promise<CompanyDto> {
     const url = `${this.baseUrl}/settings?companyId=${id}`;
-    const companySetting: CompanySettingDto = await apiService.get(url);
+    const companySetting: CompanyDto = await apiService.get(url);
     return companySetting;
   }
 }

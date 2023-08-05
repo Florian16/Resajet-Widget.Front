@@ -17,7 +17,7 @@ export default function Header({ companyContext }: HeaderProps) {
     <div
       className="resajet-header"
       style={{
-        backgroundColor: companyContext.companySettings?.mainColor,
+        backgroundColor: companyContext.company?.mainColor,
       }}
     >
       <Grid container spacing={2} alignItems="center">

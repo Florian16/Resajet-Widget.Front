@@ -1,9 +1,9 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import { companyService } from "../services/company.service";
-import { CompanySettingDto } from "../dtos/CompanySetting/CompanySettingDto";
+import { CompanyDto } from "../dtos/Company/CompanyDto";
 
 export type CompanyContextProps = {
-  companySettings: CompanySettingDto | null;
+  company: CompanyDto | null;
 };
 
 type CompanyContextProviderProps = {
@@ -11,23 +11,22 @@ type CompanyContextProviderProps = {
 };
 
 const CompanyContext = React.createContext<CompanyContextProps>({
-  companySettings: null,
+  company: null,
 });
 
 const CompanyProvider = ({ children }: CompanyContextProviderProps) => {
-  const [companySettings, setCompanySettings] =
-    useState<CompanySettingDto | null>(null);
+  const [company, setCompany] = useState<CompanyDto | null>(null);
 
   const context: CompanyContextProps = {
-    companySettings,
+    company,
   };
 
   useEffect(() => {
     const fetchData = async () => {
       companyService
-        .getCompanySettings("a3285bbf-2ee2-461a-92b2-a352b4107a14")
+        .getCompany("20ce1e94-21c7-46d9-8795-6cbf7e05737e")
         .then((result) => {
-          setCompanySettings(result);
+          setCompany(result);
         })
         .catch((error) => "error " + console.log(error));
     };

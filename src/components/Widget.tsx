@@ -53,15 +53,15 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     ({ ownerState }) => ({
-      color: companyContext.companySettings?.mainColor,
+      color: companyContext.company?.mainColor,
       display: "flex",
       height: 22,
       alignItems: "center",
       ...(ownerState.active && {
-        color: companyContext.companySettings?.mainColor,
+        color: companyContext.company?.mainColor,
       }),
       "& .QontoStepIcon-completedIcon": {
-        color: companyContext.companySettings?.mainColor,
+        color: companyContext.company?.mainColor,
         zIndex: 1,
         fontSize: 18,
       },
@@ -90,7 +90,7 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
 
   const validateReservation = () => {
     reservationService
-      .createReservation(companyContext.companySettings?.id ?? "", formulaire)
+      .createReservation(companyContext.company?.id ?? "", formulaire)
       .then(() => {
         setActiveStep(activeStep + 1);
       })

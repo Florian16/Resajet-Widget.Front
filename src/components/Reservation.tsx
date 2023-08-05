@@ -32,12 +32,8 @@ export default function Reservation({
   useEffect(() => {
     const customMarks: MarkSlider[] = [];
 
-    if (companyContext?.companySettings?.maximumReservation) {
-      for (
-        let i = 1;
-        i <= companyContext?.companySettings?.maximumReservation;
-        i++
-      ) {
+    if (companyContext?.company?.maximumReservation) {
+      for (let i = 1; i <= companyContext?.company?.maximumReservation; i++) {
         customMarks.push({ value: i, label: i.toString() });
       }
     }
@@ -45,37 +41,35 @@ export default function Reservation({
     setMarks(customMarks);
 
     // Faites quelque chose avec la variable customMarks si nécessaire
-  }, [companyContext?.companySettings?.maximumReservation]);
+  }, [companyContext?.company?.maximumReservation]);
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
 
-    if (companyContext?.companySettings && formulaire.periodId !== "") {
+    if (companyContext?.company && formulaire.periodId !== "") {
       const disabledDates: Date[] = [];
       const currentDate = new Date($d);
-      companyContext?.companySettings?.unavailabilities.forEach(
-        (unavailability) => {
-          if (
-            unavailability.unavailabilityPeriodIds.find(
-              (upid) => upid.periodId === formulaire.periodId
-            )?.disabled ||
-            companyContext.companySettings?.areas?.filter(
-              (a) =>
-                !companyContext?.companySettings?.unavailabilities.some(
-                  (u) =>
-                    isSameDay(new Date(u.date), currentDate) &&
-                    u.unavailabilityPeriodIds.find(
-                      (upid) =>
-                        upid.periodId === formulaire.periodId &&
-                        upid.areaIds.find((areaId) => areaId === a.id) &&
-                        !upid.disabled
-                    )
-                )
-            ).length === 0
-          )
-            disabledDates.push(unavailability.date);
-        }
-      );
+      companyContext?.company?.unavailabilities.forEach((unavailability) => {
+        if (
+          unavailability.unavailabilityPeriodIds.find(
+            (upid) => upid.periodId === formulaire.periodId
+          )?.disabled ||
+          companyContext.company?.areas?.filter(
+            (a) =>
+              !companyContext?.company?.unavailabilities.some(
+                (u) =>
+                  isSameDay(new Date(u.date), currentDate) &&
+                  u.unavailabilityPeriodIds.find(
+                    (upid) =>
+                      upid.periodId === formulaire.periodId &&
+                      upid.areaIds.find((areaId) => areaId === a.id) &&
+                      !upid.disabled
+                  )
+              )
+          ).length === 0
+        )
+          disabledDates.push(unavailability.date);
+      });
       return disabledDates.some(
         (d) =>
           new Date(d).getDate() === $d.getDate() &&
@@ -97,16 +91,16 @@ export default function Reservation({
 
   const StyledDateCalendar = styled(DateCalendar)`
     && .Mui-selected {
-      background-color: ${companyContext?.companySettings?.mainColor};
+      background-color: ${companyContext?.company?.mainColor};
     }
   `;
 
-  const areasFiltered = companyContext.companySettings?.areas?.filter((a) =>
-    companyContext?.companySettings?.periods
+  const areasFiltered = companyContext.company?.areas?.filter((a) =>
+    companyContext?.company?.periods
       .find((p) => p.id === formulaire.periodId)
       ?.timeSlots.some(
         (ts) =>
-          !companyContext?.companySettings?.unavailabilities.some(
+          !companyContext?.company?.unavailabilities.some(
             (u) =>
               dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
               u.unavailabilityPeriodIds.find(
@@ -137,7 +131,7 @@ export default function Reservation({
                 <em>{t("reservation.veuillezChoisirOptionRestauration")}</em>
               );
             }
-            const period = companyContext.companySettings?.periods?.find(
+            const period = companyContext.company?.periods?.find(
               (tr) => tr.id === selected
             );
 
@@ -148,7 +142,7 @@ export default function Reservation({
               : "";
           }}
         >
-          {companyContext.companySettings?.periods?.map((period) => (
+          {companyContext.company?.periods?.map((period) => (
             <MenuItem key={period.id} value={period.id}>
               {
                 period.periodTranslations.find(
@@ -168,7 +162,7 @@ export default function Reservation({
           disabled={formulaire?.periodId === ""}
           value={formulaire?.participants}
           min={1}
-          max={companyContext.companySettings?.maximumReservation}
+          max={companyContext.company?.maximumReservation}
           marks={marks}
           name="participants"
           onChange={handleChange}
@@ -193,7 +187,7 @@ export default function Reservation({
           />
         </LocalizationProvider>
       </FormControl>
-      {companyContext.companySettings?.allowAreaSelection && (
+      {companyContext.company?.companySetting.areaSelection && (
         <FormControl variant="standard" className="resajet-body-container">
           <span className="resajet-label">{t("reservation.espace")}</span>
           <Select
@@ -221,11 +215,11 @@ export default function Reservation({
         <FormControl className="resajet-body-container" variant="standard">
           <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
-            {companyContext?.companySettings?.periods
+            {companyContext?.company?.periods
               .find((p) => p.id === formulaire.periodId)
               ?.timeSlots.filter(
                 (ts) =>
-                  !companyContext?.companySettings?.unavailabilities.some(
+                  !companyContext?.company?.unavailabilities.some(
                     (u) =>
                       dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
                       u.unavailabilityPeriodIds.find((upid) =>
@@ -265,7 +259,7 @@ export default function Reservation({
                     style={{
                       borderColor:
                         formulaire?.timeSlotId === timeSlot.id
-                          ? companyContext.companySettings?.mainColor
+                          ? companyContext.company?.mainColor
                           : "black",
                     }}
                     onClick={() =>

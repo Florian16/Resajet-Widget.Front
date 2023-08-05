@@ -72,7 +72,7 @@ export default function Recapitulatif({
             className="resajet-recapitulatif-container-grid-text"
           >
             <span>
-              {companyContext?.companySettings?.periods
+              {companyContext?.company?.periods
                 .find((p) => p.id === formulaire?.periodId)
                 ?.timeSlots.find((ts) => ts.id === formulaire.timeSlotId)
                 ?.hour.replace(/:00$/, "")}
@@ -102,7 +102,7 @@ export default function Recapitulatif({
           </Grid>
         </Grid>
         <Grid container className="resajet-recapitulatif-container-grid">
-          {companyContext.companySettings?.allowAreaSelection && (
+          {companyContext.company?.companySetting.areaSelection && (
             <>
               <Grid
                 item
@@ -122,7 +122,7 @@ export default function Recapitulatif({
                 <span>
                   {formulaire?.areaId === ""
                     ? t("reservation.pasDePreference")
-                    : companyContext?.companySettings?.areas
+                    : companyContext?.company?.areas
                         .find((a) => a.id === formulaire?.areaId)
                         ?.areaTranslations.find(
                           (at) =>

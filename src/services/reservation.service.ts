@@ -1,4 +1,4 @@
-import { CompanySettingDto } from "../dtos/CompanySetting/CompanySettingDto.tsx";
+import { CompanyDto } from "../dtos/Company/CompanyDto.tsx";
 import { ReservationRequest } from "../requests/ReservationRequest.tsx";
 import { apiService } from "./api.service.ts";
 
@@ -8,7 +8,7 @@ class ReservationService {
   public async createReservation(
     companyId: string,
     data: ReservationRequest
-  ): Promise<CompanySettingDto> {
+  ): Promise<CompanyDto> {
     const url = `${this.baseUrl}/${companyId}`;
     const request = {
       periodId: data.periodId,
