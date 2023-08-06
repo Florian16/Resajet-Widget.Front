@@ -38,7 +38,14 @@
     "personne": "person",
     "personnes": "persons",
     "espace": "Area",
-    "commentaire": "Comment"
+    "commentaire": "Comment",
+    "lundi": "monday",
+    "mardi": "tuesday",
+    "mercredi": "wednesday",
+    "jeudi": "thursday",
+    "vendredi": "friday",
+    "samedi": "saturday",
+    "dimanche": "sunday"
   },
   "validation": {
     "reservationBienEnregistree": "The reservation has been registered."

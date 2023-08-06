@@ -38,7 +38,14 @@
     "personne": "personne",
     "personnes": "personnes",
     "espace": "Espace",
-    "commentaire": "Commentaire"
+    "commentaire": "Commentaire",
+    "lundi": "lundi",
+    "mardi": "mardi",
+    "mercredi": "mercredi",
+    "jeudi": "jeudi",
+    "vendredi": "vendredi",
+    "samedi": "samedi",
+    "dimanche": "dimanche"
   },
   "validation": {
     "reservationBienEnregistree": "La réservation a bien été enregistrée."

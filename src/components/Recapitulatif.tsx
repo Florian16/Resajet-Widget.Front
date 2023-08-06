@@ -51,9 +51,11 @@ export default function Recapitulatif({
           >
             <span>
               {formulaire?.date
-                ? `${formulaire?.date.format("dddd")} ${formulaire?.date.format(
-                    "DD/MM/YYYY"
-                  )}`
+                ? `${t(
+                    `recapitulatif.${formulaire?.date
+                      .locale("fr")
+                      .format("dddd")}`
+                  )} ${formulaire?.date.format("DD/MM/YYYY")}`
                 : ""}
             </span>
           </Grid>

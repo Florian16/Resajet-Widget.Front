@@ -38,7 +38,14 @@
     "personne": "persoon",
     "personnes": "personen",
     "espace": "Ruimte",
-    "commentaire": "Commentaar"
+    "commentaire": "Commentaar",
+    "lundi": "maandag",
+    "mardi": "dinsdag",
+    "mercredi": "woensdag",
+    "jeudi": "donderdag",
+    "vendredi": "vrijdag",
+    "samedi": "vrijdag",
+    "dimanche": "zondag"
   },
   "validation": {
     "reservationBienEnregistree": "De reservering is geregistreerd."
