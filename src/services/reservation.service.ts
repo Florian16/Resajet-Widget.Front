@@ -12,7 +12,7 @@ class ReservationService {
     const url = `${this.baseUrl}/${companyId}`;
     const request = {
       periodId: data.periodId,
-      areaId: data.areaId,
+      areaId: data.areaId === "" ? null : data.areaId,
       participants: data.participants,
       timeSlotId: data.timeSlotId,
       date: data.date?.format("YYYY-MM-DD"),

@@ -18,6 +18,7 @@ import { reservationService } from "../services/reservation.service";
 type WidgetProps = {
   companyContext: CompanyContextProps;
   isOpen: boolean;
+  openCloseWidget: () => void;
 };
 
 const formulaireInitial: ReservationRequest = {
@@ -33,13 +34,18 @@ const formulaireInitial: ReservationRequest = {
   comment: "",
 };
 
-export default function Widget({ companyContext, isOpen }: WidgetProps) {
+export default function Widget({
+  companyContext,
+  isOpen,
+  openCloseWidget,
+}: WidgetProps) {
   const { t } = useTranslation();
   const { formulaire, handleChange, setFormulaire, handleCustomChange } =
     useFormulaire<ReservationRequest>({
       ...formulaireInitial,
     });
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const steps = [
     t("steps.reservation"),
     t("steps.informations"),
@@ -89,18 +95,20 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
   };
 
   const validateReservation = () => {
+    setIsSubmitting(true);
     reservationService
       .createReservation(companyContext.company?.id ?? "", formulaire)
       .then(() => {
         setActiveStep(activeStep + 1);
+        setFormulaire({
+          ...formulaireInitial,
+        });
       })
       .catch(() => {
         console.log("error");
       })
       .finally(() => {
-        setFormulaire({
-          ...formulaireInitial,
-        });
+        setIsSubmitting(false);
       });
   };
 
@@ -156,16 +164,17 @@ export default function Widget({ companyContext, isOpen }: WidgetProps) {
           )}
         </div>
       </div>
-      {activeStep === steps.length ? null : (
-        <Footer
-          activeStep={activeStep}
-          formulaire={formulaire}
-          setActiveStep={(as) => setActiveStep(as)}
-          steps={steps}
-          validateReservation={validateReservation}
-          t={t}
-        />
-      )}
+      <Footer
+        activeStep={activeStep}
+        formulaire={formulaire}
+        setActiveStep={(as) => setActiveStep(as)}
+        steps={steps}
+        validateReservation={validateReservation}
+        t={t}
+        companyContext={companyContext}
+        isSubmitting={isSubmitting}
+        openCloseWidget={openCloseWidget}
+      />
     </div>
   );
 }

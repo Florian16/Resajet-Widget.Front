@@ -1,9 +1,10 @@
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, CircularProgress } from "@mui/material";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import CheckIcon from "@mui/icons-material/Check";
 import { ReservationRequest } from "../requests/ReservationRequest";
 import { TFunction } from "i18next";
+import { CompanyContextProps } from "../contexts/CompanyContext";
 
 type FooterProps = {
   activeStep: number;
@@ -12,6 +13,9 @@ type FooterProps = {
   steps: string[];
   t: TFunction;
   validateReservation: () => void;
+  companyContext: CompanyContextProps;
+  isSubmitting: boolean;
+  openCloseWidget: () => void;
 };
 
 export default function Footer({
@@ -21,6 +25,9 @@ export default function Footer({
   steps,
   t,
   validateReservation,
+  companyContext,
+  isSubmitting,
+  openCloseWidget,
 }: FooterProps) {
   const nextIsDisabled = () => {
     if (activeStep === 0) {
@@ -56,7 +63,7 @@ export default function Footer({
   return (
     <div className="resajet-footer">
       <Grid container justifyContent="space-between">
-        {activeStep !== 0 && (
+        {activeStep !== 0 && activeStep !== steps.length && (
           <Grid item>
             <Button
               startIcon={<ChevronLeft />}
@@ -70,26 +77,51 @@ export default function Footer({
           </Grid>
         )}
         <Grid item style={{ marginLeft: "auto" }}>
-          <Button
-            endIcon={
-              activeStep === steps.length - 1 ? <CheckIcon /> : <ChevronRight />
-            }
-            onClick={() => {
-              activeStep === steps.length - 1 && validateReservation();
-              !nextIsDisabled() &&
-                activeStep !== steps.length - 1 &&
-                setActiveStep(activeStep + 1);
-            }}
-            style={{
-              color: "black",
-              cursor: nextIsDisabled() ? "not-allowed" : "pointer",
-            }}
-            disableRipple={nextIsDisabled()}
-          >
-            {activeStep === steps.length - 1
-              ? `${t("footer.valider")}`
-              : `${t("footer.suivant")}`}{" "}
-          </Button>
+          {companyContext && isSubmitting ? (
+            <CircularProgress
+              variant="indeterminate"
+              disableShrink
+              sx={{
+                color: () => companyContext.company?.mainColor,
+                animationDuration: "800ms",
+                position: "absolute",
+                right: 55,
+              }}
+              size={40}
+              thickness={4}
+            />
+          ) : (
+            <Button
+              endIcon={
+                activeStep === steps.length - 1 ? (
+                  <CheckIcon />
+                ) : (
+                  <ChevronRight />
+                )
+              }
+              onClick={() => {
+                if (activeStep === steps.length) {
+                  openCloseWidget();
+                } else {
+                  activeStep === steps.length - 1 && validateReservation();
+                  !nextIsDisabled() &&
+                    activeStep !== steps.length - 1 &&
+                    setActiveStep(activeStep + 1);
+                }
+              }}
+              style={{
+                color: "black",
+                cursor: nextIsDisabled() ? "not-allowed" : "pointer",
+              }}
+              disableRipple={nextIsDisabled()}
+            >
+              {activeStep === steps.length
+                ? `${t("footer.fermer")}`
+                : activeStep === steps.length - 1
+                ? `${t("footer.valider")}`
+                : `${t("footer.suivant")}`}
+            </Button>
+          )}
         </Grid>
       </Grid>
     </div>

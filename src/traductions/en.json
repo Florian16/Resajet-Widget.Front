@@ -26,7 +26,8 @@
   "footer": {
     "retour": "Back",
     "valider": "Confirm",
-    "suivant": "Next"
+    "suivant": "Next",
+    "fermer": "Close"
   },
   "recapitulatif": {
     "client": "Client",

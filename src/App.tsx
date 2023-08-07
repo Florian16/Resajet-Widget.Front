@@ -14,7 +14,11 @@ function App() {
           companyContext={companyContext}
           onClick={() => setIsOpen(!isOpen)}
         />
-        <Widget companyContext={companyContext} isOpen={isOpen} />
+        <Widget
+          companyContext={companyContext}
+          isOpen={isOpen}
+          openCloseWidget={() => setIsOpen(!isOpen)}
+        />
       </div>
     </div>
   );

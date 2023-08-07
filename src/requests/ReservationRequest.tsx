@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 export interface ReservationRequest {
   periodId: string;
-  areaId: string;
+  areaId?: string;
   participants: number;
   timeSlotId: string;
   date: Dayjs | null;
