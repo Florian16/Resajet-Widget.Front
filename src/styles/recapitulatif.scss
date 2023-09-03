@@ -3,6 +3,10 @@
   width: 100%;
 
   &-container {
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     &-grid {
       margin-top: 2%;
       &:last-child {
