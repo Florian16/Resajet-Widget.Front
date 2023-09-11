@@ -7,7 +7,8 @@ class ReservationService {
 
   public async createReservation(
     companyId: string,
-    data: ReservationRequest
+    data: ReservationRequest,
+    language: string
   ): Promise<CompanyDto> {
     const url = `${this.baseUrl}/${companyId}`;
     const request = {
@@ -22,7 +23,7 @@ class ReservationService {
       phoneNumber: data.phoneNumber,
       comment: data.comment,
     };
-    return await apiService.post(url, request);
+    return await apiService.post(url, request, language);
   }
 }
 

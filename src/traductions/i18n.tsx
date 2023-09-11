@@ -6,16 +6,16 @@ import translationFR from "./fr.json";
 import translationNL from "./nl.json";
 
 const options = {
-  fallbackLng: "fr",
-  supportedLngs: ["en", "fr", "nl"],
+  fallbackLng: "fr-FR",
+  supportedLngs: ["en-US", "fr-FR", "nl-NL"],
   resources: {
-    en: {
+    "en-US": {
       translation: translationEN,
     },
-    fr: {
+    "fr-FR": {
       translation: translationFR,
     },
-    nl: {
+    "nl-NL": {
       translation: translationNL,
     },
   },

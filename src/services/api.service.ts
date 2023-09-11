@@ -6,19 +6,32 @@ class ApiService {
   constructor() {
     this.axiosInstance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
   }
 
-  public async get<T>(url: string): Promise<T> {
-    const response: AxiosResponse<T> = await this.axiosInstance.get(url);
+  public async get<T>(url: string, language: string): Promise<T> {
+    const headers = {
+      "Content-Type": "application/json",
+      "Accept-Language": language,
+    };
+
+    const response: AxiosResponse<T> = await this.axiosInstance.get(url, {
+      headers,
+    });
     return response.data;
   }
 
-  public async post<T, U>(url: string, data: U): Promise<T> {
-    const response: AxiosResponse<T> = await this.axiosInstance.post(url, data);
+  public async post<T, U>(url: string, data: U, language: string): Promise<T> {
+    const headers = {
+      "Content-Type": "application/json",
+      "Accept-Language": language,
+    };
+
+    const response: AxiosResponse<T> = await this.axiosInstance.post(
+      url,
+      data,
+      { headers }
+    );
     return response.data;
   }
 }

@@ -26,19 +26,19 @@ export default function Header({ companyContext }: HeaderProps) {
         </Grid>
         <Grid item xs={3} className="resajet-header-flag">
           <Select value={i18n.language} onChange={handleLanguageChange}>
-            <MenuItem value="fr">
+            <MenuItem value="fr-FR">
               <span
                 className="flag-icon flag-icon-fr"
                 style={{ fontSize: "1.4rem" }}
               ></span>
             </MenuItem>
-            <MenuItem value="nl">
+            <MenuItem value="nl-NL">
               <span
                 className="flag-icon flag-icon-nl"
                 style={{ fontSize: "1.4rem" }}
               ></span>
             </MenuItem>
-            <MenuItem value="en">
+            <MenuItem value="en-US">
               <span
                 className="flag-icon flag-icon-gb"
                 style={{ fontSize: "1.4rem" }}

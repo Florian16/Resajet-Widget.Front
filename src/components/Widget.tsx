@@ -39,7 +39,7 @@ export default function Widget({
   isOpen,
   openCloseWidget,
 }: WidgetProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { formulaire, handleChange, setFormulaire, handleCustomChange } =
     useFormulaire<ReservationRequest>({
       ...formulaireInitial,
@@ -97,7 +97,11 @@ export default function Widget({
   const validateReservation = () => {
     setIsSubmitting(true);
     reservationService
-      .createReservation(companyContext.company?.id ?? "", formulaire)
+      .createReservation(
+        companyContext.company?.id ?? "",
+        formulaire,
+        i18n.language
+      )
       .then(() => {
         setActiveStep(activeStep + 1);
         setFormulaire({
