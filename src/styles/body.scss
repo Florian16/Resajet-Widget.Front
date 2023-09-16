@@ -62,20 +62,54 @@
   }
 }
 
-@media screen and (max-width: 374.98px) {
+@media screen and (max-width: 300px) {
   .resajet-body {
     width: 100%;
-    padding: 1.5rem;
-    padding-top: 1.8rem;
+    padding-top: 1.6rem;
+    margin-top: -0.1rem;
+
+    &-stepper {
+      padding-bottom: 1rem;
+    }
+
+    &-big-container {
+      margin-right: 1.5rem;
+      margin-left: 1rem;
+    }
+
+    .MuiPickersCalendarHeader-root {
+      margin-top: 3%;
+    }
+
+    &-button-hour {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      font-family: "Poppins", sans-serif;
+      border: solid 2px;
+      padding: 2%;
+      padding-left: 10%;
+      padding-right: 10%;
+      border-radius: 14px;
+      cursor: pointer;
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
   }
 }
 
-@media screen and (max-width: 575.98px) {
+@media screen and (min-width: 301px) and (max-width: 575.98px) {
   .resajet-body {
     width: 100%;
-    padding: 1rem;
-    padding-bottom: 0rem;
-    padding-top: 1.5rem;
+    padding-top: 1.6rem;
+    margin-top: -0.1rem;
+
+    &-big-container {
+      margin-right: 1rem;
+      margin-left: 1rem;
+    }
   }
 }
 

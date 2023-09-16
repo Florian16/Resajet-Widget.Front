@@ -29,11 +29,26 @@
     }
   }
 }
+@media screen and (max-width: 300px) {
+  .resajet-header {
+    font-size: 0.9rem;
+    padding-bottom: 0rem;
 
-@media screen and (max-width: 374.98px) {
+    &-flag {
+      padding-left: 0px !important;
+    }
+  }
+  .MuiStep-root {
+    padding-right: 0 !important;
+  }
+  .MuiGrid-root > .MuiGrid-item {
+    padding-top: 0px !important;
+  }
+}
+
+@media screen and (min-width: 301px) and (max-width: 374.98px) {
   .resajet-header {
     font-size: 1.1rem;
-    padding-left: 1.5rem;
     padding-bottom: 0rem;
   }
   .MuiStep-root {
@@ -47,7 +62,6 @@
 @media screen and (min-width: 375px) and (max-width: 575.98px) {
   .resajet-header {
     font-size: 1.2rem;
-    padding-left: 1.5rem;
     padding-bottom: 0rem;
   }
   .MuiStep-root {

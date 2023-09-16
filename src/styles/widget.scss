@@ -60,7 +60,22 @@
   }
 }
 
-@media screen and (max-width: 575.98px) {
+@media screen and (max-width: 300px) {
+  .resajet-widget {
+    max-height: 86%;
+    max-width: 86%;
+    bottom: 8%;
+  }
+
+  .resajet-label {
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 0.7rem;
+    letter-spacing: 0rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+@media screen and (min-width: 301px) and (max-width: 575.98px) {
   .resajet-widget {
     max-height: 86%;
     max-width: 86%;
