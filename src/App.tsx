@@ -8,19 +8,21 @@ function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="resajet-container">
-      <div className="resajet-section">
-        <Button
-          companyContext={companyContext}
-          onClick={() => setIsOpen(!isOpen)}
-        />
-        <Widget
-          companyContext={companyContext}
-          isOpen={isOpen}
-          openCloseWidget={() => setIsOpen(!isOpen)}
-        />
+    companyContext?.company != null && (
+      <div className="resajet-container">
+        <div className="resajet-section">
+          <Button
+            companyContext={companyContext}
+            onClick={() => setIsOpen(!isOpen)}
+          />
+          <Widget
+            companyContext={companyContext}
+            isOpen={isOpen}
+            openCloseWidget={() => setIsOpen(!isOpen)}
+          />
+        </div>
       </div>
-    </div>
+    )
   );
 }
 

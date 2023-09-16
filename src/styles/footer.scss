@@ -1,14 +1,41 @@
 .resajet-footer {
+  width: 100%;
   position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #c1c8c8;
   font-size: 1.5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
   padding-top: 0.65rem;
   padding-bottom: 0.65rem;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
+
+  &-label-back-step {
+    margin-left: 1.5rem !important;
+  }
+  &-label-next-step {
+    margin-right: 1.5rem !important;
+  }
+}
+
+@media screen and (max-width: 374.98px) {
+  .resajet-footer {
+    padding-top: 0rem;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 575.98px) {
+  .resajet-footer {
+    padding-top: 0rem;
+    padding-left: 0rem;
+  }
+
+  .resajet-footer-label-back-step {
+    margin-right: 1rem !important;
+  }
+
+  .resajet-footer-label-next-step {
+    margin-right: 1rem !important;
+  }
 }

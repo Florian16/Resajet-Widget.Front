@@ -120,7 +120,11 @@ export default function Information({
             name="comment"
             onChange={handleChange}
             value={formulaire?.comment}
-            style={{ marginTop: "3%" }}
+            style={{
+              marginTop: "3%",
+              marginBottom: "3%",
+              whiteSpace: "pre-line",
+            }}
           />
         </Grid>
       </Grid>

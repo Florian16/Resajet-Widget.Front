@@ -71,6 +71,7 @@ export default function Footer({
               style={{
                 color: "black",
               }}
+              className="resajet-footer-label-back-step"
             >
               {t("footer.retour")}
             </Button>
@@ -113,6 +114,7 @@ export default function Footer({
                 color: "black",
                 cursor: nextIsDisabled() ? "not-allowed" : "pointer",
               }}
+              className="resajet-footer-label-next-step"
               disableRipple={nextIsDisabled()}
             >
               {activeStep === steps.length

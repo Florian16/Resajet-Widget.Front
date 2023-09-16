@@ -124,61 +124,65 @@ export default function Widget({
     >
       <Header companyContext={companyContext} />
       <div className="resajet-body">
-        <Stepper
-          activeStep={activeStep}
-          alternativeLabel
-          className="resajet-body-stepper"
-        >
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <div>
-          {activeStep === 0 && (
-            <Reservation
-              handleChange={handleChange}
-              handleCustomChange={handleCustomChange}
-              companyContext={companyContext}
-              formulaire={formulaire}
-              t={t}
-            />
-          )}
-          {activeStep === 1 && (
-            <Information
-              formulaire={formulaire}
-              handleChange={handleChange}
-              handleCustomChange={handleCustomChange}
-              t={t}
-            />
-          )}
-          {activeStep === 2 && (
-            <Recapitulatif
-              t={t}
-              formulaire={formulaire}
-              companyContext={companyContext}
-            />
-          )}
+        <div className="resajet-body-container">
+          <Stepper
+            activeStep={activeStep}
+            alternativeLabel
+            className="resajet-body-stepper"
+          >
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            {activeStep === 0 && (
+              <Reservation
+                handleChange={handleChange}
+                handleCustomChange={handleCustomChange}
+                companyContext={companyContext}
+                formulaire={formulaire}
+                t={t}
+              />
+            )}
+            {activeStep === 1 && (
+              <Information
+                formulaire={formulaire}
+                handleChange={handleChange}
+                handleCustomChange={handleCustomChange}
+                t={t}
+              />
+            )}
+            {activeStep === 2 && (
+              <Recapitulatif
+                t={t}
+                formulaire={formulaire}
+                companyContext={companyContext}
+              />
+            )}
 
-          {activeStep === 3 && (
-            <SuccessAnimation
-              title={t("validation.reservationBienEnregistree")}
-            />
-          )}
+            {activeStep === 3 && (
+              <SuccessAnimation
+                title={t("validation.reservationBienEnregistree")}
+              />
+            )}
+          </div>
         </div>
       </div>
-      <Footer
-        activeStep={activeStep}
-        formulaire={formulaire}
-        setActiveStep={(as) => setActiveStep(as)}
-        steps={steps}
-        validateReservation={validateReservation}
-        t={t}
-        companyContext={companyContext}
-        isSubmitting={isSubmitting}
-        openCloseWidget={openCloseWidget}
-      />
+      {
+        <Footer
+          activeStep={activeStep}
+          formulaire={formulaire}
+          setActiveStep={(as) => setActiveStep(as)}
+          steps={steps}
+          validateReservation={validateReservation}
+          t={t}
+          companyContext={companyContext}
+          isSubmitting={isSubmitting}
+          openCloseWidget={openCloseWidget}
+        />
+      }
     </div>
   );
 }

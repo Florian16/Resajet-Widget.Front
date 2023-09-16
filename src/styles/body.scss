@@ -1,5 +1,7 @@
 .resajet-body {
-  padding: 1.5rem;
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   background-color: #dbe0e0;
   &-stepper {
     padding-bottom: 1.5rem;
@@ -7,9 +9,6 @@
 
   &-container {
     padding-bottom: 2.2rem !important;
-    &:last-child {
-      padding-bottom: inherit !important;
-    }
   }
 
   &-button-hour {
@@ -59,8 +58,17 @@
   }
 }
 
+@media screen and (max-width: 374.98px) {
+  .resajet-body {
+    padding: 1.5rem;
+    padding-top: 1.8rem;
+  }
+}
+
 @media screen and (max-width: 575.98px) {
   .resajet-body {
-    width: 100%;
+    padding: 1rem;
+    padding-bottom: 0rem;
+    padding-top: 1.5rem;
   }
 }

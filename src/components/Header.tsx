@@ -21,7 +21,7 @@ export default function Header({ companyContext }: HeaderProps) {
       }}
     >
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={9}>
+        <Grid item xs={9} className="resajet-header-title">
           <span>{t("header.titre")}</span>
         </Grid>
         <Grid item xs={3} className="resajet-header-flag">

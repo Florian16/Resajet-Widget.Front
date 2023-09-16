@@ -9,8 +9,8 @@ import { ReservationRequest } from "../requests/ReservationRequest";
 import { MarkSlider } from "../interfaces/MarkSlider";
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-import { Language } from "../enums/Language";
 import dayjs from "dayjs";
+import { Language } from "../enums/Language";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
