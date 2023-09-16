@@ -124,7 +124,7 @@ export default function Widget({
     >
       <Header companyContext={companyContext} />
       <div className="resajet-body">
-        <div className="resajet-body-container">
+        <div className="resajet-body-big-container">
           <Stepper
             activeStep={activeStep}
             alternativeLabel

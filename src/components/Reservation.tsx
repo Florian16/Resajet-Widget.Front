@@ -239,8 +239,7 @@ export default function Reservation({
               .map((timeSlot) => (
                 <Grid
                   item
-                  md={3}
-                  xs={4}
+                  xs={3}
                   container
                   justifyContent="center"
                   alignItems="center"

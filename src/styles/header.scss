@@ -1,7 +1,6 @@
 .resajet-header {
   width: 100%;
   font-size: 1.5rem;
-  padding-left: 2rem;
   position: sticky;
   top: 0;
   left: 0;
@@ -12,17 +11,12 @@
   }
 
   .MuiGrid-root > .MuiGrid-item {
+    padding-left: 32px;
     padding-top: 6px !important;
   }
 
   &-flag {
-    padding-left: 0px !important;
-  }
-
-  &-title {
-    &.MuiGrid-root {
-      max-width: 70% !important;
-    }
+    padding-left: 10px !important;
   }
 
   .MuiOutlinedInput-notchedOutline {
