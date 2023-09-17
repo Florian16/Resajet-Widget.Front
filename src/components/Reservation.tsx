@@ -117,19 +117,22 @@ export default function Reservation({
 
   return (
     <div>
-      <div className="resajet-body-comment">
-        <p style={{ display: "flex" }}>
-          <i>
-            <InfoIcon
-              style={{
-                fontSize: "22px",
-                marginRight: "8px",
-              }}
-            />
-          </i>
-          {companyContext.company?.companySetting.generalComment}
-        </p>
-      </div>
+      {companyContext.company?.companySetting.generalComment !== "" &&
+        companyContext.company?.companySetting.generalComment !== null && (
+          <div className="resajet-body-comment">
+            <p style={{ display: "flex" }}>
+              <i>
+                <InfoIcon
+                  style={{
+                    fontSize: "22px",
+                    marginRight: "8px",
+                  }}
+                />
+              </i>
+              {companyContext.company?.companySetting.generalComment}
+            </p>
+          </div>
+        )}
       <FormControl variant="standard" className="resajet-body-container">
         <span className="resajet-label">
           {t("reservation.optionRestauration")}
