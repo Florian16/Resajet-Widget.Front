@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CompanyContext } from "./contexts/CompanyContext";
 import Button from "./components/Button";
 import Widget from "./components/Widget";
@@ -7,7 +7,15 @@ import Popup from "./components/Popup";
 function App() {
   const companyContext = useContext(CompanyContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isToggleOpen, setIsToggleOpen] = useState<boolean>(true);
+  const [isToggleOpen, setIsToggleOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsToggleOpen(true);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     companyContext?.company != null && (
