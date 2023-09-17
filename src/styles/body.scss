@@ -1,7 +1,17 @@
 .resajet-body {
   width: 100%;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   background-color: #dbe0e0;
+
+  &-comment {
+    background-color: lightgray;
+    border-radius: 10px;
+    p {
+      padding: 1rem;
+      font-size: 14px;
+      font-style: italic;
+    }
+  }
   &-stepper {
     padding-bottom: 1.5rem;
   }

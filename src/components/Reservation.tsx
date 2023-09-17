@@ -11,6 +11,7 @@ import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { Language } from "../enums/Language";
+import InfoIcon from "@mui/icons-material/Info";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
@@ -116,6 +117,19 @@ export default function Reservation({
 
   return (
     <div>
+      <div className="resajet-body-comment">
+        <p style={{ display: "flex" }}>
+          <i>
+            <InfoIcon
+              style={{
+                fontSize: "22px",
+                marginRight: "8px",
+              }}
+            />
+          </i>
+          {companyContext.company?.companySetting.generalComment}
+        </p>
+      </div>
       <FormControl variant="standard" className="resajet-body-container">
         <span className="resajet-label">
           {t("reservation.optionRestauration")}
