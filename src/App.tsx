@@ -23,6 +23,8 @@ function App() {
         <div className="resajet-section">
           <Button
             companyContext={companyContext}
+            isToggleOpen={isToggleOpen}
+            isOpen={isOpen}
             onClick={() => {
               if (isToggleOpen) {
                 setIsToggleOpen(false);
