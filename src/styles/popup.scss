@@ -33,3 +33,27 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 380px) {
+  .popup-container {
+    width: 40%;
+    bottom: 11%;
+    right: 19%;
+  }
+}
+
+@media screen and (min-width: 381px) and (max-width: 575.98px) {
+  .popup-container {
+    width: 40%;
+    bottom: 9.5%;
+    right: 15%;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1199.98px) {
+  .popup-container {
+    width: 20%;
+    bottom: 7.5%;
+    right: 9%;
+  }
+}
