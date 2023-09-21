@@ -35,15 +35,17 @@ function App() {
               }
             }}
           />
-          <Popup
-            companyContext={companyContext}
-            onClick={() => {
-              setIsOpen(!isOpen);
-              setIsToggleOpen(!isToggleOpen);
-            }}
-            isToggleOpen={isToggleOpen}
-            isOpen={isOpen}
-          />
+          {!isOpen && (
+            <Popup
+              companyContext={companyContext}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                setIsToggleOpen(!isToggleOpen);
+              }}
+              isToggleOpen={isToggleOpen}
+              isOpen={isOpen}
+            />
+          )}
           {isOpen && (
             <Widget
               companyContext={companyContext}

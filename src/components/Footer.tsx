@@ -60,6 +60,7 @@ export default function Footer({
 
     return false;
   };
+
   return (
     <div className="resajet-footer">
       <Grid container justifyContent="space-between">
