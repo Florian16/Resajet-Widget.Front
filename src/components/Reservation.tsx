@@ -71,6 +71,22 @@ export default function Reservation({
         )
           disabledDates.push(unavailability.date);
       });
+
+      if (
+        companyContext.company.periods
+          .find((p) => p.id === formulaire.periodId)
+          ?.timeSlots.filter((ts) => {
+            const today = dayjs();
+            const timeslotTime = dayjs(ts.hour, "HH:mm");
+
+            return !(
+              today.isSame(dayjs(date), "day") &&
+              timeslotTime.isBefore(today, "hour")
+            );
+          }).length === 0
+      )
+        disabledDates.push(date);
+
       return disabledDates.some(
         (d) =>
           new Date(d).getDate() === $d.getDate() &&
@@ -117,22 +133,27 @@ export default function Reservation({
 
   return (
     <div>
-      {companyContext.company?.companySetting.generalComment !== "" &&
-        companyContext.company?.companySetting.generalComment !== null && (
-          <div className="resajet-body-comment">
-            <p style={{ display: "flex" }}>
-              <i>
-                <InfoIcon
-                  style={{
-                    fontSize: "22px",
-                    marginRight: "8px",
-                  }}
-                />
-              </i>
-              {companyContext.company?.companySetting.generalComment}
-            </p>
-          </div>
-        )}
+      {companyContext.company?.companyComments.find(
+        (cc) => Object.values(Language)[cc.language] === i18n.language
+      )?.comment !== null && (
+        <div className="resajet-body-comment">
+          <p style={{ display: "flex" }}>
+            <i>
+              <InfoIcon
+                style={{
+                  fontSize: "22px",
+                  marginRight: "8px",
+                }}
+              />
+            </i>
+            {
+              companyContext.company?.companyComments.find(
+                (cc) => Object.values(Language)[cc.language] === i18n.language
+              )?.comment
+            }
+          </p>
+        </div>
+      )}
       <FormControl variant="standard" className="resajet-body-container">
         <span className="resajet-label">
           {t("reservation.optionRestauration")}
@@ -253,6 +274,15 @@ export default function Reservation({
                       )
                   )
               )
+              .filter((ts) => {
+                const today = dayjs();
+                const timeslotTime = dayjs(ts.hour, "HH:mm");
+
+                return !(
+                  today.isSame(dayjs(formulaire.date), "day") &&
+                  timeslotTime.isBefore(today, "hour")
+                );
+              })
               .map((timeSlot) => (
                 <Grid
                   item

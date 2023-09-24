@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import Recapitulatif from "./Recapitulatif";
 import SuccessAnimation from "./SuccessAnimation";
 import { reservationService } from "../services/reservation.service";
+import dayjs from "dayjs";
 
 type WidgetProps = {
   companyContext: CompanyContextProps;
@@ -56,6 +57,24 @@ export default function Widget({
     setFormulaire({ ...formulaireInitial });
     if (isOpen) setActiveStep(0);
   }, [isOpen, setFormulaire]);
+
+  useEffect(() => {
+    if (
+      formulaire.date !== null &&
+      companyContext?.company?.periods
+        .find((p) => p.id === formulaire.periodId)
+        ?.timeSlots.filter((ts) => {
+          const today = dayjs();
+          const timeslotTime = dayjs(ts.hour, "HH:mm");
+
+          return !(
+            today.isSame(dayjs(formulaire?.date), "day") &&
+            timeslotTime.isBefore(today, "hour")
+          );
+        }).length === 0
+    )
+      setFormulaire({ ...formulaire, date: null });
+  }, [formulaire.periodId]);
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     ({ ownerState }) => ({

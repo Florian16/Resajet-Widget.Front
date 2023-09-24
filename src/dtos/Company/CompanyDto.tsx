@@ -1,3 +1,4 @@
+import { CompanyCommentDto } from "../CompanyComment/CompanyCommentDto.tsx";
 import { CompanySettingDto } from "../CompanySetting/CompanySettingDto.tsx";
 import { AreaCompanyDto } from "./AreaCompanyDto.tsx";
 import { PeriodCompanyDto } from "./PeriodCompanyDto.tsx";
@@ -11,4 +12,5 @@ export interface CompanyDto {
   companySetting: CompanySettingDto;
   unavailabilities: UnavailabilityCompanyDto[];
   areas: AreaCompanyDto[];
+  companyComments: CompanyCommentDto[];
 }
