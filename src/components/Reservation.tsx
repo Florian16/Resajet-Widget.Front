@@ -280,7 +280,7 @@ export default function Reservation({
 
                 return !(
                   today.isSame(dayjs(formulaire.date), "day") &&
-                  timeslotTime.isBefore(today, "hour")
+                  timeslotTime.isBefore(today, "minute")
                 );
               })
               .map((timeSlot) => (
