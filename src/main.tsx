@@ -1,14 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import ReactDOM from "react-dom";
+import App from "./App";
 import "./index.scss";
-import { CompanyProvider } from "./contexts/CompanyContext.tsx";
-import "./traductions/i18n.tsx";
+import { CompanyProvider } from "./contexts/CompanyContext";
+import "./traductions/i18n";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+const reactApp = document.createElement("div");
+document.body.appendChild(reactApp);
+
+ReactDOM.render(
   <React.StrictMode>
     <CompanyProvider>
       <App />
     </CompanyProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  reactApp
 );

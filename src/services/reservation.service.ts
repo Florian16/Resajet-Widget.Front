@@ -1,6 +1,6 @@
-import { CompanyDto } from "../dtos/Company/CompanyDto.tsx";
-import { ReservationRequest } from "../requests/ReservationRequest.tsx";
-import { apiService } from "./api.service.ts";
+import { CompanyDto } from "../dtos/Company/CompanyDto";
+import { ReservationRequest } from "../requests/ReservationRequest";
+import { apiService } from "./api.service";
 
 class ReservationService {
   private readonly baseUrl = "/reservations";

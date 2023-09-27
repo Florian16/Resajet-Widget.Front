@@ -1,4 +1,4 @@
-import { CompanyDto } from "../dtos/Company/CompanyDto.tsx";
+import { CompanyDto } from "../dtos/Company/CompanyDto";
 import { apiService } from "./api.service";
 
 class CompanyService {

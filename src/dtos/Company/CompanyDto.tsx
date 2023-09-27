@@ -1,8 +1,8 @@
-import { CompanyCommentDto } from "../CompanyComment/CompanyCommentDto.tsx";
-import { CompanySettingDto } from "../CompanySetting/CompanySettingDto.tsx";
-import { AreaCompanyDto } from "./AreaCompanyDto.tsx";
-import { PeriodCompanyDto } from "./PeriodCompanyDto.tsx";
-import { UnavailabilityCompanyDto } from "./UnavailabilityCompanyDto.tsx";
+import { CompanyCommentDto } from "../CompanyComment/CompanyCommentDto";
+import { CompanySettingDto } from "../CompanySetting/CompanySettingDto";
+import { AreaCompanyDto } from "./AreaCompanyDto";
+import { PeriodCompanyDto } from "./PeriodCompanyDto";
+import { UnavailabilityCompanyDto } from "./UnavailabilityCompanyDto";
 
 export interface CompanyDto {
   id: string;

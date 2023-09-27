@@ -5,7 +5,7 @@ class ApiService {
 
   constructor() {
     this.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_API_URL,
+      baseURL: process.env.VITE_API_URL,
     });
   }
 

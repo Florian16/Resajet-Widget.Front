@@ -1,4 +1,3 @@
-@import "/node_modules/flag-icon-css/css/flag-icons.min.css";
 @import "./styles/app.scss";
 @import "./styles/button.scss";
 @import "./styles/widget.scss";
@@ -10,7 +9,3 @@
 @import "./styles/information.scss";
 @import "./styles/successAnimation.scss";
 @import "./styles/popup.scss";
-
-html {
-  background-color: black;
-}
