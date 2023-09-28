@@ -24,23 +24,23 @@ const CompanyProvider = ({ children }: CompanyContextProviderProps) => {
   };
 
   useEffect(() => {
-    const scriptWithCompanyId = document.querySelector("script[companyId]");
+    const script = document.querySelector("script[companyId]");
 
-    if (scriptWithCompanyId) {
-      const companyId = scriptWithCompanyId.getAttribute("companyId");
+    if (script) {
+      const companyId = script.getAttribute("companyId");
       if (companyId) {
         const fetchData = async () => {
           companyService
             .getCompany(companyId?.toString(), i18n.language)
             .then((result) => {
               setCompany(result);
-            })
-            .catch((error) => "error " + console.log(error));
+            });
         };
 
         fetchData();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -12,6 +12,7 @@ export default {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
   },
+  performance: { hints: false },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },

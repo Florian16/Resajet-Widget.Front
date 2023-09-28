@@ -1,11 +1,15 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
+const apiUrl =
+  (import.meta.env && import.meta.env.VITE_API_URL) ||
+  process.env.VITE_API_URL ||
+  "https://api.resajet.com";
 
 class ApiService {
   private axiosInstance: AxiosInstance;
 
   constructor() {
     this.axiosInstance = axios.create({
-      baseURL: process.env.VITE_API_URL,
+      baseURL: apiUrl,
     });
   }
 
