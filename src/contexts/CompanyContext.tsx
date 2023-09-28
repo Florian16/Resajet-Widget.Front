@@ -24,16 +24,23 @@ const CompanyProvider = ({ children }: CompanyContextProviderProps) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      companyService
-        .getCompany("20ce1e94-21c7-46d9-8795-6cbf7e05737e", i18n.language)
-        .then((result) => {
-          setCompany(result);
-        })
-        .catch((error) => "error " + console.log(error));
-    };
+    const scriptWithCompanyId = document.querySelector("script[companyId]");
 
-    fetchData();
+    if (scriptWithCompanyId) {
+      const companyId = scriptWithCompanyId.getAttribute("companyId");
+      if (companyId) {
+        const fetchData = async () => {
+          companyService
+            .getCompany(companyId?.toString(), i18n.language)
+            .then((result) => {
+              setCompany(result);
+            })
+            .catch((error) => "error " + console.log(error));
+        };
+
+        fetchData();
+      }
+    }
   }, []);
 
   return (

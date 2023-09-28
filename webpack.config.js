@@ -22,8 +22,16 @@ export default {
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.svg$/,
-        use: ["file-loader"],
+        test: /\.(png|jpe?g|gif)$/,
+        include: path.resolve(__dirname, "src/assets/img"),
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[ext]",
+            },
+          },
+        ],
       },
       {
         test: /\.(js|jsx)$/,

@@ -1,6 +1,9 @@
 import { CompanyContextProps } from "../contexts/CompanyContext";
 import { Grid, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import flagFr from "../assets/img/fr.png";
+import flagNl from "../assets/img/nl.png";
+import flagUk from "../assets/img/uk.png";
 
 type HeaderProps = {
   companyContext: CompanyContextProps;
@@ -27,22 +30,13 @@ export default function Header({ companyContext }: HeaderProps) {
         <Grid item xs={3} className="resajet-header-flag">
           <Select value={i18n.language} onChange={handleLanguageChange}>
             <MenuItem value="fr-FR">
-              <span
-                className="flag-icon flag-icon-fr"
-                style={{ fontSize: "1.4rem" }}
-              ></span>
+              <img src={flagFr} style={{ marginTop: "5px" }}></img>
             </MenuItem>
             <MenuItem value="nl-NL">
-              <span
-                className="flag-icon flag-icon-nl"
-                style={{ fontSize: "1.4rem" }}
-              ></span>
+              <img src={flagNl} style={{ marginTop: "5px" }}></img>
             </MenuItem>
             <MenuItem value="en-US">
-              <span
-                className="flag-icon flag-icon-gb"
-                style={{ fontSize: "1.4rem" }}
-              ></span>
+              <img src={flagUk} style={{ marginTop: "5px" }}></img>
             </MenuItem>
           </Select>
         </Grid>
