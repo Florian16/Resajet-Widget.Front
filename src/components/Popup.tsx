@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { CompanyContextProps } from "../contexts/CompanyContext";
 
 type PopupProps = {
@@ -12,6 +13,7 @@ export default function Popup({
   isToggleOpen,
   isOpen,
 }: PopupProps) {
+  const { t } = useTranslation();
   return (
     <div
       className={`popup-container ${
@@ -21,7 +23,7 @@ export default function Popup({
       onClick={onClick}
     >
       <div className="popup-reservation">
-        <span>Réserver une table</span>
+        <span>{t("popup.reserverUneTable")}</span>
       </div>
     </div>
   );

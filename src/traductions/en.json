@@ -50,5 +50,8 @@
   },
   "validation": {
     "reservationBienEnregistree": "The reservation has been registered."
+  },
+  "popup": {
+    "reserverUneTable": "Book a table"
   }
 }

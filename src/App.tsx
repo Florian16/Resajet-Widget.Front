@@ -3,11 +3,24 @@ import { CompanyContext } from "./contexts/CompanyContext";
 import Button from "./components/Button";
 import Widget from "./components/Widget";
 import Popup from "./components/Popup";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { i18n } = useTranslation();
   const companyContext = useContext(CompanyContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isToggleOpen, setIsToggleOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const language = navigator.language.includes("en")
+      ? "en-US"
+      : navigator.language.includes("nl")
+      ? "nl-NL"
+      : "fr-Fr";
+
+    i18n.changeLanguage(language);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

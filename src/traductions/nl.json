@@ -50,5 +50,8 @@
   },
   "validation": {
     "reservationBienEnregistree": "De reservering is geregistreerd."
+  },
+  "popup": {
+    "reserverUneTable": "Reserveer een tafel"
   }
 }

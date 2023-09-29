@@ -50,5 +50,8 @@
   },
   "validation": {
     "reservationBienEnregistree": "La réservation a bien été enregistrée."
+  },
+  "popup": {
+    "reserverUneTable": "Réserver une table"
   }
 }
