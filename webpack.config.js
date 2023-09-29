@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 
 export default {
   entry: "./src/main.tsx",
+  devtool: false,
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
