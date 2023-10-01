@@ -8,7 +8,7 @@
     "recapitulatif": "Overzicht"
   },
   "reservation": {
-    "optionRestauration": "Hersteloptie",
+    "momentRestauration": "Hersteloptie",
     "veuillezChoisirOptionRestauration": "Kies een hersteloptie",
     "espace": "Ruimte",
     "pasDePreference": "Geen voorkeur",
@@ -49,7 +49,8 @@
     "dimanche": "zondag"
   },
   "validation": {
-    "reservationBienEnregistree": "De reservering is geregistreerd."
+    "reservationBienEnregistree": "De reservering is geregistreerd.",
+    "reservationEnAttenteConfirmation": "Je reservering wacht op bevestiging."
   },
   "popup": {
     "reserverUneTable": "Reserveer een tafel"

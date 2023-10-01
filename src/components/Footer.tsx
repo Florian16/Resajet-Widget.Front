@@ -50,11 +50,12 @@ export default function Footer({
         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
           formulaire?.email
         ) ||
-        formulaire?.phoneNumber === "" ||
-        !(
-          formulaire?.phoneNumber &&
-          /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
-        )
+        (formulaire?.phoneNumber !== "" &&
+          !(
+            formulaire?.phoneNumber &&
+            /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
+          )) ||
+        !formulaire?.conditionUtilisation
       );
     }
 
@@ -84,7 +85,7 @@ export default function Footer({
               variant="indeterminate"
               disableShrink
               sx={{
-                color: () => companyContext.company?.mainColor,
+                color: () => companyContext.company?.companySetting?.mainColor,
                 animationDuration: "800ms",
                 position: "absolute",
                 right: 55,

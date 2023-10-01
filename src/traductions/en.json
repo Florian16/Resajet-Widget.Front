@@ -8,7 +8,7 @@
     "recapitulatif": "Overview"
   },
   "reservation": {
-    "optionRestauration": "Restore option",
+    "momentRestauration": "Restore option",
     "veuillezChoisirOptionRestauration": "Please choose a restore option",
     "espace": "Area",
     "pasDePreference": "No preference",
@@ -49,7 +49,8 @@
     "dimanche": "sunday"
   },
   "validation": {
-    "reservationBienEnregistree": "The reservation has been registered."
+    "reservationBienEnregistree": "The reservation has been registered.",
+    "reservationEnAttenteConfirmation": "Your booking is awaiting confirmation."
   },
   "popup": {
     "reserverUneTable": "Book a table"

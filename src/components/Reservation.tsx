@@ -33,8 +33,12 @@ export default function Reservation({
   useEffect(() => {
     const customMarks: MarkSlider[] = [];
 
-    if (companyContext?.company?.maximumReservation) {
-      for (let i = 1; i <= companyContext?.company?.maximumReservation; i++) {
+    if (companyContext?.company?.companySetting?.maximumReservation) {
+      for (
+        let i = 1;
+        i <= companyContext?.company?.companySetting?.maximumReservation;
+        i++
+      ) {
         customMarks.push({ value: i, label: i.toString() });
       }
     }
@@ -42,7 +46,7 @@ export default function Reservation({
     setMarks(customMarks);
 
     // Faites quelque chose avec la variable customMarks si nécessaire
-  }, [companyContext?.company?.maximumReservation]);
+  }, [companyContext?.company?.companySetting?.maximumReservation]);
 
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
@@ -108,7 +112,10 @@ export default function Reservation({
 
   const StyledDateCalendar = styled(DateCalendar)`
     && .Mui-selected {
-      background-color: ${companyContext?.company?.mainColor};
+      background-color: ${companyContext?.company?.companySetting?.mainColor};
+    }
+    && .Mui-selected:hover {
+      background-color: ${companyContext?.company?.companySetting?.mainColor};
     }
   `;
 
@@ -156,7 +163,7 @@ export default function Reservation({
       )}
       <FormControl variant="standard" className="resajet-body-container">
         <span className="resajet-label">
-          {t("reservation.optionRestauration")}
+          {t("reservation.momentRestauration")}
         </span>
         <Select
           displayEmpty
@@ -200,7 +207,7 @@ export default function Reservation({
           disabled={formulaire?.periodId === ""}
           value={formulaire?.participants}
           min={1}
-          max={companyContext.company?.maximumReservation}
+          max={companyContext.company?.companySetting?.maximumReservation}
           marks={marks}
           name="participants"
           onChange={handleChange}
@@ -225,7 +232,7 @@ export default function Reservation({
           />
         </LocalizationProvider>
       </FormControl>
-      {companyContext.company?.companySetting.areaSelection && (
+      {companyContext.company?.companyReservationSetting.areaSelection && (
         <FormControl variant="standard" className="resajet-body-container">
           <span className="resajet-label">{t("reservation.espace")}</span>
           <Select
@@ -305,7 +312,7 @@ export default function Reservation({
                     style={{
                       borderColor:
                         formulaire?.timeSlotId === timeSlot.id
-                          ? companyContext.company?.mainColor
+                          ? companyContext.company?.companySetting?.mainColor
                           : "black",
                     }}
                     onClick={() =>

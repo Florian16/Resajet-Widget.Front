@@ -1,5 +1,4 @@
 export interface CompanySettingDto {
-  companyId: string;
-  areaSelection: boolean;
-  emailSending: boolean;
+  mainColor: string;
+  maximumReservation: number;
 }

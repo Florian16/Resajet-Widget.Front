@@ -19,7 +19,9 @@ export default function Popup({
       className={`popup-container ${
         isOpen ? "widget-open" : isToggleOpen ? "open" : "not-open"
       }`}
-      style={{ backgroundColor: companyContext.company?.mainColor }}
+      style={{
+        backgroundColor: companyContext.company?.companySetting?.mainColor,
+      }}
       onClick={onClick}
     >
       <div className="popup-reservation">

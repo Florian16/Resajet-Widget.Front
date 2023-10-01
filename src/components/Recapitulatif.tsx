@@ -104,7 +104,7 @@ export default function Recapitulatif({
           </Grid>
         </Grid>
         <Grid container className="resajet-recapitulatif-container-grid">
-          {companyContext.company?.companySetting.areaSelection && (
+          {companyContext.company?.companyReservationSetting.areaSelection && (
             <>
               <Grid
                 item
@@ -165,7 +165,11 @@ export default function Recapitulatif({
               xs={6}
               className="resajet-recapitulatif-container-grid-text"
             >
-              <span>+{formulaire?.phoneNumber}</span>
+              <span>
+                {formulaire?.phoneNumber !== ""
+                  ? `+${formulaire?.phoneNumber}`
+                  : "/"}{" "}
+              </span>
             </Grid>
           </Grid>
           <Grid container className="resajet-recapitulatif-container-grid">

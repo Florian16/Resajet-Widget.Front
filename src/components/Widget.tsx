@@ -33,6 +33,7 @@ const formulaireInitial: ReservationRequest = {
   phoneNumber: "",
   email: "",
   comment: "",
+  conditionUtilisation: false,
 };
 
 export default function Widget({
@@ -41,10 +42,15 @@ export default function Widget({
   openCloseWidget,
 }: WidgetProps) {
   const { t, i18n } = useTranslation();
-  const { formulaire, handleChange, setFormulaire, handleCustomChange } =
-    useFormulaire<ReservationRequest>({
-      ...formulaireInitial,
-    });
+  const {
+    formulaire,
+    handleChange,
+    setFormulaire,
+    handleCustomChange,
+    handleCheckboxChange,
+  } = useFormulaire<ReservationRequest>({
+    ...formulaireInitial,
+  });
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const steps = [
@@ -78,15 +84,15 @@ export default function Widget({
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     ({ ownerState }) => ({
-      color: companyContext.company?.mainColor,
+      color: companyContext.company?.companySetting?.mainColor,
       display: "flex",
       height: 22,
       alignItems: "center",
       ...(ownerState.active && {
-        color: companyContext.company?.mainColor,
+        color: companyContext.company?.companySetting?.mainColor,
       }),
       "& .QontoStepIcon-completedIcon": {
-        color: companyContext.company?.mainColor,
+        color: companyContext.company?.companySetting?.mainColor,
         zIndex: 1,
         fontSize: 18,
       },
@@ -170,6 +176,8 @@ export default function Widget({
                 formulaire={formulaire}
                 handleChange={handleChange}
                 handleCustomChange={handleCustomChange}
+                handleCheckboxChange={handleCheckboxChange}
+                companyContext={companyContext}
                 t={t}
               />
             )}
@@ -183,7 +191,12 @@ export default function Widget({
 
             {activeStep === 3 && (
               <SuccessAnimation
-                title={t("validation.reservationBienEnregistree")}
+                title={
+                  companyContext.company?.companyReservationSetting
+                    .automaticConfirmation
+                    ? t("validation.reservationBienEnregistree")
+                    : t("validation.reservationEnAttenteConfirmation")
+                }
               />
             )}
           </div>

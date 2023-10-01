@@ -6,6 +6,7 @@ export type useFormulaireResult<T> = {
   handleChange: (e: any) => void;
   setFormulaire: (value: T) => void;
   handleCustomChange: (name: string, value: any) => void;
+  handleCheckboxChange: (e: any) => void;
 };
 
 export function useFormulaire<T = any>(
@@ -22,6 +23,11 @@ export function useFormulaire<T = any>(
     update(name, value);
   };
 
+  const handleCheckboxChange = (e: any) => {
+    const { name, checked } = e.target;
+    update(name, checked);
+  };
+
   const handleCustomChange = (name: string, value: any) => {
     update(name, value);
   };
@@ -31,5 +37,6 @@ export function useFormulaire<T = any>(
     handleChange,
     setFormulaire,
     handleCustomChange,
+    handleCheckboxChange,
   };
 }

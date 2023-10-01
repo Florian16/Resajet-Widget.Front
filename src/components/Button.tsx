@@ -17,7 +17,7 @@ export default function Button({
     <div
       className={`resajet-button`}
       style={{
-        backgroundColor: companyContext.company?.mainColor,
+        backgroundColor: companyContext.company?.companySetting?.mainColor,
       }}
       onClick={onClick}
     >

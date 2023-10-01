@@ -6,6 +6,13 @@
   left: 0;
   right: 0;
   z-index: 999;
+
+  &-title {
+    span {
+      margin-left: 5%;
+    }
+  }
+
   .MuiGrid-root {
     margin-top: 0 !important;
   }
@@ -16,7 +23,7 @@
   }
 
   &-flag {
-    padding-left: 10px !important;
+    padding-left: 7% !important;
   }
 
   .MuiOutlinedInput-notchedOutline {
@@ -51,6 +58,7 @@
     font-size: 1.1rem;
     padding-bottom: 0rem;
   }
+
   .MuiStep-root {
     padding-right: 0 !important;
   }
@@ -63,6 +71,10 @@
   .resajet-header {
     font-size: 1.2rem;
     padding-bottom: 0rem;
+
+    &-flag {
+      padding-left: 4% !important;
+    }
   }
   .MuiStep-root {
     padding-right: 0 !important;
