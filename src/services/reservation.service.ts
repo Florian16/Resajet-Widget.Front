@@ -22,6 +22,7 @@ class ReservationService {
       email: data.email,
       phoneNumber: data.phoneNumber,
       comment: data.comment,
+      conditionUtilisation: data.conditionUtilisation,
     };
     return await apiService.post(url, request, language);
   }
