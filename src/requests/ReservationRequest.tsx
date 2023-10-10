@@ -10,5 +10,5 @@ export interface ReservationRequest {
   email: string;
   phoneNumber?: string;
   comment?: string;
-  conditionUtilisation: boolean;
+  termsConditions: boolean;
 }

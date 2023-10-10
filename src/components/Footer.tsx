@@ -16,6 +16,7 @@ type FooterProps = {
   companyContext: CompanyContextProps;
   isSubmitting: boolean;
   openCloseWidget: () => void;
+  errorsChecking: () => number;
 };
 
 export default function Footer({
@@ -28,6 +29,7 @@ export default function Footer({
   companyContext,
   isSubmitting,
   openCloseWidget,
+  errorsChecking,
 }: FooterProps) {
   const nextIsDisabled = () => {
     if (activeStep === 0) {
@@ -55,7 +57,7 @@ export default function Footer({
             formulaire?.phoneNumber &&
             /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
           )) ||
-        !formulaire?.conditionUtilisation
+        !formulaire?.termsConditions
       );
     }
 
@@ -106,18 +108,19 @@ export default function Footer({
                 if (activeStep === steps.length) {
                   openCloseWidget();
                 } else {
-                  activeStep === steps.length - 1 && validateReservation();
-                  !nextIsDisabled() &&
-                    activeStep !== steps.length - 1 &&
-                    setActiveStep(activeStep + 1);
+                  if (errorsChecking() === 0) {
+                    activeStep === steps.length - 1 && validateReservation();
+                    !nextIsDisabled() &&
+                      activeStep !== steps.length - 1 &&
+                      setActiveStep(activeStep + 1);
+                  }
                 }
               }}
               style={{
                 color: "black",
-                cursor: nextIsDisabled() ? "not-allowed" : "pointer",
+                cursor: "pointer",
               }}
               className="resajet-footer-label-next-step"
-              disableRipple={nextIsDisabled()}
             >
               {activeStep === steps.length
                 ? `${t("footer.fermer")}`

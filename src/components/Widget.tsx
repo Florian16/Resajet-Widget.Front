@@ -15,6 +15,8 @@ import Recapitulatif from "./Recapitulatif";
 import SuccessAnimation from "./SuccessAnimation";
 import { reservationService } from "../services/reservation.service";
 import dayjs from "dayjs";
+import { ErrorReservation } from "../dtos/Error/Error.Reservation";
+import { ErrorType } from "../enums/ErrorType";
 
 type WidgetProps = {
   companyContext: CompanyContextProps;
@@ -33,7 +35,7 @@ const formulaireInitial: ReservationRequest = {
   phoneNumber: "",
   email: "",
   comment: "",
-  conditionUtilisation: false,
+  termsConditions: false,
 };
 
 export default function Widget({
@@ -53,6 +55,7 @@ export default function Widget({
   });
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [errors, setErrors] = useState<ErrorReservation[]>([]);
   const steps = [
     t("steps.reservation"),
     t("steps.informations"),
@@ -81,6 +84,57 @@ export default function Widget({
     )
       setFormulaire({ ...formulaire, date: null });
   }, [formulaire.periodId]);
+
+  const errorsChecking = () => {
+    const newErrors: ErrorReservation[] = [];
+
+    if (activeStep === 0) {
+      if (
+        formulaire?.periodId === "" &&
+        newErrors.findIndex((e) => e.type === ErrorType.Period) === -1
+      ) {
+        newErrors.push({
+          type: ErrorType.Period,
+          message: t("errors.momentRequis"),
+        });
+      }
+
+      if (
+        formulaire?.participants <= 0 &&
+        newErrors.findIndex((e) => e.type === ErrorType.Participant) === -1
+      ) {
+        newErrors.push({
+          type: ErrorType.Participant,
+          message: t("errors.participantRequis"),
+        });
+      }
+
+      if (
+        formulaire?.date === null &&
+        newErrors.findIndex((e) => e.type === ErrorType.Date) === -1
+      ) {
+        newErrors.push({
+          type: ErrorType.Date,
+          message: t("errors.dateRequise"),
+        });
+      }
+
+      if (
+        formulaire?.timeSlotId === "" &&
+        newErrors.findIndex((e) => e.type === ErrorType.TimeSlot) === -1
+      ) {
+        newErrors.push({
+          type: ErrorType.TimeSlot,
+          message: t("errors.heureRequise"),
+        });
+      }
+    }
+
+    if (newErrors.length !== errors.length) {
+      setErrors(newErrors);
+    }
+    return newErrors.length;
+  };
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     ({ ownerState }) => ({
@@ -168,6 +222,11 @@ export default function Widget({
                 handleCustomChange={handleCustomChange}
                 companyContext={companyContext}
                 formulaire={formulaire}
+                errors={errors}
+                formulaireInitial={formulaireInitial}
+                errorsChecking={() => {
+                  return errorsChecking();
+                }}
                 t={t}
               />
             )}
@@ -213,6 +272,7 @@ export default function Widget({
           companyContext={companyContext}
           isSubmitting={isSubmitting}
           openCloseWidget={openCloseWidget}
+          errorsChecking={errorsChecking}
         />
       }
     </div>

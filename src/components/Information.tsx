@@ -119,6 +119,11 @@ export default function Information({
             value={formulaire?.phoneNumber}
             onChange={(e) => handleCustomChange("phoneNumber", e)}
           />
+          {
+            <div className="resajet-input-error">
+              Le numéro de téléphone est incorrect.
+            </div>
+          }
         </Grid>
       </Grid>
       <Grid container alignItems={"center"} justifyContent={"center"}>
@@ -150,8 +155,8 @@ export default function Information({
           <FormControlLabel
             control={
               <Checkbox
-                name="conditionUtilisation"
-                checked={formulaire?.conditionUtilisation}
+                name="termsConditions"
+                checked={formulaire?.termsConditions}
                 onChange={handleCheckboxChange}
               />
             }

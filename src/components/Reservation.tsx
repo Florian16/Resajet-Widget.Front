@@ -12,12 +12,17 @@ import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { Language } from "../enums/Language";
 import InfoIcon from "@mui/icons-material/Info";
+import { ErrorReservation } from "../dtos/Error/Error.Reservation";
+import { ErrorType } from "../enums/ErrorType";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
   companyContext: CompanyContextProps;
   formulaire: ReservationRequest;
+  formulaireInitial: ReservationRequest;
+  errors: ErrorReservation[];
+  errorsChecking: () => number;
   t: TFunction;
 };
 
@@ -26,10 +31,21 @@ export default function Reservation({
   formulaire,
   companyContext,
   handleCustomChange,
+  errors,
+  errorsChecking,
+  formulaireInitial,
   t,
 }: ReservationProps) {
   const { i18n } = useTranslation();
   const [marks, setMarks] = useState<MarkSlider[]>();
+
+  useEffect(() => {
+    if (JSON.stringify(formulaire) !== JSON.stringify(formulaireInitial))
+      errorsChecking();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formulaire, formulaireInitial]);
+
   useEffect(() => {
     const customMarks: MarkSlider[] = [];
 
@@ -44,8 +60,6 @@ export default function Reservation({
     }
 
     setMarks(customMarks);
-
-    // Faites quelque chose avec la variable customMarks si nécessaire
   }, [companyContext?.company?.companySetting?.maximumReservation]);
 
   const shouldDisableDate = (date: any) => {
@@ -168,7 +182,7 @@ export default function Reservation({
         <Select
           displayEmpty
           name="periodId"
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
           value={formulaire?.periodId}
           renderValue={(selected) => {
             if (selected === "") {
@@ -197,6 +211,11 @@ export default function Reservation({
             </MenuItem>
           ))}
         </Select>
+        {errors.findIndex((e) => e.type == ErrorType.Period) > -1 && (
+          <div className="resajet-widget-input-error">
+            {errors.find((e) => e.type == ErrorType.Period)?.message}
+          </div>
+        )}
       </FormControl>
 
       <FormControl className="resajet-body-container" variant="standard">
@@ -210,9 +229,14 @@ export default function Reservation({
           max={companyContext.company?.companySetting?.maximumReservation}
           marks={marks}
           name="participants"
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
           style={{ color: "black" }}
         />
+        {errors.findIndex((e) => e.type == ErrorType.Participant) > -1 && (
+          <div className="resajet-widget-input-error">
+            {errors.find((e) => e.type == ErrorType.Participant)?.message}
+          </div>
+        )}
       </FormControl>
       <FormControl className="resajet-body-container" variant="standard">
         <span className="resajet-label">{t("reservation.date")}</span>
@@ -231,6 +255,11 @@ export default function Reservation({
             }
           />
         </LocalizationProvider>
+        {errors.findIndex((e) => e.type == ErrorType.Date) > -1 && (
+          <div className="resajet-widget-input-error resajet-widget-input-error-date">
+            {errors.find((e) => e.type == ErrorType.Date)?.message}
+          </div>
+        )}
       </FormControl>
       {companyContext.company?.companyReservationSetting.areaSelection && (
         <FormControl variant="standard" className="resajet-body-container">
@@ -238,7 +267,7 @@ export default function Reservation({
           <Select
             displayEmpty
             name="areaId"
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             value={formulaire?.areaId}
           >
             <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
@@ -253,6 +282,11 @@ export default function Reservation({
               </MenuItem>
             ))}
           </Select>
+          {errors.findIndex((e) => e.type == ErrorType.Area) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.Area)?.message}
+            </div>
+          )}
         </FormControl>
       )}
 
@@ -333,6 +367,11 @@ export default function Reservation({
                 </Grid>
               ))}
           </Grid>
+          {errors.findIndex((e) => e.type == ErrorType.TimeSlot) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.TimeSlot)?.message}
+            </div>
+          )}
         </FormControl>
       ) : null}
     </div>

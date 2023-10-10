@@ -54,5 +54,11 @@
   },
   "popup": {
     "reserverUneTable": "Reserveer een tafel"
+  },
+  "errors": {
+    "momentRequis": "Le moment de réservation des requis.",
+    "participantRequis": "Le nombre de participants doit être supérieur à 0.",
+    "dateRequise": "La date est obligatoire.",
+    "heureRequise": "Le créneau horaire est obligatoire."
   }
 }
