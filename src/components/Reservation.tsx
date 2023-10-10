@@ -175,7 +175,11 @@ export default function Reservation({
           </p>
         </div>
       )}
-      <FormControl variant="standard" className="resajet-body-container">
+      <FormControl
+        variant="standard"
+        className="resajet-body-container"
+        id="periodId"
+      >
         <span className="resajet-label">
           {t("reservation.momentRestauration")}
         </span>
@@ -218,7 +222,11 @@ export default function Reservation({
         )}
       </FormControl>
 
-      <FormControl className="resajet-body-container" variant="standard">
+      <FormControl
+        className="resajet-body-container"
+        variant="standard"
+        id="participants"
+      >
         <span className="resajet-label">
           {t("reservation.nombreDePersonnes")}
         </span>
@@ -238,7 +246,11 @@ export default function Reservation({
           </div>
         )}
       </FormControl>
-      <FormControl className="resajet-body-container" variant="standard">
+      <FormControl
+        className="resajet-body-container"
+        variant="standard"
+        id="date"
+      >
         <span className="resajet-label">{t("reservation.date")}</span>
         <LocalizationProvider
           dateAdapter={AdapterDayjs}
@@ -262,7 +274,11 @@ export default function Reservation({
         )}
       </FormControl>
       {companyContext.company?.companyReservationSetting.areaSelection && (
-        <FormControl variant="standard" className="resajet-body-container">
+        <FormControl
+          variant="standard"
+          className="resajet-body-container"
+          id="areaId"
+        >
           <span className="resajet-label">{t("reservation.espace")}</span>
           <Select
             displayEmpty
@@ -291,7 +307,11 @@ export default function Reservation({
       )}
 
       {formulaire?.periodId ? (
-        <FormControl className="resajet-body-container" variant="standard">
+        <FormControl
+          className="resajet-body-container"
+          variant="standard"
+          id="hour"
+        >
           <span className="resajet-label hour">{t("reservation.heures")}</span>
           <Grid container>
             {companyContext?.company?.periods

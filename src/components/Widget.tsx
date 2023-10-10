@@ -85,52 +85,85 @@ export default function Widget({
       setFormulaire({ ...formulaire, date: null });
   }, [formulaire.periodId]);
 
-  const errorsChecking = () => {
-    const newErrors: ErrorReservation[] = [];
+  const errorsChecking = (isLoading = false) => {
+    let newErrors: ErrorReservation[] = errors;
+    let scrollElement = null;
 
     if (activeStep === 0) {
       if (
         formulaire?.periodId === "" &&
         newErrors.findIndex((e) => e.type === ErrorType.Period) === -1
       ) {
-        newErrors.push({
-          type: ErrorType.Period,
-          message: t("errors.momentRequis"),
-        });
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("periodId");
+
+          newErrors.push({
+            type: ErrorType.Period,
+            message: t("errors.momentRequis"),
+          });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Period);
       }
 
       if (
         formulaire?.participants <= 0 &&
         newErrors.findIndex((e) => e.type === ErrorType.Participant) === -1
       ) {
-        newErrors.push({
-          type: ErrorType.Participant,
-          message: t("errors.participantRequis"),
-        });
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("participants");
+
+          newErrors.push({
+            type: ErrorType.Participant,
+            message: t("errors.participantRequis"),
+          });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Participant);
       }
 
       if (
         formulaire?.date === null &&
         newErrors.findIndex((e) => e.type === ErrorType.Date) === -1
       ) {
-        newErrors.push({
-          type: ErrorType.Date,
-          message: t("errors.dateRequise"),
-        });
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("date");
+
+          newErrors.push({
+            type: ErrorType.Date,
+            message: t("errors.dateRequise"),
+          });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Date);
       }
 
       if (
         formulaire?.timeSlotId === "" &&
         newErrors.findIndex((e) => e.type === ErrorType.TimeSlot) === -1
       ) {
-        newErrors.push({
-          type: ErrorType.TimeSlot,
-          message: t("errors.heureRequise"),
-        });
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("hour");
+
+          newErrors.push({
+            type: ErrorType.TimeSlot,
+            message: t("errors.heureRequise"),
+          });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.TimeSlot);
       }
     }
 
     if (newErrors.length !== errors.length) {
+      if (isLoading) {
+        scrollElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
       setErrors(newErrors);
     }
     return newErrors.length;
@@ -272,7 +305,7 @@ export default function Widget({
           companyContext={companyContext}
           isSubmitting={isSubmitting}
           openCloseWidget={openCloseWidget}
-          errorsChecking={errorsChecking}
+          errorsChecking={() => errorsChecking(true)}
         />
       }
     </div>
