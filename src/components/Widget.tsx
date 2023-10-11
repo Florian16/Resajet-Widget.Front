@@ -86,84 +86,79 @@ export default function Widget({
   }, [formulaire.periodId]);
 
   const errorsChecking = (isLoading = false) => {
-    let newErrors: ErrorReservation[] = errors;
+    let newErrors: ErrorReservation[] = [...errors];
     let scrollElement = null;
 
     if (activeStep === 0) {
-      if (
-        formulaire?.periodId === "" &&
-        newErrors.findIndex((e) => e.type === ErrorType.Period) === -1
-      ) {
+      if (formulaire?.periodId === "") {
         if (isLoading) {
           if (scrollElement === null)
             scrollElement = document.getElementById("periodId");
 
-          newErrors.push({
-            type: ErrorType.Period,
-            message: t("errors.momentRequis"),
-          });
+          if (newErrors.findIndex((e) => e.type === ErrorType.Period) === -1)
+            newErrors.push({
+              type: ErrorType.Period,
+              message: t("errors.momentRequis"),
+            });
         }
       } else {
         newErrors = newErrors.filter((e) => e.type !== ErrorType.Period);
       }
 
-      if (
-        formulaire?.participants <= 0 &&
-        newErrors.findIndex((e) => e.type === ErrorType.Participant) === -1
-      ) {
+      if (formulaire?.participants <= 0) {
         if (isLoading) {
           if (scrollElement === null)
             scrollElement = document.getElementById("participants");
 
-          newErrors.push({
-            type: ErrorType.Participant,
-            message: t("errors.participantRequis"),
-          });
+          if (
+            newErrors.findIndex((e) => e.type === ErrorType.Participant) === -1
+          )
+            newErrors.push({
+              type: ErrorType.Participant,
+              message: t("errors.participantRequis"),
+            });
         }
       } else {
         newErrors = newErrors.filter((e) => e.type !== ErrorType.Participant);
       }
 
-      if (
-        formulaire?.date === null &&
-        newErrors.findIndex((e) => e.type === ErrorType.Date) === -1
-      ) {
+      if (formulaire?.date === null) {
         if (isLoading) {
+          console.log(scrollElement);
+
           if (scrollElement === null)
             scrollElement = document.getElementById("date");
 
-          newErrors.push({
-            type: ErrorType.Date,
-            message: t("errors.dateRequise"),
-          });
+          if (newErrors.findIndex((e) => e.type === ErrorType.Date) === -1)
+            newErrors.push({
+              type: ErrorType.Date,
+              message: t("errors.dateRequise"),
+            });
         }
       } else {
         newErrors = newErrors.filter((e) => e.type !== ErrorType.Date);
       }
 
-      if (
-        formulaire?.timeSlotId === "" &&
-        newErrors.findIndex((e) => e.type === ErrorType.TimeSlot) === -1
-      ) {
+      if (formulaire?.timeSlotId === "") {
         if (isLoading) {
           if (scrollElement === null)
             scrollElement = document.getElementById("hour");
 
-          newErrors.push({
-            type: ErrorType.TimeSlot,
-            message: t("errors.heureRequise"),
-          });
+          if (newErrors.findIndex((e) => e.type === ErrorType.TimeSlot) === -1)
+            newErrors.push({
+              type: ErrorType.TimeSlot,
+              message: t("errors.heureRequise"),
+            });
         }
       } else {
         newErrors = newErrors.filter((e) => e.type !== ErrorType.TimeSlot);
       }
     }
+    if (isLoading && newErrors.length > 0) {
+      scrollElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
 
-    if (newErrors.length !== errors.length) {
-      if (isLoading) {
-        scrollElement?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-
+    if (JSON.stringify(newErrors) !== JSON.stringify(errors)) {
       setErrors(newErrors);
     }
     return newErrors.length;
