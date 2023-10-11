@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { Language } from "../enums/Language";
 import InfoIcon from "@mui/icons-material/Info";
-import { ErrorReservation } from "../dtos/Error/Error.Reservation";
+import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 
 type ReservationProps = {
@@ -21,7 +21,7 @@ type ReservationProps = {
   companyContext: CompanyContextProps;
   formulaire: ReservationRequest;
   formulaireInitial: ReservationRequest;
-  errors: ErrorReservation[];
+  errors: Error[];
   errorsChecking: () => number;
   t: TFunction;
 };

@@ -15,7 +15,7 @@ import Recapitulatif from "./Recapitulatif";
 import SuccessAnimation from "./SuccessAnimation";
 import { reservationService } from "../services/reservation.service";
 import dayjs from "dayjs";
-import { ErrorReservation } from "../dtos/Error/Error.Reservation";
+import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 
 type WidgetProps = {
@@ -55,7 +55,7 @@ export default function Widget({
   });
   const [activeStep, setActiveStep] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [errors, setErrors] = useState<ErrorReservation[]>([]);
+  const [errors, setErrors] = useState<Error[]>([]);
   const steps = [
     t("steps.reservation"),
     t("steps.informations"),
@@ -86,7 +86,7 @@ export default function Widget({
   }, [formulaire.periodId]);
 
   const errorsChecking = (isLoading = false) => {
-    let newErrors: ErrorReservation[] = [...errors];
+    let newErrors: Error[] = [...errors];
     let scrollElement = null;
 
     if (activeStep === 0) {
@@ -124,8 +124,6 @@ export default function Widget({
 
       if (formulaire?.date === null) {
         if (isLoading) {
-          console.log(scrollElement);
-
           if (scrollElement === null)
             scrollElement = document.getElementById("date");
 
@@ -153,7 +151,95 @@ export default function Widget({
       } else {
         newErrors = newErrors.filter((e) => e.type !== ErrorType.TimeSlot);
       }
+    } else if (activeStep === 1) {
+      if (formulaire?.lastname === "") {
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("lastname");
+
+          if (newErrors.findIndex((e) => e.type === ErrorType.Lastname) === -1)
+            newErrors.push({
+              type: ErrorType.Lastname,
+              message: t("errors.nomRequis"),
+            });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Lastname);
+      }
+
+      if (formulaire?.firstname === "") {
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("firstname");
+
+          if (newErrors.findIndex((e) => e.type === ErrorType.Firstname) === -1)
+            newErrors.push({
+              type: ErrorType.Firstname,
+              message: t("errors.prenomRequis"),
+            });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Firstname);
+      }
+
+      if (
+        formulaire?.email === "" ||
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          formulaire?.email
+        )
+      ) {
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("email");
+
+          if (newErrors.findIndex((e) => e.type === ErrorType.Email) === -1)
+            newErrors.push({
+              type: ErrorType.Email,
+              message: t("errors.emailRequis"),
+            });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Email);
+      }
+
+      if (formulaire?.phoneNumber === "") {
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("phoneNumber");
+
+          if (
+            newErrors.findIndex((e) => e.type === ErrorType.PhoneNumber) === -1
+          )
+            newErrors.push({
+              type: ErrorType.PhoneNumber,
+              message: t("errors.telephoneRequis"),
+            });
+        }
+      } else {
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.PhoneNumber);
+      }
+
+      if (!formulaire?.termsConditions) {
+        if (isLoading) {
+          if (scrollElement === null)
+            scrollElement = document.getElementById("termsConditions");
+
+          if (
+            newErrors.findIndex((e) => e.type === ErrorType.TermsConditions) ===
+            -1
+          )
+            newErrors.push({
+              type: ErrorType.TermsConditions,
+              message: t("errors.conditionsUtilisationRequis"),
+            });
+        }
+      } else {
+        newErrors = newErrors.filter(
+          (e) => e.type !== ErrorType.TermsConditions
+        );
+      }
     }
+
     if (isLoading && newErrors.length > 0) {
       scrollElement?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -265,6 +351,7 @@ export default function Widget({
                 handleCustomChange={handleCustomChange}
                 handleCheckboxChange={handleCheckboxChange}
                 companyContext={companyContext}
+                errors={errors}
                 t={t}
               />
             )}

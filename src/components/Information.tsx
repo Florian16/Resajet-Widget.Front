@@ -10,6 +10,8 @@ import { ReservationRequest } from "../requests/ReservationRequest";
 import PhoneInput from "react-phone-input-2";
 import { TFunction } from "i18next";
 import { CompanyContextProps } from "../contexts/CompanyContext";
+import { Error } from "../dtos/Error/Error";
+import { ErrorType } from "../enums/ErrorType";
 
 type InformationProps = {
   formulaire: ReservationRequest;
@@ -17,6 +19,7 @@ type InformationProps = {
   handleCustomChange: (name: string, value: any) => void;
   handleCheckboxChange: (e: any) => void;
   companyContext: CompanyContextProps;
+  errors: Error[];
   t: TFunction;
 };
 
@@ -34,6 +37,7 @@ export default function Information({
   handleCustomChange,
   handleCheckboxChange,
   companyContext,
+  errors,
   t,
 }: InformationProps) {
   const generateAutoCompleteValue = () => {
@@ -47,6 +51,7 @@ export default function Information({
         alignItems={"center"}
         justifyContent={"center"}
         className="resajet-information"
+        id="lastname"
       >
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.nom")} *</span>
@@ -60,6 +65,11 @@ export default function Information({
             style={{ marginTop: "3%" }}
             autoComplete={generateAutoCompleteValue()}
           />
+          {errors.findIndex((e) => e.type == ErrorType.Lastname) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.Lastname)?.message}
+            </div>
+          )}
         </Grid>
       </Grid>
       <Grid
@@ -67,6 +77,7 @@ export default function Information({
         alignItems={"center"}
         justifyContent={"center"}
         className="resajet-information"
+        id="firstname"
       >
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.prenom")} *</span>
@@ -80,6 +91,11 @@ export default function Information({
             style={{ marginTop: "3%" }}
             autoComplete={generateAutoCompleteValue()}
           />
+          {errors.findIndex((e) => e.type == ErrorType.Firstname) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.Firstname)?.message}
+            </div>
+          )}
         </Grid>
       </Grid>
       <Grid
@@ -87,6 +103,7 @@ export default function Information({
         alignItems={"center"}
         justifyContent={"center"}
         className="resajet-information"
+        id="email"
       >
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.email")} *</span>
@@ -101,6 +118,11 @@ export default function Information({
             style={{ marginTop: "3%" }}
             autoComplete={generateAutoCompleteValue()}
           />
+          {errors.findIndex((e) => e.type == ErrorType.Email) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.Email)?.message}
+            </div>
+          )}
         </Grid>
       </Grid>
       <Grid
@@ -108,6 +130,7 @@ export default function Information({
         alignItems={"center"}
         justifyContent={"center"}
         className="resajet-information"
+        id="phoneNumber"
       >
         <Grid item xs={4}>
           <span className="resajet-label">{t("information.telephone")}</span>
@@ -119,11 +142,11 @@ export default function Information({
             value={formulaire?.phoneNumber}
             onChange={(e) => handleCustomChange("phoneNumber", e)}
           />
-          {
-            <div className="resajet-input-error">
-              Le numéro de téléphone est incorrect.
+          {errors.findIndex((e) => e.type == ErrorType.PhoneNumber) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.PhoneNumber)?.message}
             </div>
-          }
+          )}
         </Grid>
       </Grid>
       <Grid container alignItems={"center"} justifyContent={"center"}>
@@ -150,6 +173,7 @@ export default function Information({
         alignItems="center"
         justifyContent="center"
         style={{ paddingBottom: "2%" }}
+        id="termsConditions"
       >
         <Grid item xs={12}>
           <FormControlLabel
@@ -176,6 +200,12 @@ export default function Information({
               </span>
             }
           />
+          {errors.findIndex((e) => e.type == ErrorType.TermsConditions) >
+            -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.TermsConditions)?.message}
+            </div>
+          )}
         </Grid>
       </Grid>
     </Box>
