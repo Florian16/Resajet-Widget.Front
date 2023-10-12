@@ -56,14 +56,14 @@
     "reserverUneTable": "Book a table"
   },
   "errors": {
-    "momentRequis": "Le moment de réservation des requis.",
+    "momentRequis": "Le moment de réservation est obligatoire.",
     "participantRequis": "Le nombre de participants doit être supérieur à 0.",
     "dateRequise": "La date est obligatoire.",
     "heureRequise": "Le créneau horaire est obligatoire.",
-    "nomRequis": "Le nom de famille est obligatoire.",
-    "prenomRequis": "Le prénom est obligatoire.",
-    "emailRequis": "L'email est obligatoire.",
-    "telephoneRequis": "Le numéro de téléphone est obligatoire.",
+    "nomRequis": "Le nom de famille est incorrect.",
+    "prenomRequis": "Le prénom est incorrect.",
+    "emailRequis": "L'email est incorrect.",
+    "telephoneRequis": "Le numéro de téléphone est incorrect.",
     "conditionsUtilisationRequis": "Veuillez accepter les conditions d'utilisations pour continuer."
   }
 }

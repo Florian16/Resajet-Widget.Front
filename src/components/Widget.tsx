@@ -301,8 +301,14 @@ export default function Widget({
           ...formulaireInitial,
         });
       })
-      .catch(() => {
-        console.log("error");
+      .catch((error) => {
+        const newErrors: Error[] = [];
+        error?.response?.data?.errors?.forEach((error: Error) => {
+          const errorType: ErrorType =
+            ErrorType[error.type as keyof typeof ErrorType];
+          newErrors.push({ type: errorType, message: error.message });
+        });
+        setErrors([...newErrors]);
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -352,6 +358,10 @@ export default function Widget({
                 handleCheckboxChange={handleCheckboxChange}
                 companyContext={companyContext}
                 errors={errors}
+                errorsChecking={() => {
+                  return errorsChecking();
+                }}
+                formulaireInitial={formulaireInitial}
                 t={t}
               />
             )}

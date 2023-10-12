@@ -12,14 +12,17 @@ import { TFunction } from "i18next";
 import { CompanyContextProps } from "../contexts/CompanyContext";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
+import { useEffect } from "react";
 
 type InformationProps = {
   formulaire: ReservationRequest;
+  formulaireInitial: ReservationRequest;
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
   handleCheckboxChange: (e: any) => void;
   companyContext: CompanyContextProps;
   errors: Error[];
+  errorsChecking: () => number;
   t: TFunction;
 };
 
@@ -38,11 +41,20 @@ export default function Information({
   handleCheckboxChange,
   companyContext,
   errors,
+  errorsChecking,
+  formulaireInitial,
   t,
 }: InformationProps) {
   const generateAutoCompleteValue = () => {
     return Math.random().toString(36).substring(2);
   };
+
+  useEffect(() => {
+    if (JSON.stringify(formulaire) !== JSON.stringify(formulaireInitial))
+      errorsChecking();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formulaire, formulaireInitial]);
 
   return (
     <Box component="form">
