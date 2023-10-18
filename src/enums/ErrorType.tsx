@@ -1,6 +1,6 @@
 export enum ErrorType {
   Period = "Period",
-  Participant = "Participant",
+  Participants = "Participants",
   Date = "Date",
   Area = "Area",
   TimeSlot = "TimeSlot",

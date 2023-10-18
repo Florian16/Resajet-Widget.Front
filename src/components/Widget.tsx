@@ -85,6 +85,40 @@ export default function Widget({
       setFormulaire({ ...formulaire, date: null });
   }, [formulaire.periodId]);
 
+  const errorsManagement = (errors: Error[]) => {
+    let scrollElement = null;
+
+    if (
+      scrollElement === null &&
+      errors.findIndex((e) => e.type === ErrorType.Participants) > -1
+    ) {
+      setActiveStep(0);
+      scrollElement = document.getElementById("participants");
+    }
+
+    if (
+      scrollElement === null &&
+      errors.findIndex((e) => e.type === ErrorType.Date) > -1
+    ) {
+      setActiveStep(0);
+      scrollElement = document.getElementById("date");
+    }
+
+    if (
+      scrollElement === null &&
+      errors.findIndex((e) => e.type === ErrorType.Firstname) > -1
+    ) {
+      setActiveStep(1);
+      scrollElement = document.getElementById("firstname");
+    }
+
+    if (scrollElement !== null) {
+      setErrors([...errors]);
+
+      scrollElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   const errorsChecking = (isLoading = false) => {
     let newErrors: Error[] = [...errors];
     let scrollElement = null;
@@ -99,6 +133,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.Period,
               message: t("errors.momentRequis"),
+              step: 0,
             });
         }
       } else {
@@ -111,15 +146,16 @@ export default function Widget({
             scrollElement = document.getElementById("participants");
 
           if (
-            newErrors.findIndex((e) => e.type === ErrorType.Participant) === -1
+            newErrors.findIndex((e) => e.type === ErrorType.Participants) === -1
           )
             newErrors.push({
-              type: ErrorType.Participant,
+              type: ErrorType.Participants,
               message: t("errors.participantRequis"),
+              step: 0,
             });
         }
       } else {
-        newErrors = newErrors.filter((e) => e.type !== ErrorType.Participant);
+        newErrors = newErrors.filter((e) => e.type !== ErrorType.Participants);
       }
 
       if (formulaire?.date === null) {
@@ -131,6 +167,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.Date,
               message: t("errors.dateRequise"),
+              step: 0,
             });
         }
       } else {
@@ -146,6 +183,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.TimeSlot,
               message: t("errors.heureRequise"),
+              step: 0,
             });
         }
       } else {
@@ -161,6 +199,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.Lastname,
               message: t("errors.nomRequis"),
+              step: 1,
             });
         }
       } else {
@@ -176,6 +215,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.Firstname,
               message: t("errors.prenomRequis"),
+              step: 1,
             });
         }
       } else {
@@ -196,6 +236,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.Email,
               message: t("errors.emailRequis"),
+              step: 1,
             });
         }
       } else {
@@ -213,6 +254,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.PhoneNumber,
               message: t("errors.telephoneRequis"),
+              step: 1,
             });
         }
       } else {
@@ -231,6 +273,7 @@ export default function Widget({
             newErrors.push({
               type: ErrorType.TermsConditions,
               message: t("errors.conditionsUtilisationRequis"),
+              step: 1,
             });
         }
       } else {
@@ -247,7 +290,7 @@ export default function Widget({
     if (JSON.stringify(newErrors) !== JSON.stringify(errors)) {
       setErrors(newErrors);
     }
-    return newErrors.length;
+    return newErrors.filter((e) => e.step === activeStep).length;
   };
 
   const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
@@ -302,13 +345,34 @@ export default function Widget({
         });
       })
       .catch((error) => {
+        const firstStepErrors = [
+          ErrorType.Period,
+          ErrorType.Participants,
+          ErrorType.Date,
+          ErrorType.Area,
+          ErrorType.TimeSlot,
+        ];
+        const secondStepErrors = [
+          ErrorType.Lastname,
+          ErrorType.Firstname,
+          ErrorType.Email,
+          ErrorType.PhoneNumber,
+          ErrorType.TermsConditions,
+        ];
         const newErrors: Error[] = [];
+
         error?.response?.data?.errors?.forEach((error: Error) => {
           const errorType: ErrorType =
             ErrorType[error.type as keyof typeof ErrorType];
-          newErrors.push({ type: errorType, message: error.message });
+          const step =
+            firstStepErrors.findIndex((e) => e === errorType) > -1
+              ? 0
+              : secondStepErrors.findIndex((e) => e === errorType) > -1
+              ? 1
+              : 2;
+          newErrors.push({ type: errorType, message: error.message, step });
         });
-        setErrors([...newErrors]);
+        if (newErrors.length > 0) errorsManagement(newErrors);
       })
       .finally(() => {
         setIsSubmitting(false);

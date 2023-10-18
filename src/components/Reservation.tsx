@@ -240,9 +240,9 @@ export default function Reservation({
           onChange={(e) => handleChange(e)}
           style={{ color: "black" }}
         />
-        {errors.findIndex((e) => e.type == ErrorType.Participant) > -1 && (
+        {errors.findIndex((e) => e.type == ErrorType.Participants) > -1 && (
           <div className="resajet-widget-input-error">
-            {errors.find((e) => e.type == ErrorType.Participant)?.message}
+            {errors.find((e) => e.type == ErrorType.Participants)?.message}
           </div>
         )}
       </FormControl>
