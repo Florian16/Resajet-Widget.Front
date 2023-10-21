@@ -198,7 +198,7 @@ export default function Information({
             }
             label={
               <span className="resajet-label">
-                J'accepte les{" "}
+                {t("information.jAccepteLes")}{" "}
                 <a
                   href={`https://www.resajet.com/conditions-utilisation/${companyContext?.company?.id}`}
                   style={{
@@ -206,7 +206,7 @@ export default function Information({
                   }}
                   target="_blank"
                 >
-                  conditions d'utilisation
+                  {t("information.conditionsUtilisation")}
                 </a>{" "}
                 *
               </span>

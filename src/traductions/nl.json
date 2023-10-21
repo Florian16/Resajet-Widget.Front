@@ -21,7 +21,9 @@
     "prenom": "Voornaam",
     "email": "E-mail",
     "telephone": "Telefoon",
-    "commentaire": "Commentaar"
+    "commentaire": "Commentaar",
+    "jAccepteLes": "Ik accepteer de",
+    "conditionsUtilisation": "gebruiksvoorwaarden"
   },
   "footer": {
     "retour": "Terug",

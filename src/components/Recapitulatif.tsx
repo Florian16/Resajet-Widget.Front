@@ -4,16 +4,20 @@ import { Grid } from "@mui/material";
 import { CompanyContextProps } from "../contexts/CompanyContext";
 import i18n from "../traductions/i18n";
 import { Language } from "../enums/Language";
+import { Error } from "../dtos/Error/Error";
+import { ErrorType } from "../enums/ErrorType";
 
 type RecapitulatifProps = {
   companyContext: CompanyContextProps;
   formulaire: ReservationRequest;
   t: TFunction;
+  errors: Error[];
 };
 export default function Recapitulatif({
   t,
   formulaire,
   companyContext,
+  errors,
 }: RecapitulatifProps) {
   return (
     <div className="resajet-recapitulatif">
@@ -190,6 +194,11 @@ export default function Recapitulatif({
             </Grid>
           </Grid>
         </Grid>
+        {errors.findIndex((e) => e.type == ErrorType.Company) > -1 && (
+          <div className="resajet-widget-input-error">
+            {errors.find((e) => e.type == ErrorType.Company)?.message}
+          </div>
+        )}
       </div>
     </div>
   );

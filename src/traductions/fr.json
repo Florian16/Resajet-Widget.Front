@@ -21,7 +21,9 @@
     "prenom": "Prénom",
     "email": "E-mail",
     "telephone": "Téléphone",
-    "commentaire": "Commentaire"
+    "commentaire": "Commentaire",
+    "jAccepteLes": "J'accepte les",
+    "conditionsUtilisation": "conditions d'utilisation"
   },
   "footer": {
     "retour": "Retour",

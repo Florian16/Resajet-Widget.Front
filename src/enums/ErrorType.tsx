@@ -11,4 +11,5 @@ export enum ErrorType {
   Comment = "Comment",
   TermsConditions = "TermsConditions",
   ReservationNotAvailable = "ReservationNotAvailable",
+  Company = "Company",
 }

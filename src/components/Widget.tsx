@@ -112,6 +112,14 @@ export default function Widget({
       scrollElement = document.getElementById("firstname");
     }
 
+    if (
+      scrollElement === null &&
+      errors.findIndex((e) => e.type === ErrorType.Company) > -1
+    ) {
+      setActiveStep(2);
+      scrollElement = document.getElementById("company");
+    }
+
     if (scrollElement !== null) {
       setErrors([...errors]);
 
@@ -434,6 +442,7 @@ export default function Widget({
                 t={t}
                 formulaire={formulaire}
                 companyContext={companyContext}
+                errors={errors}
               />
             )}
 
