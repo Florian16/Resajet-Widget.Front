@@ -14,6 +14,7 @@ import { Language } from "../enums/Language";
 import InfoIcon from "@mui/icons-material/Info";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
+import { CompanyType } from "../enums/CompanyType";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
@@ -175,53 +176,56 @@ export default function Reservation({
           </p>
         </div>
       )}
-      <FormControl
-        variant="standard"
-        className="resajet-body-container"
-        id="periodId"
-      >
-        <span className="resajet-label">
-          {t("reservation.momentRestauration")}
-        </span>
-        <Select
-          displayEmpty
-          name="periodId"
-          onChange={(e) => handleChange(e)}
-          value={formulaire?.periodId}
-          renderValue={(selected) => {
-            if (selected === "") {
-              return (
-                <em>{t("reservation.veuillezChoisirOptionRestauration")}</em>
-              );
-            }
-            const period = companyContext.company?.periods?.find(
-              (tr) => tr.id === selected
-            );
-
-            return period
-              ? period.periodTranslations.find(
-                  (pt) => Object.values(Language)[pt.language] === i18n.language
-                )?.name
-              : "";
-          }}
+      {companyContext?.company?.type === CompanyType.Restaurant && (
+        <FormControl
+          variant="standard"
+          className="resajet-body-container"
+          id="periodId"
         >
-          {companyContext.company?.periods?.map((period) => (
-            <MenuItem key={period.id} value={period.id}>
-              {
-                period.periodTranslations.find(
-                  (pt) => Object.values(Language)[pt.language] === i18n.language
-                )?.name
+          <span className="resajet-label">
+            {t("reservation.momentRestauration")}
+          </span>
+          <Select
+            displayEmpty
+            name="periodId"
+            onChange={(e) => handleChange(e)}
+            value={formulaire?.periodId}
+            renderValue={(selected) => {
+              if (selected === "") {
+                return (
+                  <em>{t("reservation.veuillezChoisirOptionRestauration")}</em>
+                );
               }
-            </MenuItem>
-          ))}
-        </Select>
-        {errors.findIndex((e) => e.type == ErrorType.Period) > -1 && (
-          <div className="resajet-widget-input-error">
-            {errors.find((e) => e.type == ErrorType.Period)?.message}
-          </div>
-        )}
-      </FormControl>
+              const period = companyContext.company?.periods?.find(
+                (tr) => tr.id === selected
+              );
 
+              return period
+                ? period.periodTranslations.find(
+                    (pt) =>
+                      Object.values(Language)[pt.language] === i18n.language
+                  )?.name
+                : "";
+            }}
+          >
+            {companyContext.company?.periods?.map((period) => (
+              <MenuItem key={period.id} value={period.id}>
+                {
+                  period.periodTranslations.find(
+                    (pt) =>
+                      Object.values(Language)[pt.language] === i18n.language
+                  )?.name
+                }
+              </MenuItem>
+            ))}
+          </Select>
+          {errors.findIndex((e) => e.type == ErrorType.Period) > -1 && (
+            <div className="resajet-widget-input-error">
+              {errors.find((e) => e.type == ErrorType.Period)?.message}
+            </div>
+          )}
+        </FormControl>
+      )}
       <FormControl
         className="resajet-body-container"
         variant="standard"
@@ -305,7 +309,6 @@ export default function Reservation({
           )}
         </FormControl>
       )}
-
       {formulaire?.periodId ? (
         <FormControl
           className="resajet-body-container"

@@ -8,6 +8,7 @@ import { CompanySettingDto } from "../CompanySetting/CompanySettingDto";
 
 export interface CompanyDto {
   id: string;
+  type: number;
   periods: PeriodCompanyDto[];
   companySetting: CompanySettingDto;
   companyEmailSetting: CompanyEmailSettingDto;
