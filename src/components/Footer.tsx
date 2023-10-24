@@ -5,6 +5,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { ReservationRequest } from "../requests/ReservationRequest";
 import { TFunction } from "i18next";
 import { CompanyContextProps } from "../contexts/CompanyContext";
+import { CompanyType } from "../enums/CompanyType";
 
 type FooterProps = {
   activeStep: number;
@@ -33,32 +34,53 @@ export default function Footer({
 }: FooterProps) {
   const nextIsDisabled = () => {
     if (activeStep === 0) {
-      return (
-        formulaire?.periodId === "" ||
-        formulaire?.participants <= 0 ||
-        formulaire?.date === null ||
-        formulaire?.timeSlotId === ""
-      );
+      if (companyContext?.company?.type === CompanyType.Restaurant) {
+        return (
+          formulaire?.periodId === "" ||
+          formulaire?.participants <= 0 ||
+          formulaire?.startDate === null ||
+          formulaire?.timeSlotId === ""
+        );
+      } else if (companyContext?.company?.type === CompanyType.Housing)
+        return formulaire?.participants <= 0 || formulaire?.startDate === null;
     }
     if (activeStep === 1) {
-      return (
-        formulaire?.periodId === "" ||
-        formulaire?.participants <= 0 ||
-        formulaire?.date === null ||
-        formulaire?.timeSlotId === "" ||
-        formulaire?.lastname === "" ||
-        formulaire?.firstname === "" ||
-        formulaire?.email === "" ||
-        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-          formulaire?.email
-        ) ||
-        (formulaire?.phoneNumber !== "" &&
-          !(
-            formulaire?.phoneNumber &&
-            /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
-          )) ||
-        !formulaire?.termsConditions
-      );
+      if (companyContext?.company?.type === CompanyType.Restaurant) {
+        return (
+          formulaire?.periodId === "" ||
+          formulaire?.participants <= 0 ||
+          formulaire?.startDate === null ||
+          formulaire?.timeSlotId === "" ||
+          formulaire?.lastname === "" ||
+          formulaire?.firstname === "" ||
+          formulaire?.email === "" ||
+          !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+            formulaire?.email
+          ) ||
+          (formulaire?.phoneNumber !== "" &&
+            !(
+              formulaire?.phoneNumber &&
+              /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
+            )) ||
+          !formulaire?.termsConditions
+        );
+      } else if (companyContext?.company?.type === CompanyType.Housing)
+        return (
+          formulaire?.participants <= 0 ||
+          formulaire?.startDate === null ||
+          formulaire?.lastname === "" ||
+          formulaire?.firstname === "" ||
+          formulaire?.email === "" ||
+          !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+            formulaire?.email
+          ) ||
+          (formulaire?.phoneNumber !== "" &&
+            !(
+              formulaire?.phoneNumber &&
+              /^\+\d{1,3}\s?\d{1,14}$/.test("+" + formulaire?.phoneNumber)
+            )) ||
+          !formulaire?.termsConditions
+        );
     }
 
     return false;

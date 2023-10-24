@@ -22,7 +22,7 @@ export default function SuccessAnimation({ title }: SuccessAnimationProps) {
           d="M14.1 27.2l7.1 7.2 16.7-16.8"
         />
       </svg>
-      <p>{title}</p>
+      <p style={{ textAlign: "center" }}>{title}</p>
     </div>
   );
 }

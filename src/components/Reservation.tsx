@@ -141,7 +141,7 @@ export default function Reservation({
         (ts) =>
           !companyContext?.company?.unavailabilities.some(
             (u) =>
-              dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
+              dayjs(u.date).isSame(dayjs(formulaire.startDate), "day") &&
               u.unavailabilityPeriodIds.find(
                 (upid) =>
                   upid.periodId === formulaire.periodId &&
@@ -235,13 +235,16 @@ export default function Reservation({
           {t("reservation.nombreDePersonnes")}
         </span>
         <Slider
-          disabled={formulaire?.periodId === ""}
+          disabled={
+            companyContext?.company?.type === CompanyType.Restaurant &&
+            formulaire?.periodId === ""
+          }
           value={formulaire?.participants}
           min={1}
           max={companyContext.company?.companySetting?.maximumReservation}
           marks={marks}
           name="participants"
-          onChange={(e) => handleChange(e)}
+          onChange={(e: any) => handleChange(e)}
           style={{ color: "black" }}
         />
         {errors.findIndex((e) => e.type == ErrorType.Participants) > -1 && (
@@ -256,147 +259,166 @@ export default function Reservation({
         id="date"
       >
         <span className="resajet-label">{t("reservation.date")}</span>
-        <LocalizationProvider
-          dateAdapter={AdapterDayjs}
-          adapterLocale={i18n.language}
-        >
-          <StyledDateCalendar
-            disablePast
-            shouldDisableDate={shouldDisableDate}
-            views={["month", "day"]}
-            value={formulaire?.date}
-            onChange={(value: any) => handleCustomChange("date", value)}
-            disabled={
-              !(formulaire?.periodId !== "" && formulaire?.participants > 0)
-            }
-          />
-        </LocalizationProvider>
+
+        {companyContext?.company?.type === CompanyType.Housing ? (
+          <div></div>
+        ) : companyContext?.company?.type === CompanyType.Restaurant ? (
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale={i18n.language}
+          >
+            <StyledDateCalendar
+              disablePast
+              shouldDisableDate={shouldDisableDate}
+              views={["month", "day"]}
+              value={formulaire?.startDate}
+              onChange={(value: any) => handleCustomChange("startDate", value)}
+              disabled={
+                companyContext?.company?.type === CompanyType.Restaurant
+                  ? !(
+                      formulaire?.periodId !== "" &&
+                      formulaire?.participants > 0
+                    )
+                  : companyContext?.company?.type === CompanyType.Housing
+                  ? formulaire?.participants <= 0
+                  : false
+              }
+            />
+          </LocalizationProvider>
+        ) : null}
         {errors.findIndex((e) => e.type == ErrorType.Date) > -1 && (
           <div className="resajet-widget-input-error resajet-widget-input-error-date">
             {errors.find((e) => e.type == ErrorType.Date)?.message}
           </div>
         )}
       </FormControl>
-      {companyContext.company?.companyReservationSetting.areaSelection && (
-        <FormControl
-          variant="standard"
-          className="resajet-body-container"
-          id="areaId"
-        >
-          <span className="resajet-label">{t("reservation.espace")}</span>
-          <Select
-            displayEmpty
-            name="areaId"
-            onChange={(e) => handleChange(e)}
-            value={formulaire?.areaId}
+      {companyContext?.company?.type === CompanyType.Restaurant &&
+        companyContext.company?.companyReservationSetting.areaSelection && (
+          <FormControl
+            variant="standard"
+            className="resajet-body-container"
+            id="areaId"
           >
-            <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
-            {areasFiltered?.map((area) => (
-              <MenuItem key={area.id} value={area.id}>
-                {
-                  area.areaTranslations.find(
-                    (at) =>
-                      Object.values(Language)[at.language] === i18n.language
-                  )?.name
-                }
-              </MenuItem>
-            ))}
-          </Select>
-          {errors.findIndex((e) => e.type == ErrorType.Area) > -1 && (
-            <div className="resajet-widget-input-error">
-              {errors.find((e) => e.type == ErrorType.Area)?.message}
-            </div>
-          )}
-        </FormControl>
-      )}
-      {formulaire?.periodId ? (
-        <FormControl
-          className="resajet-body-container"
-          variant="standard"
-          id="hour"
-        >
-          <span className="resajet-label hour">{t("reservation.heures")}</span>
-          <Grid container>
-            {companyContext?.company?.periods
-              .find((p) => p.id === formulaire.periodId)
-              ?.timeSlots.filter(
-                (ts) =>
-                  !companyContext?.company?.unavailabilities.some(
-                    (u) =>
-                      dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
-                      u.unavailabilityPeriodIds.find((upid) =>
-                        upid.areaIds.length > 0
-                          ? upid.periodId === formulaire.periodId &&
-                            upid.areaIds.find(
-                              (areaId) => areaId === formulaire.areaId
-                            ) &&
-                            upid.unavailabilityTimeSlotIds.includes(ts.id) &&
-                            !upid.disabled
-                          : upid.periodId === formulaire.periodId &&
-                            upid.unavailabilityTimeSlotIds.includes(ts.id) &&
-                            !upid.disabled
-                      )
-                  )
-              )
-              .filter((ts) => {
-                const today = dayjs();
-                const timeslotTime = dayjs(ts.hour, "HH:mm");
+            <span className="resajet-label">{t("reservation.espace")}</span>
+            <Select
+              displayEmpty
+              name="areaId"
+              onChange={(e) => handleChange(e)}
+              value={formulaire?.areaId}
+            >
+              <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
+              {areasFiltered?.map((area) => (
+                <MenuItem key={area.id} value={area.id}>
+                  {
+                    area.areaTranslations.find(
+                      (at) =>
+                        Object.values(Language)[at.language] === i18n.language
+                    )?.name
+                  }
+                </MenuItem>
+              ))}
+            </Select>
+            {errors.findIndex((e) => e.type == ErrorType.Area) > -1 && (
+              <div className="resajet-widget-input-error">
+                {errors.find((e) => e.type == ErrorType.Area)?.message}
+              </div>
+            )}
+          </FormControl>
+        )}
+      {companyContext?.company?.type === CompanyType.Restaurant &&
+        formulaire?.periodId && (
+          <FormControl
+            className="resajet-body-container"
+            variant="standard"
+            id="hour"
+          >
+            <span className="resajet-label hour">
+              {t("reservation.heures")}
+            </span>
+            <Grid container>
+              {companyContext?.company?.periods
+                .find((p) => p.id === formulaire.periodId)
+                ?.timeSlots.filter(
+                  (ts) =>
+                    !companyContext?.company?.unavailabilities.some(
+                      (u) =>
+                        dayjs(u.date).isSame(
+                          dayjs(formulaire.startDate),
+                          "day"
+                        ) &&
+                        u.unavailabilityPeriodIds.find((upid) =>
+                          upid.areaIds.length > 0
+                            ? upid.periodId === formulaire.periodId &&
+                              upid.areaIds.find(
+                                (areaId) => areaId === formulaire.areaId
+                              ) &&
+                              upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                              !upid.disabled
+                            : upid.periodId === formulaire.periodId &&
+                              upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                              !upid.disabled
+                        )
+                    )
+                )
+                .filter((ts) => {
+                  const today = dayjs();
+                  const timeslotTime = dayjs(ts.hour, "HH:mm");
 
-                return !(
-                  today.isSame(dayjs(formulaire.date), "day") &&
-                  timeslotTime.isBefore(today, "minute")
-                );
-              })
-              .map((timeSlot) => (
-                <Grid
-                  item
-                  xs={3}
-                  container
-                  justifyContent="center"
-                  alignItems="center"
-                  key={timeSlot.id}
-                >
-                  <div
-                    className={`resajet-body-button-hour${
-                      !(
+                  return !(
+                    today.isSame(dayjs(formulaire.startDate), "day") &&
+                    timeslotTime.isBefore(today, "minute")
+                  );
+                })
+                .map((timeSlot) => (
+                  <Grid
+                    item
+                    xs={3}
+                    container
+                    justifyContent="center"
+                    alignItems="center"
+                    key={timeSlot.id}
+                  >
+                    <div
+                      className={`resajet-body-button-hour${
+                        !(
+                          formulaire?.periodId !== "" &&
+                          formulaire?.participants > 0 &&
+                          formulaire?.startDate !== null
+                        )
+                          ? " disabled"
+                          : ""
+                      }`}
+                      style={{
+                        borderColor:
+                          formulaire?.timeSlotId === timeSlot.id
+                            ? companyContext.company?.companySetting?.mainColor
+                            : "black",
+                      }}
+                      onClick={() =>
                         formulaire?.periodId !== "" &&
                         formulaire?.participants > 0 &&
-                        formulaire?.date !== null
-                      )
-                        ? " disabled"
-                        : ""
-                    }`}
-                    style={{
-                      borderColor:
-                        formulaire?.timeSlotId === timeSlot.id
-                          ? companyContext.company?.companySetting?.mainColor
-                          : "black",
-                    }}
-                    onClick={() =>
-                      formulaire?.periodId !== "" &&
-                      formulaire?.participants > 0 &&
-                      formulaire?.date !== null
-                        ? handleCustomChange(
-                            "timeSlotId",
-                            timeSlot.id === formulaire?.timeSlotId
-                              ? ""
-                              : timeSlot.id
-                          )
-                        : null
-                    }
-                  >
-                    {timeSlot.hour.replace(/:00$/, "")}
-                  </div>
-                </Grid>
-              ))}
-          </Grid>
-          {errors.findIndex((e) => e.type == ErrorType.TimeSlot) > -1 && (
-            <div className="resajet-widget-input-error">
-              {errors.find((e) => e.type == ErrorType.TimeSlot)?.message}
-            </div>
-          )}
-        </FormControl>
-      ) : null}
+                        formulaire?.startDate !== null
+                          ? handleCustomChange(
+                              "timeSlotId",
+                              timeSlot.id === formulaire?.timeSlotId
+                                ? ""
+                                : timeSlot.id
+                            )
+                          : null
+                      }
+                    >
+                      {timeSlot.hour.replace(/:00$/, "")}
+                    </div>
+                  </Grid>
+                ))}
+            </Grid>
+            {errors.findIndex((e) => e.type == ErrorType.TimeSlot) > -1 && (
+              <div className="resajet-widget-input-error">
+                {errors.find((e) => e.type == ErrorType.TimeSlot)?.message}
+              </div>
+            )}
+          </FormControl>
+        )}
     </div>
   );
 }

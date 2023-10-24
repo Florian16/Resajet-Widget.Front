@@ -12,11 +12,11 @@ class ReservationService {
   ): Promise<CompanyDto> {
     const url = `${this.baseUrl}/${companyId}`;
     const request = {
-      periodId: data.periodId,
+      periodId: data.periodId === "" ? null : data.periodId,
       areaId: data.areaId === "" ? null : data.areaId,
       participants: data.participants,
-      timeSlotId: data.timeSlotId,
-      date: data.date?.format("YYYY-MM-DD"),
+      timeSlotId: data.timeSlotId === "" ? null : data.timeSlotId,
+      startDate: data.startDate?.format("YYYY-MM-DD"),
       lastname: data.lastname,
       firstname: data.firstname,
       email: data.email,

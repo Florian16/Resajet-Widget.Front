@@ -17,6 +17,7 @@ import { reservationService } from "../services/reservation.service";
 import dayjs from "dayjs";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
+import { CompanyType } from "../enums/CompanyType";
 
 type WidgetProps = {
   companyContext: CompanyContextProps;
@@ -29,7 +30,8 @@ const formulaireInitial: ReservationRequest = {
   areaId: "",
   participants: 0,
   timeSlotId: "",
-  date: null,
+  startDate: null,
+  endDate: null,
   firstname: "",
   lastname: "",
   phoneNumber: "",
@@ -69,7 +71,7 @@ export default function Widget({
 
   useEffect(() => {
     if (
-      formulaire.date !== null &&
+      formulaire.startDate !== null &&
       companyContext?.company?.periods
         .find((p) => p.id === formulaire.periodId)
         ?.timeSlots.filter((ts) => {
@@ -77,12 +79,12 @@ export default function Widget({
           const timeslotTime = dayjs(ts.hour, "HH:mm");
 
           return !(
-            today.isSame(dayjs(formulaire?.date), "day") &&
+            today.isSame(dayjs(formulaire?.startDate), "day") &&
             timeslotTime.isBefore(today, "hour")
           );
         }).length === 0
     )
-      setFormulaire({ ...formulaire, date: null });
+      setFormulaire({ ...formulaire, startDate: null });
   }, [formulaire.periodId]);
 
   const errorsManagement = (errors: Error[]) => {
@@ -132,70 +134,88 @@ export default function Widget({
     let scrollElement = null;
 
     if (activeStep === 0) {
-      if (formulaire?.periodId === "") {
-        if (isLoading) {
-          if (scrollElement === null)
-            scrollElement = document.getElementById("periodId");
+      if (companyContext?.company?.type === CompanyType.Restaurant) {
+        if (formulaire?.periodId === "") {
+          if (isLoading) {
+            if (scrollElement === null)
+              scrollElement = document.getElementById("periodId");
 
-          if (newErrors.findIndex((e) => e.type === ErrorType.Period) === -1)
-            newErrors.push({
-              type: ErrorType.Period,
-              message: t("errors.momentRequis"),
-              step: 0,
-            });
+            if (newErrors.findIndex((e) => e.type === ErrorType.Period) === -1)
+              newErrors.push({
+                type: ErrorType.Period,
+                message: t("errors.momentRequis"),
+                step: 0,
+              });
+          }
+        } else {
+          newErrors = newErrors.filter((e) => e.type !== ErrorType.Period);
         }
-      } else {
-        newErrors = newErrors.filter((e) => e.type !== ErrorType.Period);
       }
 
-      if (formulaire?.participants <= 0) {
-        if (isLoading) {
-          if (scrollElement === null)
-            scrollElement = document.getElementById("participants");
+      if (
+        companyContext?.company?.type === CompanyType.Restaurant ||
+        companyContext?.company?.type === CompanyType.Housing
+      ) {
+        if (formulaire?.participants <= 0) {
+          if (isLoading) {
+            if (scrollElement === null)
+              scrollElement = document.getElementById("participants");
 
-          if (
-            newErrors.findIndex((e) => e.type === ErrorType.Participants) === -1
-          )
-            newErrors.push({
-              type: ErrorType.Participants,
-              message: t("errors.participantRequis"),
-              step: 0,
-            });
+            if (
+              newErrors.findIndex((e) => e.type === ErrorType.Participants) ===
+              -1
+            )
+              newErrors.push({
+                type: ErrorType.Participants,
+                message: t("errors.participantRequis"),
+                step: 0,
+              });
+          }
+        } else {
+          newErrors = newErrors.filter(
+            (e) => e.type !== ErrorType.Participants
+          );
         }
-      } else {
-        newErrors = newErrors.filter((e) => e.type !== ErrorType.Participants);
       }
 
-      if (formulaire?.date === null) {
-        if (isLoading) {
-          if (scrollElement === null)
-            scrollElement = document.getElementById("date");
+      if (
+        companyContext?.company?.type === CompanyType.Restaurant ||
+        companyContext?.company?.type === CompanyType.Housing
+      ) {
+        if (formulaire?.startDate === null) {
+          if (isLoading) {
+            if (scrollElement === null)
+              scrollElement = document.getElementById("date");
 
-          if (newErrors.findIndex((e) => e.type === ErrorType.Date) === -1)
-            newErrors.push({
-              type: ErrorType.Date,
-              message: t("errors.dateRequise"),
-              step: 0,
-            });
+            if (newErrors.findIndex((e) => e.type === ErrorType.Date) === -1)
+              newErrors.push({
+                type: ErrorType.Date,
+                message: t("errors.dateRequise"),
+                step: 0,
+              });
+          }
+        } else {
+          newErrors = newErrors.filter((e) => e.type !== ErrorType.Date);
         }
-      } else {
-        newErrors = newErrors.filter((e) => e.type !== ErrorType.Date);
       }
+      if (companyContext?.company?.type === CompanyType.Restaurant) {
+        if (formulaire?.timeSlotId === "") {
+          if (isLoading) {
+            if (scrollElement === null)
+              scrollElement = document.getElementById("hour");
 
-      if (formulaire?.timeSlotId === "") {
-        if (isLoading) {
-          if (scrollElement === null)
-            scrollElement = document.getElementById("hour");
-
-          if (newErrors.findIndex((e) => e.type === ErrorType.TimeSlot) === -1)
-            newErrors.push({
-              type: ErrorType.TimeSlot,
-              message: t("errors.heureRequise"),
-              step: 0,
-            });
+            if (
+              newErrors.findIndex((e) => e.type === ErrorType.TimeSlot) === -1
+            )
+              newErrors.push({
+                type: ErrorType.TimeSlot,
+                message: t("errors.heureRequise"),
+                step: 0,
+              });
+          }
+        } else {
+          newErrors = newErrors.filter((e) => e.type !== ErrorType.TimeSlot);
         }
-      } else {
-        newErrors = newErrors.filter((e) => e.type !== ErrorType.TimeSlot);
       }
     } else if (activeStep === 1) {
       if (formulaire?.lastname === "") {
@@ -367,6 +387,7 @@ export default function Widget({
           ErrorType.PhoneNumber,
           ErrorType.TermsConditions,
         ];
+
         const newErrors: Error[] = [];
 
         error?.response?.data?.errors?.forEach((error: Error) => {
