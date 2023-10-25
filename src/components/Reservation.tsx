@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Select, FormControl, MenuItem, Slider, Grid } from "@mui/material";
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  Slider,
+  Grid,
+  Box,
+} from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
@@ -15,6 +22,9 @@ import InfoIcon from "@mui/icons-material/Info";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 import { CompanyType } from "../enums/CompanyType";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 type ReservationProps = {
   handleChange: (e: any) => void;
@@ -261,7 +271,21 @@ export default function Reservation({
         <span className="resajet-label">{t("reservation.date")}</span>
 
         {companyContext?.company?.type === CompanyType.Housing ? (
-          <div></div>
+          <DateRange
+            ranges={[
+              {
+                startDate: new Date(),
+                endDate: new Date(),
+                key: "formulaire",
+              },
+            ]}
+            minDate={new Date()}
+            onChange={(e) => {
+              console.log(e.formulaire.startDate);
+              console.log(e.formulaire.endDate);
+            }}
+            rangeColors={[companyContext?.company?.companySetting.mainColor]}
+          />
         ) : companyContext?.company?.type === CompanyType.Restaurant ? (
           <LocalizationProvider
             dateAdapter={AdapterDayjs}

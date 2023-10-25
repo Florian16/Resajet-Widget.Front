@@ -23,6 +23,16 @@
 
   &-container {
     padding-bottom: 2.2rem !important;
+
+    .rdrDateDisplayWrapper {
+      background-color: #dbe0e0;
+    }
+
+    .rdrDateDisplay {
+      margin: 0rem;
+      margin-top: 0.833rem !important;
+      margin-bottom: 0.833rem !important;
+    }
   }
 
   &-button-hour {

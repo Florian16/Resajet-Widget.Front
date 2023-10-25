@@ -4,8 +4,8 @@ export interface ReservationRequest {
   areaId?: string;
   participants: number;
   timeSlotId: string;
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
+  startDate: Dayjs | Date | null;
+  endDate: Dayjs | Date | null;
   lastname: string;
   firstname: string;
   email: string;
