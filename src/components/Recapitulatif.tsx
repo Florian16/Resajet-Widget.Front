@@ -55,12 +55,12 @@ export default function Recapitulatif({
             className="resajet-recapitulatif-container-grid-text"
           >
             <span>
-              {formulaire?.startDate
+              {formulaire?.date
                 ? `${t(
-                    `recapitulatif.${formulaire?.startDate
+                    `recapitulatif.${formulaire?.date
                       .locale("fr")
                       .format("dddd")}`
-                  )} ${formulaire?.startDate.format("DD/MM/YYYY")}`
+                  )} ${formulaire?.date.format("DD/MM/YYYY")}`
                 : ""}
             </span>
           </Grid>

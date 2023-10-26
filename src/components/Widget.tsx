@@ -30,8 +30,9 @@ const formulaireInitial: ReservationRequest = {
   areaId: "",
   participants: 0,
   timeSlotId: "",
-  startDate: null,
-  endDate: null,
+  date: null,
+  startDate: new Date(),
+  endDate: new Date(),
   firstname: "",
   lastname: "",
   phoneNumber: "",
@@ -52,6 +53,7 @@ export default function Widget({
     setFormulaire,
     handleCustomChange,
     handleCheckboxChange,
+    handleDoubleChange,
   } = useFormulaire<ReservationRequest>({
     ...formulaireInitial,
   });
@@ -71,7 +73,7 @@ export default function Widget({
 
   useEffect(() => {
     if (
-      formulaire.startDate !== null &&
+      formulaire.date !== null &&
       companyContext?.company?.periods
         .find((p) => p.id === formulaire.periodId)
         ?.timeSlots.filter((ts) => {
@@ -79,12 +81,12 @@ export default function Widget({
           const timeslotTime = dayjs(ts.hour, "HH:mm");
 
           return !(
-            today.isSame(dayjs(formulaire?.startDate), "day") &&
+            today.isSame(dayjs(formulaire?.date), "day") &&
             timeslotTime.isBefore(today, "hour")
           );
         }).length === 0
     )
-      setFormulaire({ ...formulaire, startDate: null });
+      setFormulaire({ ...formulaire, date: null });
   }, [formulaire.periodId]);
 
   const errorsManagement = (errors: Error[]) => {
@@ -182,7 +184,7 @@ export default function Widget({
         companyContext?.company?.type === CompanyType.Restaurant ||
         companyContext?.company?.type === CompanyType.Housing
       ) {
-        if (formulaire?.startDate === null) {
+        if (formulaire?.date === null) {
           if (isLoading) {
             if (scrollElement === null)
               scrollElement = document.getElementById("date");
@@ -433,6 +435,7 @@ export default function Widget({
               <Reservation
                 handleChange={handleChange}
                 handleCustomChange={handleCustomChange}
+                handleDoubleChange={handleDoubleChange}
                 companyContext={companyContext}
                 formulaire={formulaire}
                 errors={errors}

@@ -38,18 +38,18 @@ export default function Footer({
         return (
           formulaire?.periodId === "" ||
           formulaire?.participants <= 0 ||
-          formulaire?.startDate === null ||
+          formulaire?.date === null ||
           formulaire?.timeSlotId === ""
         );
       } else if (companyContext?.company?.type === CompanyType.Housing)
-        return formulaire?.participants <= 0 || formulaire?.startDate === null;
+        return formulaire?.participants <= 0 || formulaire?.date === null;
     }
     if (activeStep === 1) {
       if (companyContext?.company?.type === CompanyType.Restaurant) {
         return (
           formulaire?.periodId === "" ||
           formulaire?.participants <= 0 ||
-          formulaire?.startDate === null ||
+          formulaire?.date === null ||
           formulaire?.timeSlotId === "" ||
           formulaire?.lastname === "" ||
           formulaire?.firstname === "" ||
@@ -67,7 +67,7 @@ export default function Footer({
       } else if (companyContext?.company?.type === CompanyType.Housing)
         return (
           formulaire?.participants <= 0 ||
-          formulaire?.startDate === null ||
+          formulaire?.date === null ||
           formulaire?.lastname === "" ||
           formulaire?.firstname === "" ||
           formulaire?.email === "" ||

@@ -24,6 +24,16 @@
   &-container {
     padding-bottom: 2.2rem !important;
 
+    .rdrMonthPicker,
+    .rdrYearPicker {
+      font-family: "Poppins", sans-serif !important;
+    }
+
+    .rdrMonthAndYearWrapper {
+      margin-top: 0px;
+      border-radius: 6px;
+    }
+
     .rdrDateDisplayWrapper {
       background-color: #dbe0e0;
     }
@@ -32,6 +42,15 @@
       margin: 0rem;
       margin-top: 0.833rem !important;
       margin-bottom: 0.833rem !important;
+    }
+
+    .rdrMonth {
+      width: 100%;
+      padding: inherit;
+    }
+
+    .rdrDays {
+      padding-bottom: 0.5rem;
     }
   }
 

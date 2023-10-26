@@ -16,7 +16,10 @@ class ReservationService {
       areaId: data.areaId === "" ? null : data.areaId,
       participants: data.participants,
       timeSlotId: data.timeSlotId === "" ? null : data.timeSlotId,
-      startDate: data.startDate?.format("YYYY-MM-DD"),
+      endDate:
+        data.date !== null ? data.date?.format("YYYY-MM-DD") : data.endDate,
+      startDate:
+        data.date !== null ? data.date?.format("YYYY-MM-DD") : data.startDate,
       lastname: data.lastname,
       firstname: data.firstname,
       email: data.email,

@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Select,
-  FormControl,
-  MenuItem,
-  Slider,
-  Grid,
-  Box,
-} from "@mui/material";
+import { Select, FormControl, MenuItem, Slider, Grid } from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
@@ -23,12 +16,19 @@ import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 import { CompanyType } from "../enums/CompanyType";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import { fr, nl, enGB } from "date-fns/locale";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 type ReservationProps = {
   handleChange: (e: any) => void;
   handleCustomChange: (name: string, value: any) => void;
+  handleDoubleChange: (
+    firstName: string,
+    firstValue: Date | undefined,
+    secondName: string,
+    secondValue: Date | undefined
+  ) => void;
   companyContext: CompanyContextProps;
   formulaire: ReservationRequest;
   formulaireInitial: ReservationRequest;
@@ -42,6 +42,7 @@ export default function Reservation({
   formulaire,
   companyContext,
   handleCustomChange,
+  handleDoubleChange,
   errors,
   errorsChecking,
   formulaireInitial,
@@ -151,7 +152,7 @@ export default function Reservation({
         (ts) =>
           !companyContext?.company?.unavailabilities.some(
             (u) =>
-              dayjs(u.date).isSame(dayjs(formulaire.startDate), "day") &&
+              dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
               u.unavailabilityPeriodIds.find(
                 (upid) =>
                   upid.periodId === formulaire.periodId &&
@@ -274,15 +275,26 @@ export default function Reservation({
           <DateRange
             ranges={[
               {
-                startDate: new Date(),
-                endDate: new Date(),
+                startDate: formulaire?.startDate,
+                endDate: formulaire?.endDate,
                 key: "formulaire",
               },
             ]}
+            locale={
+              i18n.language === "nl-NL"
+                ? nl
+                : i18n.language === "en-US"
+                ? enGB
+                : fr
+            }
             minDate={new Date()}
             onChange={(e) => {
-              console.log(e.formulaire.startDate);
-              console.log(e.formulaire.endDate);
+              handleDoubleChange(
+                "startDate",
+                e.formulaire.startDate,
+                "endDate",
+                e.formulaire.endDate
+              );
             }}
             rangeColors={[companyContext?.company?.companySetting.mainColor]}
           />
@@ -295,8 +307,8 @@ export default function Reservation({
               disablePast
               shouldDisableDate={shouldDisableDate}
               views={["month", "day"]}
-              value={formulaire?.startDate}
-              onChange={(value: any) => handleCustomChange("startDate", value)}
+              value={formulaire?.date}
+              onChange={(value: any) => handleCustomChange("date", value)}
               disabled={
                 companyContext?.company?.type === CompanyType.Restaurant
                   ? !(
@@ -366,10 +378,7 @@ export default function Reservation({
                   (ts) =>
                     !companyContext?.company?.unavailabilities.some(
                       (u) =>
-                        dayjs(u.date).isSame(
-                          dayjs(formulaire.startDate),
-                          "day"
-                        ) &&
+                        dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
                         u.unavailabilityPeriodIds.find((upid) =>
                           upid.areaIds.length > 0
                             ? upid.periodId === formulaire.periodId &&
@@ -389,7 +398,7 @@ export default function Reservation({
                   const timeslotTime = dayjs(ts.hour, "HH:mm");
 
                   return !(
-                    today.isSame(dayjs(formulaire.startDate), "day") &&
+                    today.isSame(dayjs(formulaire.date), "day") &&
                     timeslotTime.isBefore(today, "minute")
                   );
                 })
@@ -407,7 +416,7 @@ export default function Reservation({
                         !(
                           formulaire?.periodId !== "" &&
                           formulaire?.participants > 0 &&
-                          formulaire?.startDate !== null
+                          formulaire?.date !== null
                         )
                           ? " disabled"
                           : ""
@@ -421,7 +430,7 @@ export default function Reservation({
                       onClick={() =>
                         formulaire?.periodId !== "" &&
                         formulaire?.participants > 0 &&
-                        formulaire?.startDate !== null
+                        formulaire?.date !== null
                           ? handleCustomChange(
                               "timeSlotId",
                               timeSlot.id === formulaire?.timeSlotId
