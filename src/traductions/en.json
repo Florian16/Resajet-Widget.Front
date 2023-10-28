@@ -56,7 +56,8 @@
     "reservationEnAttenteConfirmation": "Your booking is awaiting confirmation."
   },
   "popup": {
-    "reserverUneTable": "Book a table"
+    "reserverUneTable": "Book a table",
+    "reserverMaintenant": "Book now"
   },
   "errors": {
     "momentRequis": "Le moment de réservation est obligatoire.",

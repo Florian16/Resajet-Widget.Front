@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { CompanyContextProps } from "../contexts/CompanyContext";
+import { CompanyType } from "../enums/CompanyType";
 
 type PopupProps = {
   companyContext: CompanyContextProps;
@@ -28,7 +29,13 @@ export default function Popup({
       onClick={onClick}
     >
       <div className="popup-reservation">
-        <span>{t("popup.reserverUneTable")}</span>
+        <span>
+          {companyContext?.company?.type === CompanyType.Restaurant
+            ? t("popup.reserverUneTable")
+            : companyContext?.company?.type === CompanyType.Housing
+            ? t("popup.reserverMaintenant")
+            : t("popup.reserverUneTable")}
+        </span>
       </div>
     </div>
   );

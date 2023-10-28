@@ -56,7 +56,8 @@
     "reservationEnAttenteConfirmation": "Je reservering wacht op bevestiging."
   },
   "popup": {
-    "reserverUneTable": "Reserveer een tafel"
+    "reserverUneTable": "Reserveer een tafel",
+    "reserverMaintenant": "Reserveer nu"
   },
   "errors": {
     "momentRequis": "Le moment de réservation est obligatoire.",
