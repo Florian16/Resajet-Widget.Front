@@ -310,14 +310,7 @@ export default function Reservation({
               value={formulaire?.date}
               onChange={(value: any) => handleCustomChange("date", value)}
               disabled={
-                companyContext?.company?.type === CompanyType.Restaurant
-                  ? !(
-                      formulaire?.periodId !== "" &&
-                      formulaire?.participants > 0
-                    )
-                  : companyContext?.company?.type === CompanyType.Housing
-                  ? formulaire?.participants <= 0
-                  : false
+                !(formulaire?.periodId !== "" && formulaire?.participants > 0)
               }
             />
           </LocalizationProvider>

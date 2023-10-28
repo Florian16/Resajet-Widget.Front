@@ -42,7 +42,11 @@ export default function Footer({
           formulaire?.timeSlotId === ""
         );
       } else if (companyContext?.company?.type === CompanyType.Housing)
-        return formulaire?.participants <= 0 || formulaire?.date === null;
+        return (
+          formulaire?.participants <= 0 ||
+          formulaire?.startDate === undefined ||
+          formulaire?.endDate === undefined
+        );
     }
     if (activeStep === 1) {
       if (companyContext?.company?.type === CompanyType.Restaurant) {
@@ -64,10 +68,11 @@ export default function Footer({
             )) ||
           !formulaire?.termsConditions
         );
-      } else if (companyContext?.company?.type === CompanyType.Housing)
+      } else if (companyContext?.company?.type === CompanyType.Housing) {
         return (
           formulaire?.participants <= 0 ||
-          formulaire?.date === null ||
+          formulaire?.startDate === undefined ||
+          formulaire?.endDate === undefined ||
           formulaire?.lastname === "" ||
           formulaire?.firstname === "" ||
           formulaire?.email === "" ||
@@ -81,6 +86,7 @@ export default function Footer({
             )) ||
           !formulaire?.termsConditions
         );
+      }
     }
 
     return false;

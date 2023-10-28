@@ -7,6 +7,8 @@ import { Language } from "../enums/Language";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 import { CompanyType } from "../enums/CompanyType";
+import { format } from "date-fns";
+import { fr, nl, enGB } from "date-fns/locale";
 
 type RecapitulatifProps = {
   companyContext: CompanyContextProps;
@@ -20,6 +22,17 @@ export default function Recapitulatif({
   companyContext,
   errors,
 }: RecapitulatifProps) {
+  const dateFormat = (date: Date | undefined) => {
+    if (date === undefined) return "";
+    if (i18n.language === "nl-NL") {
+      return format(date, "dd MMMM yyyy", { locale: nl });
+    } else if (i18n.language === "en-US") {
+      return format(date, "MMMM dd, yyyy", { locale: enGB });
+    } else {
+      return format(date, "dd MMMM yyyy", { locale: fr });
+    }
+  };
+
   return (
     <div className="resajet-recapitulatif">
       <div className="resajet-recapitulatif-container">
@@ -53,14 +66,26 @@ export default function Recapitulatif({
             item
             xs={6}
             className="resajet-recapitulatif-container-grid-text"
+            style={{
+              textTransform:
+                companyContext?.company?.type === CompanyType.Housing
+                  ? "inherit"
+                  : "capitalize",
+            }}
           >
             <span>
-              {formulaire?.date
-                ? `${t(
-                    `recapitulatif.${formulaire?.date
-                      .locale("fr")
-                      .format("dddd")}`
-                  )} ${formulaire?.date.format("DD/MM/YYYY")}`
+              {companyContext?.company?.type === CompanyType.Restaurant
+                ? formulaire?.date
+                  ? `${t(
+                      `recapitulatif.${formulaire?.date
+                        .locale("fr")
+                        .format("dddd")}`
+                    )} ${formulaire?.date.format("DD/MM/YYYY")}`
+                  : ""
+                : companyContext?.company?.type === CompanyType.Housing
+                ? `${dateFormat(formulaire?.startDate)} ${t(
+                    "recapitulatif.au"
+                  )} ${dateFormat(formulaire?.endDate)}`
                 : ""}
             </span>
           </Grid>

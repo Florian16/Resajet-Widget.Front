@@ -182,10 +182,7 @@ export default function Widget({
         }
       }
 
-      if (
-        companyContext?.company?.type === CompanyType.Restaurant ||
-        companyContext?.company?.type === CompanyType.Housing
-      ) {
+      if (companyContext?.company?.type === CompanyType.Restaurant) {
         if (formulaire?.date === null) {
           if (isLoading) {
             if (scrollElement === null)
@@ -201,7 +198,27 @@ export default function Widget({
         } else {
           newErrors = newErrors.filter((e) => e.type !== ErrorType.Date);
         }
+      } else if (companyContext?.company?.type === CompanyType.Housing) {
+        if (
+          formulaire?.startDate === undefined ||
+          formulaire?.endDate === undefined
+        ) {
+          if (isLoading) {
+            if (scrollElement === null)
+              scrollElement = document.getElementById("date");
+
+            if (newErrors.findIndex((e) => e.type === ErrorType.Date) === -1)
+              newErrors.push({
+                type: ErrorType.Date,
+                message: t("errors.rangeDateRequise"),
+                step: 0,
+              });
+          }
+        } else {
+          newErrors = newErrors.filter((e) => e.type !== ErrorType.Date);
+        }
       }
+
       if (companyContext?.company?.type === CompanyType.Restaurant) {
         if (formulaire?.timeSlotId === "") {
           if (isLoading) {
@@ -363,6 +380,8 @@ export default function Widget({
   };
 
   const validateReservation = () => {
+    console.log("yo");
+
     setIsSubmitting(true);
     reservationService
       .createReservation(
