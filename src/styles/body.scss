@@ -24,14 +24,40 @@
   &-container {
     padding-bottom: 2.2rem !important;
 
+    .rdrCalendarWrapper {
+      background: none;
+      margin-left: 10px;
+      margin-right: 10px;
+
+      .rdrDateDisplayWrapper {
+        display: none;
+      }
+
+      .rdrDayDisabled {
+        background-color: inherit !important;
+      }
+
+      .rdrDayNumber {
+        span::after {
+          background: white;
+        }
+      }
+      .rdrDayToday:not(.rdrDayPassive) .rdrInRange ~ .rdrDayNumber span:after,
+      .rdrDayToday:not(.rdrDayPassive) .rdrStartEdge ~ .rdrDayNumber span:after,
+      .rdrDayToday:not(.rdrDayPassive) .rdrEndEdge ~ .rdrDayNumber span:after,
+      .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
+        background: white;
+      }
+    }
+
     .rdrMonthPicker,
     .rdrYearPicker {
       font-family: "Poppins", sans-serif !important;
     }
 
     .rdrMonthAndYearWrapper {
-      margin-top: 0px;
-      border-radius: 6px;
+      padding-top: inherit !important;
+      border-radius: 6px !important;
     }
 
     .rdrDateDisplayWrapper {

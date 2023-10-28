@@ -6,12 +6,14 @@ type PopupProps = {
   onClick: () => void;
   isToggleOpen: boolean;
   isOpen: boolean;
+  color: string;
 };
 export default function Popup({
   companyContext,
   onClick,
   isToggleOpen,
   isOpen,
+  color,
 }: PopupProps) {
   const { t } = useTranslation();
   return (
@@ -21,6 +23,7 @@ export default function Popup({
       }`}
       style={{
         backgroundColor: companyContext.company?.companySetting?.mainColor,
+        color: color,
       }}
       onClick={onClick}
     >

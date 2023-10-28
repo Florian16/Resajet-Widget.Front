@@ -7,9 +7,10 @@ import flagUk from "../assets/img/uk.png";
 
 type HeaderProps = {
   companyContext: CompanyContextProps;
+  color: string;
 };
 
-export default function Header({ companyContext }: HeaderProps) {
+export default function Header({ companyContext, color }: HeaderProps) {
   const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (event: SelectChangeEvent<string>) => {
@@ -21,6 +22,7 @@ export default function Header({ companyContext }: HeaderProps) {
       className="resajet-header"
       style={{
         backgroundColor: companyContext.company?.companySetting?.mainColor,
+        color: color,
       }}
     >
       <Grid container spacing={2} alignItems="center">

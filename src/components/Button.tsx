@@ -5,6 +5,7 @@ type ButtonProps = {
   onClick: () => void;
   isToggleOpen: boolean;
   isOpen: boolean;
+  color: string;
 };
 
 export default function Button({
@@ -12,6 +13,7 @@ export default function Button({
   onClick,
   isToggleOpen,
   isOpen,
+  color,
 }: ButtonProps) {
   return (
     <div
@@ -38,8 +40,8 @@ export default function Button({
           height="32"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <line x1="8" y1="8" x2="24" y2="24" stroke="black" strokeWidth="2" />
-          <line x1="8" y1="24" x2="24" y2="8" stroke="black" strokeWidth="2" />
+          <line x1="8" y1="8" x2="24" y2="24" stroke={color} strokeWidth="2" />
+          <line x1="8" y1="24" x2="24" y2="8" stroke={color} strokeWidth="2" />
         </svg>
       </span>
     </div>

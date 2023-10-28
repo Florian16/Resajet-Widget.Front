@@ -31,6 +31,32 @@ function App() {
     return () => clearTimeout(timeout);
   }, []);
 
+  const getColor = () => {
+    const backgroundColor = companyContext.company?.companySetting?.mainColor;
+
+    if (backgroundColor === undefined) return "white";
+
+    const background = parseColor(backgroundColor);
+
+    const luminance =
+      0.299 * background.r + 0.587 * background.g + 0.114 * background.b;
+
+    return luminance > 128 ? "black" : "white";
+  };
+
+  const parseColor = (color: string) => {
+    const m = /^#([0-9a-f]{6})$/i.exec(color);
+    if (m) {
+      const hex = m[1];
+      return {
+        r: parseInt(hex.substring(0, 2), 16),
+        g: parseInt(hex.substring(2, 4), 16),
+        b: parseInt(hex.substring(4, 6), 16),
+      };
+    }
+    return { r: 0, g: 0, b: 0 };
+  };
+
   return (
     companyContext?.company != null && (
       <div className="resajet-container">
@@ -39,6 +65,7 @@ function App() {
             companyContext={companyContext}
             isToggleOpen={isToggleOpen}
             isOpen={isOpen}
+            color={getColor()}
             onClick={() => {
               if (isToggleOpen) {
                 setIsToggleOpen(false);
@@ -58,12 +85,14 @@ function App() {
               }}
               isToggleOpen={isToggleOpen}
               isOpen={isOpen}
+              color={getColor()}
             />
           )}
           {isOpen && (
             <Widget
               companyContext={companyContext}
               isOpen={isOpen}
+              color={getColor()}
               openCloseWidget={() => setIsOpen(!isOpen)}
             />
           )}
