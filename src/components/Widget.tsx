@@ -23,6 +23,7 @@ type WidgetProps = {
   companyContext: CompanyContextProps;
   isOpen: boolean;
   openCloseWidget: () => void;
+  color: string;
 };
 
 const formulaireInitial: ReservationRequest = {
@@ -45,6 +46,7 @@ export default function Widget({
   companyContext,
   isOpen,
   openCloseWidget,
+  color,
 }: WidgetProps) {
   const { t, i18n } = useTranslation();
   const {
@@ -416,7 +418,7 @@ export default function Widget({
         isOpen ? "resajet-widget-open" : "resajet-widget-close"
       }`}
     >
-      <Header companyContext={companyContext} />
+      <Header companyContext={companyContext} color={color} />
       <div className="resajet-body">
         <div className="resajet-body-big-container">
           <Stepper
