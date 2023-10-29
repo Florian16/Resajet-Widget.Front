@@ -128,6 +128,18 @@ export default function Reservation({
     return false;
   };
 
+  const disabledDates = () => {
+    const dates: Date[] = [];
+
+    if (companyContext?.company) {
+      companyContext?.company?.unavailabilities.forEach((unavailability) => {
+        dates.push(new Date(unavailability.date));
+      });
+    }
+
+    return dates;
+  };
+
   const isSameDay = (date1: Date, date2: Date) => {
     return (
       date1.getDate() === date2.getDate() &&
@@ -287,6 +299,7 @@ export default function Reservation({
                 ? enGB
                 : fr
             }
+            disabledDates={disabledDates()}
             minDate={new Date()}
             onChange={(e) => {
               handleDoubleChange(
