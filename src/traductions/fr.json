@@ -23,7 +23,7 @@
     "telephone": "Téléphone",
     "commentaire": "Commentaire",
     "jAccepteLes": "J'accepte les",
-    "conditionsUtilisation": "conditions d'utilisation"
+    "conditionsUtilisations": "conditions d'utilisations"
   },
   "footer": {
     "retour": "Retour",
@@ -69,6 +69,6 @@
     "prenomRequis": "Le prénom est incorrect.",
     "emailRequis": "L'email est incorrect.",
     "telephoneRequis": "Le numéro de téléphone est incorrect.",
-    "conditionsUtilisationRequis": "Veuillez accepter les conditions d'utilisations pour continuer."
+    "conditionsUtilisationsRequis": "Veuillez accepter les conditions d'utilisations pour continuer."
   }
 }

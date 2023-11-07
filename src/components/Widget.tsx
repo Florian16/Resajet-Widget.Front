@@ -329,7 +329,7 @@ export default function Widget({
           )
             newErrors.push({
               type: ErrorType.TermsConditions,
-              message: t("errors.conditionsUtilisationRequis"),
+              message: t("errors.conditionsUtilisationsRequis"),
               step: 1,
             });
         }
