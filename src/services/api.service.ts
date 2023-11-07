@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosResponse, ResponseType } from "axios";
 const apiUrl =
   (import.meta.env && import.meta.env.VITE_API_URL) ||
   process.env.VITE_API_URL ||
@@ -16,7 +16,7 @@ class ApiService {
   public async get<T>(
     url: string,
     language: string,
-    contentType = "application/json"
+    responseType: ResponseType | undefined = "json"
   ): Promise<T> {
     const headers = {
       "Content-Type": "application/json",
@@ -25,6 +25,7 @@ class ApiService {
 
     const response: AxiosResponse<T> = await this.axiosInstance.get(url, {
       headers,
+      responseType,
     });
     return response.data;
   }
