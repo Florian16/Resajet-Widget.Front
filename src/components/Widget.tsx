@@ -126,6 +126,14 @@ export default function Widget({
       scrollElement = document.getElementById("company");
     }
 
+    if (
+      scrollElement === null &&
+      errors.findIndex((e) => e.type === ErrorType.TermsConditions) > -1
+    ) {
+      setActiveStep(1);
+      scrollElement = document.getElementById("termsConditions");
+    }
+
     if (scrollElement !== null) {
       setErrors([...errors]);
 
@@ -380,8 +388,6 @@ export default function Widget({
   };
 
   const validateReservation = () => {
-    console.log("yo");
-
     setIsSubmitting(true);
     reservationService
       .createReservation(
@@ -478,6 +484,7 @@ export default function Widget({
                 errorsChecking={() => {
                   return errorsChecking();
                 }}
+                errorsManagement={errorsManagement}
                 formulaireInitial={formulaireInitial}
                 t={t}
               />

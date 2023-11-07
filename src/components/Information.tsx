@@ -13,6 +13,8 @@ import { CompanyContextProps } from "../contexts/CompanyContext";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 import { useEffect } from "react";
+import { documentService } from "../services/document.service";
+import { useTranslation } from "react-i18next";
 
 type InformationProps = {
   formulaire: ReservationRequest;
@@ -23,6 +25,7 @@ type InformationProps = {
   companyContext: CompanyContextProps;
   errors: Error[];
   errorsChecking: () => number;
+  errorsManagement: (errors: Error[]) => void;
   t: TFunction;
 };
 
@@ -43,8 +46,10 @@ export default function Information({
   errors,
   errorsChecking,
   formulaireInitial,
+  errorsManagement,
   t,
 }: InformationProps) {
+  const { i18n } = useTranslation();
   const generateAutoCompleteValue = () => {
     return Math.random().toString(36).substring(2);
   };
@@ -55,6 +60,25 @@ export default function Information({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formulaire, formulaireInitial]);
+
+  const openTermsConditions = () => {
+    documentService
+      .getDocument(companyContext?.company?.id, i18n.language)
+      .then((response) => {
+        const downloadUrl = window.URL.createObjectURL(response);
+        window.open(downloadUrl, "_blank");
+        URL.revokeObjectURL(downloadUrl);
+      })
+      .catch((e) => {
+        errorsManagement([
+          {
+            type: ErrorType.TermsConditions,
+            message: e?.response?.data?.title,
+            step: 1,
+          },
+        ]);
+      });
+  };
 
   return (
     <Box component="form">
@@ -200,7 +224,10 @@ export default function Information({
               <span className="resajet-label">
                 {t("information.jAccepteLes")}{" "}
                 <a
-                  href={`https://www.resajet.com/conditions-utilisation/${companyContext?.company?.id}`}
+                  onClick={(e) => {
+                    e.preventDefault(); // Empêche la propagation de l'événement
+                    openTermsConditions();
+                  }}
                   style={{
                     color: companyContext?.company?.companySetting?.mainColor,
                   }}

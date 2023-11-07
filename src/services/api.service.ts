@@ -13,7 +13,11 @@ class ApiService {
     });
   }
 
-  public async get<T>(url: string, language: string): Promise<T> {
+  public async get<T>(
+    url: string,
+    language: string,
+    contentType = "application/json"
+  ): Promise<T> {
     const headers = {
       "Content-Type": "application/json",
       "Accept-Language": language,
