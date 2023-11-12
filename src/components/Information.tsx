@@ -225,7 +225,7 @@ export default function Information({
                 {t("information.jAccepteLes")}{" "}
                 <a
                   onClick={(e) => {
-                    e.preventDefault(); // Empêche la propagation de l'événement
+                    e.preventDefault();
                     openTermsConditions();
                   }}
                   style={{
@@ -233,7 +233,7 @@ export default function Information({
                   }}
                   target="_blank"
                 >
-                  {t("information.conditionsUtilisation")}
+                  {t("information.conditionsUtilisations")}
                 </a>{" "}
                 *
               </span>
