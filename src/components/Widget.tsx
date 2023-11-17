@@ -388,6 +388,8 @@ export default function Widget({
   };
 
   const validateReservation = () => {
+    console.log("yo");
+
     setIsSubmitting(true);
     reservationService
       .createReservation(
@@ -419,17 +421,20 @@ export default function Widget({
 
         const newErrors: Error[] = [];
 
-        error?.response?.data?.errors?.forEach((error: Error) => {
-          const errorType: ErrorType =
-            ErrorType[error.type as keyof typeof ErrorType];
-          const step =
-            firstStepErrors.findIndex((e) => e === errorType) > -1
-              ? 0
-              : secondStepErrors.findIndex((e) => e === errorType) > -1
-              ? 1
-              : 2;
-          newErrors.push({ type: errorType, message: error.message, step });
-        });
+        if (error?.response?.data?.errors.length > 0) {
+          error?.response?.data?.errors?.forEach((error: Error) => {
+            const errorType: ErrorType =
+              ErrorType[error.type as keyof typeof ErrorType];
+            const step =
+              firstStepErrors.findIndex((e) => e === errorType) > -1
+                ? 0
+                : secondStepErrors.findIndex((e) => e === errorType) > -1
+                ? 1
+                : 2;
+            newErrors.push({ type: errorType, message: error.message, step });
+          });
+        }
+
         if (newErrors.length > 0) errorsManagement(newErrors);
       })
       .finally(() => {

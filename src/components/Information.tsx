@@ -233,7 +233,7 @@ export default function Information({
                   }}
                   target="_blank"
                 >
-                  {t("information.conditionsUtilisations")}
+                  {t("information.conditionsUtilisation")}
                 </a>{" "}
                 *
               </span>
