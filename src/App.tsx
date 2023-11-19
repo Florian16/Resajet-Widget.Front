@@ -32,6 +32,12 @@ function App() {
   }, []);
 
   const getColor = () => {
+    if (
+      companyContext.company?.companySetting &&
+      companyContext.company?.companySetting?.textColor !== null
+    ) {
+      return companyContext.company?.companySetting?.textColor;
+    }
     const backgroundColor = companyContext.company?.companySetting?.mainColor;
 
     if (backgroundColor === undefined) return "white";
