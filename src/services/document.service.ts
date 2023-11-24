@@ -1,7 +1,7 @@
 import { apiService } from "./api.service";
 
 class DocumentService {
-  private readonly baseUrl = "/documents";
+  private readonly baseUrl = "widget/documents";
 
   public async getDocument(
     companyId: string | undefined,

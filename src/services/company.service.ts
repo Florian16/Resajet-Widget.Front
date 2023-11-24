@@ -2,7 +2,7 @@ import { CompanyDto } from "../dtos/Company/CompanyDto";
 import { apiService } from "./api.service";
 
 class CompanyService {
-  private readonly baseUrl = "/companies";
+  private readonly baseUrl = "widget/companies";
 
   public async getCompany(
     id: string | undefined,

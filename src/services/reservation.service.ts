@@ -4,7 +4,7 @@ import { apiService } from "./api.service";
 import { DateOnly } from "../utils/utils.dateOnly";
 
 class ReservationService {
-  private readonly baseUrl = "/reservations";
+  private readonly baseUrl = "widget/reservations";
 
   public async createReservation(
     companyId: string,
