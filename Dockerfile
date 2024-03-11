@@ -1,5 +1,5 @@
 # Utilisation d'une image de Node.js pour construire l'application
-FROM node:18-alpine AS builder
+FROM node:16-alpine AS builder
 
 # Définition du répertoire de travail dans le conteneur
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Installation des dépendances
-RUN npm install --force
+RUN npm install
 
 # Copie des fichiers de l'application dans le répertoire de travail
 COPY . .
