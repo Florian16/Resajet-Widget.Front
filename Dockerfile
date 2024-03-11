@@ -8,13 +8,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Installation des dépendances
-RUN npm install
+RUN npm install --force
 
 # Copie des fichiers de l'application dans le répertoire de travail
 COPY . .
 
 # Exécution de la construction de l'application avec webpack
-RUN npm run build --bail=false
+RUN npm run build
 
 # Utilisation d'une image légère pour le déploiement
 FROM nginx:stable-alpine
