@@ -18,9 +18,6 @@ export default {
     extensions: [".tsx", ".ts", ".js"],
   },
   module: {
-    typescript: {
-      ignoreBuildErrors: true,
-    },
     rules: [
       {
         test: /\.(css|scss)$/,
