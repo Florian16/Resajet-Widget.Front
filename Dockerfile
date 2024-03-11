@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Exécution de la construction de l'application avec webpack
-RUN npm run build
+RUN npm run build --bail=false
 
 # Utilisation d'une image légère pour le déploiement
 FROM nginx:stable-alpine
