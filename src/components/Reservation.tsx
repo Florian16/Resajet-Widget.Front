@@ -171,7 +171,8 @@ export default function Reservation({
               u.unavailabilityPeriodIds.find(
                 (upid) =>
                   upid.periodId === formulaire.periodId &&
-                  upid.areaIds.find((areaId) => areaId === a.id) &&
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  upid.areaIds.find((areaId: string) => areaId === a.id) &&
                   upid.unavailabilityTimeSlotIds.includes(ts.id) &&
                   !upid.disabled
               )
@@ -392,7 +393,7 @@ export default function Reservation({
                           upid.areaIds.length > 0
                             ? upid.periodId === formulaire.periodId &&
                               upid.areaIds.find(
-                                (areaId) => areaId === formulaire.areaId
+                                (areaId: string) => areaId === formulaire.areaId
                               ) &&
                               upid.unavailabilityTimeSlotIds.includes(ts.id) &&
                               !upid.disabled
