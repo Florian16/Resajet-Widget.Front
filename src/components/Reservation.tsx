@@ -96,7 +96,7 @@ export default function Reservation({
                   u.unavailabilityPeriodIds.find(
                     (upid) =>
                       upid.periodId === formulaire.periodId &&
-                      upid.areaIds.find((areaId) => areaId === a.id) &&
+                      upid.areaIds.find((areaId: string) => areaId === a.id) &&
                       !upid.disabled
                   )
               )
