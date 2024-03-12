@@ -1,4 +1,4 @@
-import { PeriodTranslation } from "@models/PeriodTranslation";
+import { PeriodTranslation } from "../../models/PeriodTranslation";
 import { TimeSlotCompanyDto } from "./TimeSlotCompanyDto";
 
 export interface PeriodCompanyDto {
