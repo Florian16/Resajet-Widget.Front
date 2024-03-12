@@ -15,6 +15,9 @@ export default {
   },
   performance: { hints: false },
   resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
     extensions: [".tsx", ".ts", ".js"],
   },
   module: {
