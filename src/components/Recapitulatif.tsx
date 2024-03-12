@@ -3,7 +3,7 @@ import { ReservationRequest } from "../requests/ReservationRequest";
 import { Grid } from "@mui/material";
 import { CompanyContextProps } from "../contexts/CompanyContext";
 import i18n from "../traductions/i18n";
-import { Language } from "@enums/Language";
+import { Language } from "../enums/Language";
 import { Error } from "../dtos/Error/Error";
 import { ErrorType } from "../enums/ErrorType";
 import { CompanyType } from "../enums/CompanyType";
