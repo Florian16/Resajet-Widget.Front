@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@enums/*": ["enums/*"]
+      "@enums/*": ["src/enums/*"],
+      "@models/*": ["src/models/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

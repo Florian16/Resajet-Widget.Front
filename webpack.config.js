@@ -17,6 +17,7 @@ export default {
   resolve: {
     alias: {
       "@enums": path.resolve(__dirname, "src/enums"),
+      "@models": path.resolve(__dirname, "src/models"),
     },
     extensions: [".tsx", ".ts", ".js"],
   },
