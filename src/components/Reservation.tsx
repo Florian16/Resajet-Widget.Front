@@ -21,7 +21,9 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
 type ReservationProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleChange: (e: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleCustomChange: (name: string, value: any) => void;
   handleDoubleChange: (
     firstName: string,
@@ -74,6 +76,7 @@ export default function Reservation({
     setMarks(customMarks);
   }, [companyContext?.company?.companySetting?.maximumReservation]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
 
