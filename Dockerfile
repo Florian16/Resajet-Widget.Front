@@ -1,5 +1,5 @@
 # Utilisation d'une image de Node.js pour construire l'application
-FROM node:16-alpine AS builder
+FROM node:14-alpine AS builder
 
 # Définition du répertoire de travail dans le conteneur
 WORKDIR /app

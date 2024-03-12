@@ -16,9 +16,6 @@ export default {
   performance: { hints: false },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
-    alias: {
-      "@enums": path.resolve(__dirname, "src/enums"),
-    },
   },
   module: {
     rules: [
