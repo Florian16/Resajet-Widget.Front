@@ -4,7 +4,7 @@ import Button from "./components/Button";
 import Widget from "./components/Widget";
 import Popup from "./components/Popup";
 import { useTranslation } from "react-i18next";
-import { Language } from "./enums/Language";
+import { Test } from "./test/test";
 
 function App() {
   const { i18n } = useTranslation();
@@ -14,10 +14,10 @@ function App() {
 
   useEffect(() => {
     const language = navigator.language.includes("en")
-      ? Language.English
+      ? Test.English
       : navigator.language.includes("nl")
-      ? Language.Dutch
-      : Language.French;
+      ? Test.Dutch
+      : Test.French;
 
     i18n.changeLanguage(language);
     // eslint-disable-next-line react-hooks/exhaustive-deps
