@@ -17,13 +17,15 @@ COPY . .
 RUN npm run build
 
 # Utilisation d'une image légère pour le déploiement
-FROM nginx:stable-alpine
+FROM nginx:1.17-alpine
 
 # Copie des fichiers de build de l'application depuis le premier étage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
+COPY nginx.conf /etc/nginx/
+
 # Exposition du port 8080 pour accéder à l'application via HTTP
-EXPOSE 4000
+EXPOSE 9080
 
 # Commande par défaut pour exécuter nginx
 CMD ["nginx", "-g", "daemon off;"]
