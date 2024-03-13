@@ -23,7 +23,7 @@ FROM nginx:stable-alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Exposition du port 8080 pour accéder à l'application via HTTP
-EXPOSE 8080
+EXPOSE 4000
 
 # Commande par défaut pour exécuter nginx
 CMD ["nginx", "-g", "daemon off;"]
