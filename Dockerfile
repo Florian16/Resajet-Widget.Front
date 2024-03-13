@@ -16,6 +16,9 @@ FROM nginx:1.17-alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+COPY nginx.conf /etc/nginx/
 
+EXPOSE 9080
+
+# Commande par défaut pour exécuter nginx
 CMD ["nginx", "-g", "daemon off;"]
