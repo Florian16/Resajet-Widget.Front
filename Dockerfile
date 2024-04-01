@@ -16,8 +16,9 @@ FROM nginx:1.17-alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
+COPY index.html  /usr/share/nginx/html/test
+
 COPY nginx.conf /etc/nginx/
-COPY fichiers /var/www/html/fichiers
 
 EXPOSE 9080
 
