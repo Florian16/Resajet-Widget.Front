@@ -16,7 +16,9 @@ FROM nginx:1.17-alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY index.html  /usr/share/nginx/html/test
+COPY index.html  /var/www/html/test
+
+COPY fichiers /var/www/html/fichiers
 
 COPY nginx.conf /etc/nginx/
 
