@@ -76,6 +76,21 @@ export default function Reservation({
     setMarks(customMarks);
   }, [companyContext?.company?.companySetting?.maximumReservation]);
 
+  useEffect(() => {
+    const periodIndex = companyContext.company?.periods?.findIndex(
+      (p) => p.id === formulaire.periodId
+    );
+
+    if (periodIndex !== undefined && periodIndex > -1) {
+      const areaExist = companyContext.company?.periods[
+        periodIndex
+      ].areaPeriods.find((ap) => ap.areaId === formulaire.areaId);
+
+      if (!areaExist) handleCustomChange("areaId", "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formulaire?.periodId]);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const shouldDisableDate = (date: any) => {
     const { $d } = date;
@@ -160,24 +175,28 @@ export default function Reservation({
     }
   `;
 
-  const areasFiltered = companyContext.company?.areas?.filter((a) =>
-    companyContext?.company?.periods
-      .find((p) => p.id === formulaire.periodId)
-      ?.timeSlots.some(
-        (ts) =>
-          !companyContext?.company?.unavailabilities.some(
-            (u) =>
-              dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
-              u.unavailabilityPeriodIds.find(
-                (upid) =>
-                  upid.periodId === formulaire.periodId &&
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  upid.areaIds.find((areaId: string) => areaId === a.id) &&
-                  upid.unavailabilityTimeSlotIds.includes(ts.id) &&
-                  !upid.disabled
-              )
-          )
-      )
+  const areasFiltered = companyContext.company?.areas?.filter(
+    (a) =>
+      companyContext?.company?.periods
+        .find((p) => p.id === formulaire.periodId)
+        ?.timeSlots.some(
+          (ts) =>
+            !companyContext?.company?.unavailabilities.some(
+              (u) =>
+                dayjs(u.date).isSame(dayjs(formulaire.date), "day") &&
+                u.unavailabilityPeriodIds.find(
+                  (upid) =>
+                    upid.periodId === formulaire.periodId &&
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    upid.areaIds.find((areaId: string) => areaId === a.id) &&
+                    upid.unavailabilityTimeSlotIds.includes(ts.id) &&
+                    !upid.disabled
+                )
+            )
+        ) &&
+      companyContext?.company?.periods
+        .find((p) => p.id === formulaire.periodId)
+        ?.areaPeriods?.some((areaPeriod) => areaPeriod.areaId === a.id)
   );
 
   return (
@@ -351,6 +370,13 @@ export default function Reservation({
               name="areaId"
               onChange={(e) => handleChange(e)}
               value={formulaire?.areaId}
+              disabled={
+                !(
+                  formulaire?.periodId !== "" &&
+                  formulaire?.participants > 0 &&
+                  formulaire?.date !== null
+                )
+              }
             >
               <MenuItem value={""}>{t("reservation.pasDePreference")}</MenuItem>
               {areasFiltered?.map((area) => (
