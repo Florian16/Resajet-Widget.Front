@@ -36,6 +36,18 @@ export default {
         ],
       },
       {
+        test: /\.(png|jpe?g|gif)$/,
+        include: path.resolve(__dirname, "src/assets/logo"),
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[ext]",
+            },
+          },
+        ],
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
