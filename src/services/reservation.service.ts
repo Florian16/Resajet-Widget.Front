@@ -35,8 +35,8 @@ class ReservationService {
       phoneNumber: data.phoneNumber,
       comment: data.comment,
       termsConditions: data.termsConditions,
+      newsletter: data.newsletter,
     };
-    console.log(request);
 
     return await apiService.post(url, request, language);
   }

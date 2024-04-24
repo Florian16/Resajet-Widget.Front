@@ -23,7 +23,8 @@
     "telephone": "Phone",
     "commentaire": "Comment",
     "jAccepteLes": "I accept the",
-    "conditionsUtilisation": "terms of use"
+    "conditionsUtilisation": "terms of use",
+    "newsletter": "I would like to subscribe to the newsletter."
   },
   "footer": {
     "retour": "Back",

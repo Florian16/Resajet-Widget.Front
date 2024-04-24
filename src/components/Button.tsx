@@ -16,8 +16,6 @@ export default function Button({
   isOpen,
   color,
 }: ButtonProps) {
-  console.log(color);
-
   return (
     <div
       className={`resajet-button`}

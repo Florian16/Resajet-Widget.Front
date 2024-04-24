@@ -40,6 +40,7 @@ const formulaireInitial: ReservationRequest = {
   email: "",
   comment: "",
   termsConditions: false,
+  newsletter: false,
 };
 
 export default function Widget({
@@ -388,8 +389,6 @@ export default function Widget({
   };
 
   const validateReservation = () => {
-    console.log("yo");
-
     setIsSubmitting(true);
     reservationService
       .createReservation(
@@ -417,6 +416,7 @@ export default function Widget({
           ErrorType.Email,
           ErrorType.PhoneNumber,
           ErrorType.TermsConditions,
+          ErrorType.Newsletter,
         ];
 
         const newErrors: Error[] = [];

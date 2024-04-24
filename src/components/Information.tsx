@@ -204,11 +204,33 @@ export default function Information({
         </Grid>
       </Grid>
 
+      <Grid item xs={12}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="newsletter"
+              checked={formulaire?.newsletter}
+              onChange={handleCheckboxChange}
+            />
+          }
+          label={
+            <span className="resajet-label">
+              <p> {t("information.newsletter")}</p>
+            </span>
+          }
+        />
+        {errors.findIndex((e) => e.type == ErrorType.Newsletter) > -1 && (
+          <div className="resajet-widget-input-error">
+            {errors.find((e) => e.type == ErrorType.Newsletter)?.message}
+          </div>
+        )}
+      </Grid>
+
       <Grid
         container
         alignItems="center"
         justifyContent="center"
-        style={{ paddingBottom: "2%" }}
+        style={{ paddingBottom: "2%", marginTop: "-3%" }}
         id="termsConditions"
       >
         <Grid item xs={12}>

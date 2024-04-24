@@ -12,4 +12,5 @@ export enum ErrorType {
   TermsConditions = "TermsConditions",
   ReservationNotAvailable = "ReservationNotAvailable",
   Company = "Company",
+  Newsletter = "Newsletter",
 }
