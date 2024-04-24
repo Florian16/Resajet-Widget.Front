@@ -2,6 +2,7 @@ import { CompanyDto } from "../dtos/Company/CompanyDto";
 import { ReservationRequest } from "../requests/ReservationRequest";
 import { apiService } from "./api.service";
 import { DateOnly } from "../utils/utils.dateOnly";
+import { Language } from "../enums/Language";
 
 class ReservationService {
   private readonly baseUrl = "widget/reservations";
@@ -36,6 +37,7 @@ class ReservationService {
       comment: data.comment,
       termsConditions: data.termsConditions,
       newsletter: data.newsletter,
+      language: language === "nl-NL" ? 2 : language === "en-US" ? 1 : 0,
     };
 
     return await apiService.post(url, request, language);
