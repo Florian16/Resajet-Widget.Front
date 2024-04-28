@@ -301,24 +301,6 @@ export default function Widget({
         newErrors = newErrors.filter((e) => e.type !== ErrorType.Email);
       }
 
-      if (formulaire?.phoneNumber === "") {
-        if (isLoading) {
-          if (scrollElement === null)
-            scrollElement = document.getElementById("phoneNumber");
-
-          if (
-            newErrors.findIndex((e) => e.type === ErrorType.PhoneNumber) === -1
-          )
-            newErrors.push({
-              type: ErrorType.PhoneNumber,
-              message: t("errors.telephoneRequis"),
-              step: 1,
-            });
-        }
-      } else {
-        newErrors = newErrors.filter((e) => e.type !== ErrorType.PhoneNumber);
-      }
-
       if (!formulaire?.termsConditions) {
         if (isLoading) {
           if (scrollElement === null)
