@@ -40,7 +40,7 @@ export default function Button({
             src={logo}
             className={`resajet-button-logo  ${
               color === "white" ||
-              companyContext.company?.companySetting?.mainColor === "#FFFFFF"
+              companyContext.company?.companySetting?.textColor === "#FFFFFF"
                 ? ""
                 : "resajet-button-logo-black"
             } `}
