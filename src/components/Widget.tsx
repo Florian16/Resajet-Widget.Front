@@ -95,44 +95,31 @@ export default function Widget({
   const errorsManagement = (errors: Error[]) => {
     let scrollElement = null;
 
-    if (
-      scrollElement === null &&
-      errors.findIndex((e) => e.type === ErrorType.Participants) > -1
-    ) {
-      setActiveStep(0);
-      scrollElement = document.getElementById("participants");
-    }
+    if (scrollElement === null) {
+      if (errors.findIndex((e) => e.type === ErrorType.Participants) > -1) {
+        setActiveStep(0);
+        scrollElement = document.getElementById("participants");
+      }
 
-    if (
-      scrollElement === null &&
-      errors.findIndex((e) => e.type === ErrorType.Date) > -1
-    ) {
-      setActiveStep(0);
-      scrollElement = document.getElementById("date");
-    }
+      if (errors.findIndex((e) => e.type === ErrorType.Date) > -1) {
+        setActiveStep(0);
+        scrollElement = document.getElementById("date");
+      }
 
-    if (
-      scrollElement === null &&
-      errors.findIndex((e) => e.type === ErrorType.Firstname) > -1
-    ) {
-      setActiveStep(1);
-      scrollElement = document.getElementById("firstname");
-    }
+      if (errors.findIndex((e) => e.type === ErrorType.Firstname) > -1) {
+        setActiveStep(1);
+        scrollElement = document.getElementById("firstname");
+      }
 
-    if (
-      scrollElement === null &&
-      errors.findIndex((e) => e.type === ErrorType.Company) > -1
-    ) {
-      setActiveStep(2);
-      scrollElement = document.getElementById("company");
-    }
+      if (errors.findIndex((e) => e.type === ErrorType.Company) > -1) {
+        setActiveStep(2);
+        scrollElement = document.getElementById("company");
+      }
 
-    if (
-      scrollElement === null &&
-      errors.findIndex((e) => e.type === ErrorType.TermsConditions) > -1
-    ) {
-      setActiveStep(1);
-      scrollElement = document.getElementById("termsConditions");
+      if (errors.findIndex((e) => e.type === ErrorType.TermsConditions) > -1) {
+        setActiveStep(1);
+        scrollElement = document.getElementById("termsConditions");
+      }
     }
 
     if (scrollElement !== null) {
