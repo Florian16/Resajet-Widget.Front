@@ -485,20 +485,18 @@ export default function Widget({
           </div>
         </div>
       </div>
-      {
-        <Footer
-          activeStep={activeStep}
-          formulaire={formulaire}
-          setActiveStep={(as) => setActiveStep(as)}
-          steps={steps}
-          validateReservation={validateReservation}
-          t={t}
-          companyContext={companyContext}
-          isSubmitting={isSubmitting}
-          openCloseWidget={openCloseWidget}
-          errorsChecking={() => errorsChecking(true)}
-        />
-      }
+      <Footer
+        activeStep={activeStep}
+        formulaire={formulaire}
+        setActiveStep={(as) => setActiveStep(as)}
+        steps={steps}
+        validateReservation={validateReservation}
+        t={t}
+        companyContext={companyContext}
+        isSubmitting={isSubmitting}
+        openCloseWidget={openCloseWidget}
+        errorsChecking={() => errorsChecking(true)}
+      />
     </div>
   );
 }
