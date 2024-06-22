@@ -377,8 +377,6 @@ export default function Widget({
         });
       })
       .catch((error) => {
-        console.log(error);
-
         const firstStepErrors = [
           ErrorType.Period,
           ErrorType.Participants,
