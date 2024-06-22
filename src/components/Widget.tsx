@@ -120,6 +120,11 @@ export default function Widget({
         setActiveStep(1);
         scrollElement = document.getElementById("termsConditions");
       }
+
+      if (errors.findIndex((e) => e.type === ErrorType.TimeSlot) > -1) {
+        setActiveStep(0);
+        scrollElement = document.getElementById("hour");
+      }
     }
 
     if (scrollElement !== null) {
@@ -372,6 +377,8 @@ export default function Widget({
         });
       })
       .catch((error) => {
+        console.log(error);
+
         const firstStepErrors = [
           ErrorType.Period,
           ErrorType.Participants,
@@ -394,12 +401,14 @@ export default function Widget({
           error?.response?.data?.errors?.forEach((error: Error) => {
             const errorType: ErrorType =
               ErrorType[error.type as keyof typeof ErrorType];
+
             const step =
               firstStepErrors.findIndex((e) => e === errorType) > -1
                 ? 0
                 : secondStepErrors.findIndex((e) => e === errorType) > -1
                 ? 1
                 : 2;
+
             newErrors.push({ type: errorType, message: error.message, step });
           });
         }

@@ -430,6 +430,37 @@ export default function Reservation({
                     )
                 )
                 .filter((ts) => {
+                  const totalReservationIndex =
+                    companyContext.company?.totalReservations.findIndex(
+                      (tr) =>
+                        dayjs(tr.startDate).isSame(
+                          dayjs(formulaire.date),
+                          "day"
+                        ) && tr.timeSlotId == ts.id
+                    );
+
+                  if (
+                    totalReservationIndex !== undefined &&
+                    totalReservationIndex > -1 &&
+                    companyContext.company?.totalReservations
+                  ) {
+                    return (
+                      companyContext.company?.totalReservations[
+                        totalReservationIndex
+                      ].total +
+                        formulaire.participants <=
+                      ts.maximumCapacity
+                    );
+                  } else if (
+                    ts.maximumCapacity >= 0 &&
+                    ts.maximumCapacity != null
+                  ) {
+                    return formulaire.participants <= ts.maximumCapacity;
+                  }
+
+                  return true;
+                })
+                .filter((ts) => {
                   const today = dayjs();
                   const timeslotTime = dayjs(ts.hour, "HH:mm");
 

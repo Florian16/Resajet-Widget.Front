@@ -5,6 +5,7 @@ import { AreaCompanyDto } from "./AreaCompanyDto";
 import { PeriodCompanyDto } from "./PeriodCompanyDto";
 import { UnavailabilityCompanyDto } from "./UnavailabilityCompanyDto";
 import { CompanySettingDto } from "../CompanySetting/CompanySettingDto";
+import { TotalReservationByTimeSlotDto } from "../Reservation/TotalReservationByTimeSlotDto";
 
 export interface CompanyDto {
   id: string;
@@ -16,4 +17,5 @@ export interface CompanyDto {
   unavailabilities: UnavailabilityCompanyDto[];
   areas: AreaCompanyDto[];
   companyComments: CompanyCommentDto[];
+  totalReservations: TotalReservationByTimeSlotDto[];
 }
